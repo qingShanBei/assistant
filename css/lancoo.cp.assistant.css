@@ -1303,7 +1303,7 @@
 
 } */
 .lgAssistant-main .contact-li .pager4 .pagination,
-.lgAssistant-main . .lgAssistant-main .message-box .pager3 .pagination,
+.lgAssistant-main  .lgAssistant-main .message-box .pager3 .pagination,
 .lgAssistant-main .notice-box .pager2 .pagination,
 .lgAssistant-main .todo-box .pager1 .pagination {
 	bottom: 20px;
@@ -2805,6 +2805,8 @@
 	right: 0px;
 	z-index: 6;
 	cursor: pointer;
+	font-size: 0;
+	color: #fff;
 }
 
 .lgAssistant-main #lgAssistant-next2:hover {
@@ -6304,10 +6306,10 @@
 
 
 /*  line 127, ../../../../../sass/component/_pagination.scss */
-.lgAssistant-main .pagination .next:hover,
+/* .lgAssistant-main .pagination .next:hover,
 .lgAssistant-main .pagination .prev:hover {
 	/*  border-color: #2ec7bb;*/
-}
+/* }  */
 
 
 /*  line 132, ../../../../../sass/component/_pagination.scss */
@@ -6324,12 +6326,12 @@
 
 
 /*  line 141, ../../../../../sass/component/_pagination.scss */
-.lgAssistant-main .pagination .prev:active,
+/* .lgAssistant-main .pagination .prev:active,
 .lgAssistant-main .pagination .next:active {
 	/*  color: #ffffff !important;
     background-color: #2ec7bb !important;
     border-color: #2ec7bb !important;*/
-}
+/* } */ 
 
 
 /*  line 148, ../../../../../sass/component/_pagination.scss */
@@ -6392,12 +6394,12 @@
 
 
 /*  line 193, ../../../../../sass/component/_pagination.scss */
-.lgAssistant-main .frame_min_pager .pagination .prev:active,
-.lgAssistant-main .frame_min_pager .pagination .next:active {
+/* .lgAssistant-main .frame_min_pager .pagination .prev:active,
+.lgAssistant-main .frame_min_pager .pagination .next:active { */
 	/*  width: 20px !important;
     height: 18px;
     line-height: 18px;*/
-}
+/* } */
 
 
 /*  line 201, ../../../../../sass/component/_pagination.scss */
@@ -6505,10 +6507,10 @@
 
 
 /*  line 277, ../../../../../sass/component/_pagination.scss */
-.lgAssistant-main .pagination .pagination_go_button {
+/* .lgAssistant-main .pagination .pagination_go_button { */
 	/*  height: 26px;
     line-height: 26px;*/
-}
+/* } */
 
 
 /*  line 282, ../../../../../sass/component/_pagination.scss */
@@ -6533,25 +6535,25 @@
 
 
 /*  line 297, ../../../../../sass/component/_pagination.scss */
-.lgAssistant-main .pagination .next:hover,
+/* .lgAssistant-main .pagination .next:hover,
 .lgAssistant-main .pagination .prev:hover,
 .lgAssistant-main .pagination a:hover,
-.lgAssistant-main .pagination span:hover {
+.lgAssistant-main .pagination span:hover { */
 	/*  border-color: #276f85;*/
-}
+/* } */
 
 
 /*  line 302, ../../../../../sass/component/_pagination.scss */
-.lgAssistant-main .pagination a {
+/* .lgAssistant-main .pagination a { */
 	/*  background: -webkit-linear-gradient(bottom, #daeff9, #feffff);
     background: linear-gradient(to top, #daeff9, #feffff);*/
-}
+/* } */
 
 
 /*  line 307, ../../../../../sass/component/_pagination.scss */
-.lgAssistant-main .pagination_go_button:hover {
+/* .lgAssistant-main .pagination_go_button:hover { */
 	/*  border-color: #97b6c1 !important;*/
-}
+/* } */
 
 
 /*  line 311, ../../../../../sass/component/_pagination.scss */
@@ -6596,8 +6598,8 @@
 
 
 /*  line 341, ../../../../../sass/component/_pagination.scss */
-.lgAssistant-main .pagination .prev:active,
-.lgAssistant-main .pagination .next:active {
+/* .lgAssistant-main .pagination .prev:active,
+.lgAssistant-main .pagination .next:active { */
 	/*  border: none;
     width: 28px !important;
     height: 28px;
@@ -6605,17 +6607,17 @@
     line-height: 28px;
     background: -webkit-linear-gradient(bottom, #95d1e0, #276f85) !important;
     background: linear-gradient(to top, #95d1e0, #276f85) !important;*/
-}
+/* } */
 
 
 /*  line 352, ../../../../../sass/component/_pagination.scss */
-.lgAssistant-main .pagination .pagination_go_button:active,
-.lgAssistant-main .pagination .pagination_go_button {
+/* .lgAssistant-main .pagination .pagination_go_button:active,
+.lgAssistant-main .pagination .pagination_go_button { */
 	/*  color: #3c6a77 !important;*/
 	/*  border-color: #97b6c1 !important;*/
 	/*  background: -webkit-linear-gradient(bottom, #daeff9, #feffff);
     background: linear-gradient(to top, #daeff9, #feffff);*/
-}
+/* } */
 
 
 /*  line 362, ../../../../../sass/component/_pagination.scss */
