@@ -3636,7 +3636,7 @@
 	color: #63b2d4;
 }
 
-.lgAssistant-main .summary-title p {
+.lgAssistant-main .summary-title>p {
 	line-height: 42px;
 	font-family: MicrosoftYaHei;
 	font-size: 14px;
@@ -3712,7 +3712,7 @@
 	font-size: 14px;
 	font-weight: normal;
 	font-stretch: normal;
-	line-height: 22px;
+	line-height: 1.6;
 	letter-spacing: 0px;
 	color: #0e95ed;
 	text-align: center;
@@ -4153,7 +4153,9 @@
 	width: 96px;
 	box-sizing: border-box;
 }
-
+.lgAssistant-main .popup-main3 .assistant-select-span66{
+	margin: 8px 3px 10px 19px;
+}
 .lgAssistant-main .assistant-empty {
 	width: 256px;
 	height: 80px;
@@ -4609,7 +4611,7 @@
 	font-size: 12px;
 	line-height: 20px;
 	letter-spacing: -1px;
-	color: #333333;
+	/* color: #333333; */
 
 }
 

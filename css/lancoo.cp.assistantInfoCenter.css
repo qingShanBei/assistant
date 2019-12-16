@@ -3,6 +3,7 @@
 #Assistant_infoCenter {
 	z-index: 1080;
 	cursor: pointer;
+	text-align: left;
 }
 
 ::-webkit-input-placeholder {
@@ -863,7 +864,7 @@
 
 }
 
-.lgAssistant-infoCenter-main . .lgAssistant-infoCenter-main .message-box .pager3 .pagination,
+.lgAssistant-infoCenter-main .lgAssistant-infoCenter-main .message-box .pager3 .pagination,
 .lgAssistant-infoCenter-main .notice-box .pager2 .pagination,
 .lgAssistant-infoCenter-main .todo-box .pager1 .pagination {
 	bottom: 20px;
@@ -1214,6 +1215,7 @@
 	left: -2px;
 	z-index: 1;
 	display: none;
+	margin: 0;
 }
 
 .lgAssistant-infoCenter-main .todo-type-span:hover b {
@@ -2185,15 +2187,15 @@
 
 
 /* line 3, ../../../../../sass/mixins/_clear.scss */
-.lgAssistant-infoCenter-main .clearfix:before,
-.lgAssistant-infoCenter-main .clearfix:after {
+.lgAssistant-infoCenter-main .lgAssistantClearfix:before,
+.lgAssistant-infoCenter-main .lgAssistantClearfix:after {
 	content: " ";
 	display: table;
 }
 
 
 /*  line 8, ../../../../../sass/mixins/_clear.scss */
-.lgAssistant-infoCenter-main .clearfix:after {
+.lgAssistant-infoCenter-main .lgAssistantClearfix:after {
 	clear: both;
 }
 

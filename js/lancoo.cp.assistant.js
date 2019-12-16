@@ -134,19 +134,7 @@ function AgassitantCallbackFunction(result) {
 		SubjectNameArr = ['语文', '数学'];
 	}
 	var SubjectID = SubjectIDArr[0];
-	if (SubjectIDArr.length > 1) {
-		var summary = ' <select class="summary-subjects">';
-		summary += SubjectNameArr.map(function(item, idx) {
-			return '<option value=' + SubjectIDArr[idx] + '>' + item + '</option>'
-		})
-		$('.summary-title1').append($(
-			summary + '</select>'
-		))
-	} else {
-		// $('.summary-title1').append($(
-		// 	'<span class="summary-subjects1" >' + SubjectID + '</span>'
-		// ))
-	}
+	
 
 
 
@@ -172,7 +160,7 @@ function AgassitantCallbackFunction(result) {
 	var onlyRemindType = 1; //只有一种类型提醒消息判断参数 1为是， 0为不是
 	var assistantTimeUpdata = true; //提醒消息的数据是否已更新
 	//获取学期信息和服务器时间
-	ajaxN('PsnMgr/Schedule/GetTermInformation', 'get', {}, function(data) {
+	ajaxN('PsnMgr/Schedule/GetTermInformation', 'get', {}, function (data) {
 		if (data.StatusCode == 200 && data.ErrCode == 0) {
 			termEndDate = data.Data.TermEndDate;
 			termStartDate = data.Data.TermStartDate;
@@ -184,7 +172,7 @@ function AgassitantCallbackFunction(result) {
 			// 初始化获取未读消息和日程提醒
 			ajaxN('PsnMgr/Schedule/GetScheduleRemindList', 'get', {
 				ScheduleDate: serverTime.slice(0, 10)
-			}, function(data) {
+			}, function (data) {
 				if (data.StatusCode == 200 && data.ErrCode == 0) {
 					if (data.Data.length > 0) {
 						assistantRemindArr.push('0005');
@@ -193,17 +181,17 @@ function AgassitantCallbackFunction(result) {
 						scheduleRemindList = data.Data;
 						$('.popup-nav-ul li').eq(0).children('b').attr('class', 'info-unread');
 					}
-				}else{
-					scheduleRemindCount=0;
+				} else {
+					scheduleRemindCount = 0;
 				}
-				ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function(data) {
+				ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function (data) {
 					if (data.StatusCode == 200 && data.ErrCode == 0) {
 						if (data.Data.TotalCount != 0) {
 							if (data.Data.TodoListCount != 0) {
 								assistantRemindArr.push('0000');
 								TodoRemindCount = data.Data.TodoListCount;
 								if (data.Data.TodoListCount > 99) {
-									data.Data.TodoListCount = 99;
+									data.Data.TodoListCount = '...';
 								}
 								$('.popup-main1 ul li').eq(0).children().children().attr('class', 'info-unread2');
 								$('.popup-main1 ul li').eq(0).children().children().children().children().text(data.Data.TodoListCount);
@@ -211,7 +199,7 @@ function AgassitantCallbackFunction(result) {
 							if (data.Data.NoticeCount != 0) {
 								NoticeRemindCount = data.Data.NoticeCount;
 								if (data.Data.NoticeCount > 99) {
-									data.Data.NoticeCount = 99;
+									data.Data.NoticeCount = '...';
 								}
 								$('.popup-main1 ul li').eq(1).children().children().children().children().text(data.Data.NoticeCount);
 								$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
@@ -221,7 +209,7 @@ function AgassitantCallbackFunction(result) {
 							if (data.Data.ChatCount != 0) {
 								ChatRemindCount = data.Data.ChatCount;
 								if (data.Data.ChatCount > 99) {
-									data.Data.ChatCount = 99;
+									data.Data.ChatCount = '...';
 								}
 								$('.popup-main1 ul li').eq(3).children().children().children().children().text(data.Data.ChatCount);
 								$('.popup-main1 ul li').eq(3).children().children().attr('class', 'info-unread4');
@@ -236,7 +224,7 @@ function AgassitantCallbackFunction(result) {
 							}
 							if (data.Data.MessageCount != 0) {
 								if (data.Data.MessageCount > 99) {
-									data.Data.MessageCount = 99;
+									data.Data.MessageCount = '...';
 								}
 								// console.log(data.Data.MessageCount, 'data.Data.MessageCount');
 								$('.popup-main1 ul li').eq(2).children().children().children().children().text(data.Data.MessageCount);
@@ -245,7 +233,7 @@ function AgassitantCallbackFunction(result) {
 							if (data.Data.NewsCount != 0) {
 								NewsRemindCount = data.Data.NewsCount;
 								if (data.Data.NewsCount > 99) {
-									data.Data.NewsCount = 99;
+									data.Data.NewsCount = '...';
 								}
 								$('.popup-main1 ul li').eq(4).children().children().children().children().text(data.Data.NewsCount);
 								$('.popup-main1 ul li').eq(4).children().children().attr('class', 'info-unread4');
@@ -253,8 +241,9 @@ function AgassitantCallbackFunction(result) {
 
 							}
 							if (data.Data.TotalCount == TodoRemindCount || data.Data.TotalCount == NoticeRemindCount ||
-								data.Data.TotalCount == ChatRemindCount || data.Data.TotalCount == MessageRemindCount || data.Data
-								.TotalCount == NewsRemindCount) {
+								data.Data.TotalCount == ChatRemindCount || data.Data.TotalCount == MessageRemindCount-scheduleRemindCount || data.Data
+								.TotalCount == NewsRemindCount|| data.Data
+								.TotalCount == scheduleRemindCount) {
 								onlyRemindType = 1;
 							} else {
 								onlyRemindType = 0;
@@ -298,19 +287,19 @@ function AgassitantCallbackFunction(result) {
 		initialization = true;
 		//初始化消息中心
 		todoFn(0);
-		getSysIP('400', function(data) {
+		getSysIP('400', function (data) {
 			messageURL = data;
 			console.log(name);
 			if (name == 'message') {
 				noticeFn(0);
 			}
 		});
-		getSysIP('810', function(data) {
+		getSysIP('810', function (data) {
 			gradeManageURL = data;
 			// gradeManageURL = 'http://172.16.41.111:10103/WS_CJZP/';
 			summaryStartTime = dateChangeFn(serverTime.slice(0, 10), -6) + ' 00:00:00'; // 学情总结开始时间
 			summaryEndTime = serverTime.slice(0, 10) + ' 00:00:00'; //学情总结结束时间
-			getSysIP('844', function(data) {
+			getSysIP('844', function (data) {
 				summaryURL = data;
 				summaryTableFn();
 			});
@@ -322,13 +311,13 @@ function AgassitantCallbackFunction(result) {
 				// SchoolID:'S15-130-773A',
 				// UserType:'1',
 				// URL:'http://192.168.129.1:10103/',
-			}, function(data) {
+			}, function (data) {
 				var dateArr = data.Data.split(',');
 				var mark = {};
-				dateArr.map(function(item) {
+				dateArr.map(function (item) {
 					mark[item] = '';
 				})
-				layui.use('laydate', function() {
+				layui.use('laydate', function () {
 					var laydate = layui.laydate;
 					laydate.render({
 						elem: '#lgAssistant-next3', //指定元素
@@ -341,14 +330,14 @@ function AgassitantCallbackFunction(result) {
 						position: 'fixed',
 						value: serverTime.slice(0, 10),
 						isInitValue: false,
-						done: function(value, date, endDate) {
+						done: function (value, date, endDate) {
 							// console.log(value); //得到日期生成的值，如：2017-08-18
 							// console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
 							// console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
 						}
 					});
 				});
-				layui.use('laydate', function() {
+				layui.use('laydate', function () {
 					var laydate = layui.laydate;
 					laydate.render({
 						elem: '#lgAssistant-next2', //指定元素
@@ -361,7 +350,7 @@ function AgassitantCallbackFunction(result) {
 						isInitValue: false,
 						mark: mark,
 						trigger: 'click',
-						done: function(value, date, endDate) {
+						done: function (value, date, endDate) {
 							// console.log( $('#lgAssistant-next2').attr('lay-key'));
 							// console.log('#layui-laydate' + $('#lgAssistant-next2').attr('lay-key') +
 							// ' .layui-laydate-main .layui-laydate-content .layui-this .laydate-day-mark').css();
@@ -426,13 +415,13 @@ function AgassitantCallbackFunction(result) {
 						position: 'static',
 					});
 				});
-			}, function(data) {
+			}, function (data) {
 				// var dateArr = data.Data.split(',');
 				// var mark = {};
 				// dateArr.map(function(item){
 				// 	mark[item]='';
 				// })
-				layui.use('laydate', function() {
+				layui.use('laydate', function () {
 					var laydate = layui.laydate;
 					laydate.render({
 						elem: '#lgAssistant-next3', //指定元素
@@ -444,14 +433,14 @@ function AgassitantCallbackFunction(result) {
 						position: 'fixed',
 						value: serverTime.slice(0, 10),
 						isInitValue: false,
-						done: function(value, date, endDate) {
+						done: function (value, date, endDate) {
 							// console.log(value); //得到日期生成的值，如：2017-08-18
 							// console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
 							// console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
 						}
 					});
 				});
-				layui.use('laydate', function() {
+				layui.use('laydate', function () {
 					var laydate = layui.laydate;
 					laydate.render({
 						elem: '#lgAssistant-next2', //指定元素
@@ -463,7 +452,7 @@ function AgassitantCallbackFunction(result) {
 						value: serverTime.slice(0, 10),
 						isInitValue: false,
 						trigger: 'click',
-						done: function(value, date, endDate) {
+						done: function (value, date, endDate) {
 							$('#lgAssistant-next2').css('font-size', '0');
 							$('.personal-schedule-ul1').hide();
 							$('.personal-schedule-ul2').hide();
@@ -524,7 +513,7 @@ function AgassitantCallbackFunction(result) {
 			// 	}
 			// },
 			var summaryBoxCount = ''; //成绩管理盒子
-			var startDate = layui.use('laydate', function() {
+			var startDate = layui.use('laydate', function () {
 				var laydate = layui.laydate;
 				laydate.render({
 					elem: '#lgAssistant-next4', //指定元素
@@ -535,7 +524,7 @@ function AgassitantCallbackFunction(result) {
 					position: 'fixed',
 					value: serverTime.slice(0, 10),
 					isInitValue: false,
-					done: function(value, dates) {
+					done: function (value, dates) {
 						if (Date.parse($('#lgAssistant-next4').val()) > Date.parse($('#lgAssistant-next5').val())) {
 							assistantTipsFn('开始时间不能大于结束时间');
 						}
@@ -559,7 +548,7 @@ function AgassitantCallbackFunction(result) {
 				});
 
 			});
-			var endDate = layui.use('laydate', function() {
+			var endDate = layui.use('laydate', function () {
 				var laydate = layui.laydate;
 				laydate.render({
 					elem: '#lgAssistant-next5', //指定元素
@@ -570,7 +559,7 @@ function AgassitantCallbackFunction(result) {
 					position: 'fixed',
 					value: serverTime.slice(0, 10),
 					isInitValue: false,
-					done: function(value, dates) {
+					done: function (value, dates) {
 						if ($('#lgAssistant-next5').val()) {
 							if (Date.parse($('#lgAssistant-next4').val()) > Date.parse($('#lgAssistant-next5').val())) {
 								assistantTipsFn('开始时间不能大于结束时间');
@@ -595,13 +584,13 @@ function AgassitantCallbackFunction(result) {
 					TeacherID: UserID,
 					SchoolID: SchoolID,
 					Term: termName,
-				}, function(data) {
+				}, function (data) {
 					if (data.data) {
 						summaryBoxCount = data.data.length;
 						$('.assistant-empty2').hide();
 						$('.summary-grade-main').show();
 						$('.summary-title p').eq(0).children('span').show();
-						data.data.map(function(item, idx) {
+						data.data.map(function (item, idx) {
 
 							var nowClass = 'summary-grade-classes' + idx;
 							var nowClass1 = '.' + nowClass;
@@ -621,7 +610,7 @@ function AgassitantCallbackFunction(result) {
 								'</b>分<i></i></li><li class="summary-marks-li">最低分: <b class="red" >' + keepTwoDecimal(item.MinScore) +
 								'</b>分<i></i></li><li class="summary-marks-li">最高分: <b class="green" >' + keepTwoDecimal(item.MaxScore) +
 								'</b>分<i></i></li></ul></span></div>'));
-							item.ClassList.map(function(it) {
+							item.ClassList.map(function (it) {
 								if (keepTwoDecimal(it.ChangeScore) < 0) {
 									var text = '-';
 									it.ChangeScore = -it.ChangeScore;
@@ -658,7 +647,7 @@ function AgassitantCallbackFunction(result) {
 						TeacherID: UserID,
 						SchoolID: SchoolID,
 						Term: termName,
-					}, function(data) {
+					}, function (data) {
 						if (data.data && summaryBoxCount == 0) {
 							$('.assistant-empty2').show();
 							$('.summary-grade-main').hide();
@@ -673,7 +662,7 @@ function AgassitantCallbackFunction(result) {
 								return;
 							}
 
-							data.data.map(function(item, idx) {
+							data.data.map(function (item, idx) {
 								var nowClass = 'summary-grade-classes' + idx;
 								var nowClass1 = '.' + nowClass;
 								var class1 = ' summary-grade-classes clearfix ' + nowClass;
@@ -692,7 +681,7 @@ function AgassitantCallbackFunction(result) {
 									'</b>分<i></i></li><li class="summary-marks-li">最低分: <b class="red" >' + keepTwoDecimal(item.MinScore) +
 									'</b>分<i></i></li><li class="summary-marks-li">最高分: <b class="green" >' + keepTwoDecimal(item.MaxScore) +
 									'</b>分<i></i></li></ul></span></div>'));
-								item.ClassList.map(function(it) {
+								item.ClassList.map(function (it) {
 									if (keepTwoDecimal(it.ChangeScore) < 0) {
 										var text = '-';
 										it.ChangeScore = -it.ChangeScore;
@@ -737,7 +726,7 @@ function AgassitantCallbackFunction(result) {
 							}
 						}
 
-					}, function() {
+					}, function () {
 						var data = [{
 								"GradeID": null,
 								"GradeName": null,
@@ -821,7 +810,7 @@ function AgassitantCallbackFunction(result) {
 								]
 							}
 						];
-						data.map(function(item, idx) {
+						data.map(function (item, idx) {
 							var nowClass = 'summary-grade-classes' + idx;
 							var nowClass1 = '.' + nowClass;
 							var class1 = ' summary-grade-classes clearfix ' + nowClass;
@@ -840,7 +829,7 @@ function AgassitantCallbackFunction(result) {
 								'</b>分<i></i></li><li class="summary-marks-li">最低分: <b class="red" >' + keepTwoDecimal(item.MinScore) +
 								'</b>分<i></i></li><li class="summary-marks-li">最高分: <b class="green" >' + keepTwoDecimal(item.MaxScore) +
 								'</b>分<i></i></li></ul></span></div>'));
-							item.ClassList.map(function(it) {
+							item.ClassList.map(function (it) {
 								if (keepTwoDecimal(it.ChangeScore) < 0) {
 									var text = '-';
 									it.ChangeScore = -it.ChangeScore;
@@ -887,7 +876,7 @@ function AgassitantCallbackFunction(result) {
 					// 		$('.summary-grade-class').eq(i).attr('class', 'summary-grade-class summary-grade-class3');
 					// 	}
 					// }
-				}, function() {
+				}, function () {
 					$('.assistant-empty2').show();
 					$('.summary-grade-main').hide();
 					$('.summary-title p span').hide();
@@ -898,14 +887,14 @@ function AgassitantCallbackFunction(result) {
 					TeacherID: UserID,
 					SchoolID: SchoolID,
 					Term: termName,
-				}, function(data) {
+				}, function (data) {
 					if (data.data.length == 0) {
 						$('.assistant-empty2').show();
 						$('.summary-grade-main').hide();
 						$('.summary-title p span').hide();
 						return;
 					}
-					data.data.map(function(item, idx) {
+					data.data.map(function (item, idx) {
 						var nowClass = 'summary-grade-classes' + idx;
 						var nowClass1 = '.' + nowClass;
 						var class1 = ' summary-grade-classes clearfix ' + nowClass;
@@ -924,7 +913,7 @@ function AgassitantCallbackFunction(result) {
 							'</b>分<i></i></li><li class="summary-marks-li">最低分: <b class="red" >' + keepTwoDecimal(item.MinScore) +
 							'</b>分<i></i></li><li class="summary-marks-li">最高分: <b class="green" >' + keepTwoDecimal(item.MaxScore) +
 							'</b>分<i></i></li></ul></span></div>'));
-						item.ClassList.map(function(it) {
+						item.ClassList.map(function (it) {
 							if (keepTwoDecimal(it.ChangeScore) < 0) {
 								var text = '-';
 								it.ChangeScore = -it.ChangeScore;
@@ -961,7 +950,7 @@ function AgassitantCallbackFunction(result) {
 						}
 					}
 
-				}, function() {
+				}, function () {
 					$('.assistant-empty2').show();
 					$('.summary-grade-main').hide();
 					$('.summary-title p span').hide();
@@ -1051,7 +1040,7 @@ function AgassitantCallbackFunction(result) {
 					];
 					// 	data ={"data":[{"GradeID":null,"GradeName":null,"CourseNO":"5CD6D9EE-8B72-4C07-B6BE-7B816BEEF991","CourseName":"视听说B","AvgScore":0.3869565217391304347826086957,"GoodScore":1.2881578947368421052631578947,"MaxScore":21.95,"MinScore":0.00,"ClassList":[{"ClassID":"4048C45E-2C12-46D6-AE3E-87B21A852098","ClassName":"认知视听说B一3班","AvgScore":0.025,"GoodScore":0.0833,"MaxScore":0.75,"MinScore":0.00,"ChangeScore":0.025,"PCurl":"/Views/Teacher/teacher.html#/?CourseClassID=4048C45E-2C12-46D6-AE3E-87B21A852098&CourseClassName=认知视听说B一3班&SubjectName=英语","Androidurl":null,"IOSurl":null},{"ClassID":"7A4209FD-1EBA-443D-BF61-0994C577A879","ClassName":"认知视听说B一1班","AvgScore":0.0066666666666666666666666667,"GoodScore":0.0222222222222222222222222222,"MaxScore":0.10,"MinScore":0.00,"ChangeScore":0.0066666666666666666666666667,"PCurl":"/Views/Teacher/teacher.html#/?CourseClassID=7A4209FD-1EBA-443D-BF61-0994C577A879&CourseClassName=认知视听说B一1班&SubjectName=英语","Androidurl":null,"IOSurl":null},{"ClassID":"865856BF-22BE-498D-83E1-43AFEF45365E","ClassName":"认知视听说B一2班","AvgScore":1.0753333333333333333333333333,"GoodScore":3.5844444444444444444444444444,"MaxScore":21.95,"MinScore":0.00,"ChangeScore":1.0753333333333333333333333333,"PCurl":"/Views/Teacher/teacher.html#/?CourseClassID=865856BF-22BE-498D-83E1-43AFEF45365E&CourseClassName=认知视听说B一2班&SubjectName=英语","Androidurl":null,"IOSurl":null}]}],"success":true,"message":null};
 					// 
-					data.map(function(item, idx) {
+					data.map(function (item, idx) {
 						var nowClass = 'summary-grade-classes' + idx;
 						var nowClass1 = '.' + nowClass;
 						var class1 = ' summary-grade-classes clearfix ' + nowClass;
@@ -1070,7 +1059,7 @@ function AgassitantCallbackFunction(result) {
 							'</b>分<i></i></li><li class="summary-marks-li">最低分: <b class="red" >' + keepTwoDecimal(item.MinScore) +
 							'</b>分<i></i></li><li class="summary-marks-li">最高分: <b class="green" >' + keepTwoDecimal(item.MaxScore) +
 							'</b>分<i></i></li></ul></span></div>'));
-						item.ClassList.map(function(it) {
+						item.ClassList.map(function (it) {
 							if (keepTwoDecimal(it.ChangeScore) < 0) {
 								var text = '-';
 								it.ChangeScore = -it.ChangeScore;
@@ -1112,7 +1101,7 @@ function AgassitantCallbackFunction(result) {
 
 		});
 		// 获取天气
-		ajaxN('PsnMgr/Schedule/GetWeatherInformation', 'get', {}, function(data) {
+		ajaxN('PsnMgr/Schedule/GetWeatherInformation', 'get', {}, function (data) {
 			if (data.StatusCode == 200) {
 				$('.assistant-popup-weather').show();
 				var data = data.Data;
@@ -1193,7 +1182,7 @@ function AgassitantCallbackFunction(result) {
 					BackUpTwo: ''
 				},
 				//请求成功
-				success: function(data, status) {
+				success: function (data, status) {
 					// //DOM解析器
 					// var parser = new DOMParser();
 					// //读取返回字符串
@@ -1209,10 +1198,10 @@ function AgassitantCallbackFunction(result) {
 
 				},
 				//失败/超时
-				error: function(XMLHttpRequest, textStatus, errorThrown) {
+				error: function (XMLHttpRequest, textStatus, errorThrown) {
 					if (textStatus === 'timeout') {
 						// alert('請求超時');
-						setTimeout(function() {
+						setTimeout(function () {
 							// alert('重新请求');
 						}, 8000);
 					} else {
@@ -1254,7 +1243,7 @@ function AgassitantCallbackFunction(result) {
 					BackUpTwo: ''
 				},
 				//请求成功
-				success: function(data, status) {
+				success: function (data, status) {
 					// //DOM解析器
 					// var parser = new DOMParser();
 					// //读取返回字符串
@@ -1270,10 +1259,10 @@ function AgassitantCallbackFunction(result) {
 
 				},
 				//失败/超时
-				error: function(XMLHttpRequest, textStatus, errorThrown) {
+				error: function (XMLHttpRequest, textStatus, errorThrown) {
 					if (textStatus === 'timeout') {
 						// alert('請求超時');
-						setTimeout(function() {
+						setTimeout(function () {
 							// alert('重新请求');
 						}, 8000);
 					} else {
@@ -1352,10 +1341,10 @@ function AgassitantCallbackFunction(result) {
 			dataType: "json",
 			data: param,
 
-			success: function(data) {
+			success: function (data) {
 				successFunction(data);
 			},
-			error: function(data) {
+			error: function (data) {
 				// assistantTipsFn('请求错误~');
 				$('.assistant-popup-loading').hide();
 				assistantTipsFn(url);
@@ -1371,11 +1360,11 @@ function AgassitantCallbackFunction(result) {
 				// 	$('.personal-schedule-empty').show();
 				// }
 			},
-			complete: function(XMLHttpRequest, status) {
+			complete: function (XMLHttpRequest, status) {
 				if (status == 'timeout') {
 					XMLHttpRequest.abort(); // 超时后中断请求
 					$('.assistant-popup-loading').hide();
-					assistantRemindFn(['网络超时，请刷新'], function() {
+					assistantRemindFn(['网络超时，请刷新'], function () {
 						ajaxN(url, submitType, param, successFunction);
 					})
 
@@ -1427,21 +1416,21 @@ function AgassitantCallbackFunction(result) {
 			type: submitType,
 			data: param,
 			timeout: 15000, //超时
-			success: function(data) {
+			success: function (data) {
 				$('.assistant-popup-loading').hide();
 				successFunction(data);
 			},
-			error: function(data) {
+			error: function (data) {
 				$('.assistant-popup-loading').hide();
 				errorFunction(data);
 				// assistantTipsFn('请求错误~');
 
 			},
-			complete: function(XMLHttpRequest, status) {
+			complete: function (XMLHttpRequest, status) {
 				if (status == 'timeout') {
 					XMLHttpRequest.abort(); // 超时后中断请求
 					$('.assistant-popup-loading').hide();
-					assistantRemindFn(['网络超时，请刷新'], function() {
+					assistantRemindFn(['网络超时，请刷新'], function () {
 						ajaxM(url, submitType, param, successFunction, errorFunction);
 					})
 
@@ -1464,7 +1453,7 @@ function AgassitantCallbackFunction(result) {
 		} else {
 			$('.assistant-small-text').text(str);
 		}
-		assistantpopuptimer = setTimeout(function() {
+		assistantpopuptimer = setTimeout(function () {
 			$('.assistant-small-success').hide();
 			clearTimeout(assistantpopuptimer);
 		}, 1500);
@@ -1492,7 +1481,7 @@ function AgassitantCallbackFunction(result) {
 		} else {
 			$('.assistant-tips-text').text(str);
 		}
-		assistantpopuptimer = setTimeout(function() {
+		assistantpopuptimer = setTimeout(function () {
 			$('.assistant-tips').hide();
 			clearTimeout(assistantpopuptimer);
 		}, 1500);
@@ -1511,7 +1500,7 @@ function AgassitantCallbackFunction(result) {
 		} else {
 			$('.assistant-big-text').text(str);
 		}
-		assistantpopuptimer = setTimeout(function() {
+		assistantpopuptimer = setTimeout(function () {
 			$('.assistant-big-success').hide();
 			clearTimeout(assistantpopuptimer);
 		}, 1500);
@@ -1544,16 +1533,16 @@ function AgassitantCallbackFunction(result) {
 			}
 		};
 
-		$('.assistant-remind-true').off().click(function() {
+		$('.assistant-remind-true').off().click(function () {
 			$('.assistant-remind').hide();
 			remindFunction(true);
 
 		});
-		$('.assistant-remind-false').off().click(function() {
+		$('.assistant-remind-false').off().click(function () {
 			$('.assistant-remind').hide();
 			remindFunction(0);
 		});
-		$('.assistant-remind-close').off().click(function() {
+		$('.assistant-remind-close').off().click(function () {
 			$('.assistant-remind').hide();
 			remindFunction(false);
 		});
@@ -1678,7 +1667,7 @@ function AgassitantCallbackFunction(result) {
 			if (domName == '#schedule-test1') {
 				$('#layui-laydate' + $('#schedule-test1').attr('lay-key') +
 					' .layui-this').css('cssText', 'background-color: #fff!important;color: #333!important;');
-				$('.layui-laydate-list').click(function(e) {
+				$('.layui-laydate-list').click(function (e) {
 					$('#schedule-test1').val($('.layui-this').text().slice(-6, -4) + '时' + $('.layui-this').text().slice(-4, -2) +
 						'分');
 					var $e = $(e.target);
@@ -1701,7 +1690,7 @@ function AgassitantCallbackFunction(result) {
 				$('#schedule-test1').blur();
 			}
 			if (domName == '#lgAssistant-next4' || domName == '#lgAssistant-next5') {
-				setTimeout(function() {
+				setTimeout(function () {
 					$('.laydate-prev-y').text(' ');
 					$('.laydate-prev-m').text(' ');
 					$('.laydate-next-y').text(' ');
@@ -1754,7 +1743,7 @@ function AgassitantCallbackFunction(result) {
 
 		}
 		times = times - 1;
-		setTimeout(function() {
+		setTimeout(function () {
 			error(domName, times);
 		}, 150);
 	}
@@ -1764,7 +1753,7 @@ function AgassitantCallbackFunction(result) {
 		normalObj.css("border-color", "red");
 
 		times = times - 1;
-		setTimeout(function() {
+		setTimeout(function () {
 			normal(domName, times);
 		}, 150);
 	}
@@ -1898,7 +1887,7 @@ function AgassitantCallbackFunction(result) {
 				var tmpSocket = new WebSocket("ws://127.0.0.1:" + i);
 				//tmpSocket.CONNECTING
 				socketArray.push(tmpSocket);
-				tmpSocket.onclose = function() {
+				tmpSocket.onclose = function () {
 					if (!thisObj.checkBase) {
 						--thisObj.socketArrayLength;
 						if (thisObj.socketArrayLength <= 0) {
@@ -1913,7 +1902,7 @@ function AgassitantCallbackFunction(result) {
 						}
 					}
 				};
-				tmpSocket.onopen = function() {
+				tmpSocket.onopen = function () {
 					switch (this.readyState) {
 						case 0:
 						case 2:
@@ -1928,7 +1917,7 @@ function AgassitantCallbackFunction(result) {
 								initFunc(thisObj);
 							}
 							if (typeof reciveExeMessageFunc == 'function') {
-								this.onmessage = function(e) {
+								this.onmessage = function (e) {
 									reciveExeMessageFunc(e.data);
 								}
 							}
@@ -1964,7 +1953,7 @@ function AgassitantCallbackFunction(result) {
 
 	}
 
-	BsToCsFuncAssistant.prototype.start = function(proName, moduleName, url, exeName, exeParam) {
+	BsToCsFuncAssistant.prototype.start = function (proName, moduleName, url, exeName, exeParam) {
 		if (this.objState == 0) {
 			if (this.objConnect) {
 				var char1 = String.fromCharCode(1);
@@ -1986,7 +1975,7 @@ function AgassitantCallbackFunction(result) {
 	}
 
 	//如果页面需要接收exe发送的消息，则需要在initFunc函数内调用此函数
-	BsToCsFuncAssistant.prototype.willReciveMessage = function(proName, moduleName) {
+	BsToCsFuncAssistant.prototype.willReciveMessage = function (proName, moduleName) {
 		if (this.objState == 0) {
 			if (this.objConnect) {
 				var char1 = String.fromCharCode(1);
@@ -1998,7 +1987,7 @@ function AgassitantCallbackFunction(result) {
 		return false;
 	}
 
-	BsToCsFuncAssistant.prototype.sendMessage = function(proName, moduleName, msgData) {
+	BsToCsFuncAssistant.prototype.sendMessage = function (proName, moduleName, msgData) {
 		if (this.objState == 0) {
 			if (this.objConnect) {
 				var char1 = String.fromCharCode(1);
@@ -2012,7 +2001,7 @@ function AgassitantCallbackFunction(result) {
 	}
 
 	//如果页面需要获取本机mac地址，则需要在initFunc函数内调用此函数，将在reciveExeMessageFunc内接收到{LocalMacIDs:[mac1,mac2,...,macN]}的json字符串
-	BsToCsFuncAssistant.prototype.GetMacIDs = function(proName, moduleName) {
+	BsToCsFuncAssistant.prototype.GetMacIDs = function (proName, moduleName) {
 		if (this.objState == 0) {
 			if (this.objConnect) {
 				var char1 = String.fromCharCode(1);
@@ -2127,7 +2116,7 @@ function AgassitantCallbackFunction(result) {
 			var proName = "FSCModule"; //产品名称
 			var moduleName = "FSCModule"; //模块名称
 			var exeName = "FSCModule\\FSCModule.exe"; //启动程序
-			setTimeout(function() {
+			setTimeout(function () {
 				_clientObj.start(proName, moduleName, PsnMgrMainServerAddr, exeName, porotol); //"http://192.168.129.130:10103/"
 			}, 100);
 		}
@@ -2135,18 +2124,30 @@ function AgassitantCallbackFunction(result) {
 
 	//小助手动态生成
 	$('body').append($(
-		'<div class="lgAssistant-main"><div class="assistant-box"><div id="assistant-box"><canvas id="assistant-box-canvas" width="225" height="150"></canvas></div><div class="assistant-prompt"><p>金老师</p><p>您好~</p></div><div class="assistant-remind-count"><canvas class="assistant-remind-count " style="position:absolute; z-index="-111" "></canvas><ul><li>0</li></ul></div><div class="assistant-info-prompt"><i></i><div class="assistant-remind-div"><ul class="assistant-remind-ul"></ul></div></div><div class="assistant-schedule-prompt"><span class="schedule-prompt-text">上午，10:30 教学主楼606 “学科教研会”</span><p class="schedule-prompt-close">我知道了</p></div><canvas class="assistant-hover-box"></canvas><div class="assistant-popup"><div class="assistant-popup-nav"><div class="assistant-popup-logo"><ul><li><i></i></li><li>教学小助手</li><li><i class="assistant-popup-close "></i></li></ul><div class="lgAssistant-clear"></div></div><div class="popup-nav-list"><ul class="popup-nav-ul"><li class="assistant-active" name="1"><i></i><b></b><p>消息中心</p></li><li name="2"><i></i><p>日程与课表</p></li><li name="3"><i></i><p>学情总结</p></li><li name="4"><i></i><p>通讯录</p></li><li name="5"><i></i><p>教务窗口</p></li></ul><div class="assistant-popup-weather"><i class="assistant-weather3"></i><div><p class="assistant-weather1">晴转多云</p><p class="assistant-weather2">26°~34°</p></div></div></div></div><div class="popup-main"><p class="popup-main-shadow"></p><p class=" popup-main-shade"></p><div class="assistant-small-success"><span><i></i><b class="assistant-small-text">操作成功！</b></span></div><div class="assistant-tips"><span><i></i><b class="assistant-tips-text">未找到相关联系人！</b></span></div><div class="assistant-big-success"><span><i></i><b class="assistant-big-text">操作成功~</b></span></div><div class="assistant-remind"><span class="assistant-remind-span"  ><i class="assistant-remind-close"></i><p><i></i><span class="assistant-remind-text">操作询操作询问操作询问问</span></p><span class="assistant-remind-true">确定删除</span><span class="assistant-remind-false">再想想</span></span></div><div class="assistant-outline"><span><p><i></i><span class="assistant-outline-text">您已经掉线，请重新登录！</span></p><span class="assistant-outline-true">重新登录</span></span></div><div class="popup-main-nav popup-main1"><ul><li class="info-active" name="1"><p class="info-active">待办事项<i><span><b></b></span></i></p></li><li name="2"><p>通知<i><span><b></b></span></i></p></li><li name="4"><p>系统消息<i><span><b></b></span></i></p></li></ul><div class="infoCenter-setting"><i></i><span>设置</span></div><div class="infoCenter-empty"><i></i><p>暂时还没有<span class="infoCenter-empty-text">待办事项</span>哦~</p></div><div class="lgAssistant-clear"></div><div class="setting-popup"><div></div><div><div class="setting-close"><i></i><span>设置</span><i class="lgAssistant-close"></i></div><ul><li class="setting-active" name="setting-option1"><p class="setting-active">系统消息接收设置</p></li></ul><div class="lgAssistant-clear"></div><div></div><div class="setting-option setting-option1"></div><div class="setting-option setting-option2"></div><div class="setting-option setting-option3"></div></div><div></div></div><div class="infoCenter-option todo"><span class="todo-type-span" data-name="0"> 全部内容(共<strong>0</strong>项)<i></i><p></p><ul class="todo-type-ul"></ul></span><span> 期限 </span><div class="infoCenter-option-box todo-box"></div></div><div class="infoCenter-option message"><span> 标题(有<strong>0</strong>个未读通知)</span><span> 发布人 </span><span> 发布时间 </span><div class="infoCenter-option-box message-box"></div></div><div class="infoCenter-option chat"><span> 共有<strong>0</strong>条新消息</span><div class="infoCenter-option-box chat-box"><div class="chat-clear"><span><b></b>清除交流信息</span></div></div></div><div class="infoCenter-option notice"><span> 消息内容(有<strong>0</strong>条新消息)</span><span> 来源 </span><span> 时间 </span><div class="infoCenter-option-box notice-box"><div class="notice-clear"><span><b></b>清空系统信息</span></div></div></div><div class="infoCenter-option news"><div class="news-box"></div></div></div><div class="popup-main-nav popup-main2"><div class="schedule-setting-popup"><div></div><div class="schedule-setting-main"><p><i></i><b class="schedule-change-type">新建日程</b><i class="schedule-setting-close"></i></p><div><ul><li class="schedule-type"><span>类型:</span><i name="1"></i><b>备课</b><i name="2"></i><b>会议</b><i name="3" class="schedule-type-true"></i><b>重要活动</b><i name="4"></i><b class="schedule-edit-name">自定义</b><input type="text" class="schedule-type-name" placeholder="班级活动" maxlength="4"></li><li><span>日期:</span><div class="schedule-setting-date"><input type="text" autocomplete="off" id="lgAssistant-next3"><i></i></li><li><span>时间:</span><input type="text" id="schedule-test1"><span><i></i><i></i></span><span>到</span><input type="text" id="schedule-test2"><span><i></i><i></i></span></li><li><span>内容:</span><textarea class="schedule-topic" maxlength="50"></textarea><b class="schedule-topic-length">0/50</b></li></ul><div class="schedule-setting-clock"><p>提醒设置:<span><i class="schedule-clocks-setting" name="true"></i>开启提醒</span></p><p class="schedule-clocks-setting1"><i name="1"></i>按开始时间提醒</p><p class="schedule-clocks-setting1"><i class="schedule-input-clocks" name="2"></i>提前提醒<span>计划开始前</span><input class="schedule-clocks-time" type="number" value="30" max="999"  min="1"/><span>分钟提醒</span></p></div></div><div><span class="schedule-setting-true">确定</span><span class="schedule-setting-false">取消</span></div><div class="schedule-edit-popup"></div></div></div><div class="popup-main22"><span class="new-schedule"><i></i>新建日程</span><span class="assistant-mySchedule"><i></i>查看全部课表</span></div><div class="popup-main22"><span class="schedule-choose-day"><i name="1">今天</i><i name="2">明天</i><i name="3">后天</i></span><span><b class="schedule-choose-date">2019-08-21</b><b class="schedule-choose-week">(第11周 星期三)</b></span><div class="chooose-schedule-date"><i id="lgAssistant-next2"></i></div></div><div class="personal-schedule-box popup-main22"><ul class="personal-schedule-ul1"></ul><ul class="personal-schedule-ul2"></ul><ul class="personal-schedule-ul3"></ul></div><div class="personal-schedule-empty popup-main22"><i></i><p>暂时还没有日程安排哦~</p></div></div><div class="popup-main-nav popup-main3"><div class="summary-main"><div class="summary-title"><p class="summary-title1"><i></i>考勤及学习情况</p></div><div><ul class="summary-choose-time clearfix"><li class="summary-time-active" name="1">近一周</li><li name="2">近一月</li><li name="3">本学期</li><li name="4">指定时间 <div class="summary-input-time"><input type="text" class="layui-input" autocomplete="off" id="lgAssistant-next4" placeholder="开始时间"><b> - </b><input type="text" class="layui-input" autocomplete="off" id="lgAssistant-next5" placeholder="结束时间"><span>确定</span></div></li></ul><div class="assistant-empty assistant-empty1"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table "><tr class="summary-table-header"><th width="176"></th><th width="180">上课/考试出勤率</th><th width="180">作业完成率</th><th width="180">自学计划完成率</th><th width="90">详情</th></tr></table><div class="summary-title"><p><i></i>成绩总览 <span>成绩管理<i></i></span></p></div><div class="assistant-empty assistant-empty2"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><div class="summary-grade-main"></div></div><p class=" popup-main3-padding"></p></div><div class="summary-popup summary-popup0" name="1"><div class="summary-popup-shade" name="1" ></div><div class="summary-popup-main summary-popup0-main"><p><span class="summary-popup0-class">一年级一班</span>的考勤及学习情况 <i class="summary-popup-close" name ="1" ></i></p><p>总体上课考试出勤率<span class="summary-popup0-class1"> 0% </span> 总体作业完成率<span class="summary-popup0-class2"> 0%</span> 总体自学计划完成率: <span class="summary-popup0-class3">0%</span></p><div class="assistant-empty assistant-empty3"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table1"><thead><tr><th width="75">序号</th><th width="80">姓名</th><th width="120">学号</th><th width="191">上课/考试出勤率</th><th width="154">作业完成率</th><th width="189">自学计划完成率</th></tr></thead><tbody></tbody></table></div></div><div class="summary-popup summary-popup1"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup1-main"><p><span class="summary-popup1-name"></span>的上课/考试考勤情况 <i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span1" name="1"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="1">全部<li><li name="0">缺勤<li></ul></div><span class="summary-popup1-border"></span>总体上课/考试出勤率:<i class="summary-popup1-AllRate"> 0% </i><span class="summary-popup1-AllAttendence">(0/0次)</span> 课堂考勤:<i class="summary-popup1-LessonAttendence green">出勤0</i>/<span class="summary-popup1-LessonAbsence red">缺勤0</span> 考试出勤:<i class=" summary-popup1-ExamAttendence green">出考0</i>/<span class=" summary-popup1-ExamAbsence red">缺考0</span><br/><div class="assistant-empty assistant-empty4"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table2"><thead><tr><th width="75">序号</th><th width="191">时间<i></i></th><th width="180">学科</th><th width="310">内容</th><th width="80">状态</th><th width="66"></th></tr></thead><tbody></tbody></table></div></div><div class="summary-popup summary-popup2"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup2-main"><p><span class="summary-popup2-name"></span>作业完成情况 <i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span21" name="0"><p>全部作业</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部作业<li><li name="1">预习作业<li><li name="2">课业作业<li></ul></div><div class="assistant-select-span assistant-select-span22" name="0"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部<li><li name="1">未完成<li><li name="2">已完成<li></ul></div><span class="summary-popup1-border"></span>总体作业完成率: <i class="summary-popup2-HomeworkCompleteRate">0%</i><span class="summary-popup2-CompleteHomework">(0/0次) </span><br/><div class="assistant-empty assistant-empty5"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table3"><thead><tr><th width="75">序号</th><th width="223">标题</th><th width="99">学科</th><th width="80">发布老师</th><th width="187">完成时间</th><th width="53">成绩</th><th width="100">详情</th></tr></thead><tbody></tbody></table></div></div><div class=" summary-popup summary-popup3"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup3-main"><p><span class="summary-popup3-name"></span>的自学计划完成情况 <i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span3" name="0"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部<li><li name="1">未完成<li></ul></div><span class="summary-popup1-border"></span>总体自学计划完成率: <i class="summary-popup3-PassRate">0%</i><span class="summary-popup3-PassPlan"> (0/0次) </span><div class="assistant-empty assistant-empty6"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table4"><thead><tr><th width="75">序号</th><th width="200">计划名称<i></i></th><th width="70">学科</th><th width="285">计划时间</th><th width="90">完成情况</th><th width="70">详情</th><th width="23"></th></tr></thead><tbody></tbody></table></div></div></div><div class="popup-main-nav popup-main4"><div class="contact-left"><div class="contact-left-search"><input class="contact-search-input"  type="text" placeholder="请输入姓名/用户编号搜索"/><i class="contact-search-choose"></i><i class="contact-search-clear"></i></div><ul><li class="contact-list-choose" name="最近联系人"><i class="i-middle"></i><span>最近联系人</span><i class="contact-tab"></i></li><li name="常用联系人"><i class="i-middle"></i><span>常用联系人</span><i class="contact-tab"></i></li><li name="我的班级"><i class="i-middle"></i><span>我的班级</span><i class="contact-tab"></i></li><li name="我的教师组"><i class="i-middle"></i><span>我的教师组</span><i class="contact-tab"></i></li><li name="全校师生"><i class="i-middle"></i><span>全校师生</span><i class="contact-tab"></i></li></ul></div><div class="contact-right "><div class="contact-list1"><ul class="contact-type"><li><p class="contact-type-p" data-class="contact-Initialization">最近联系人</p><span>></span></li></ul><span class="contact-type-text" name="1"><i></i>清空</span><ul class="contact-li"></ul><div class="contact-right-empty"><i></i><p>暂时还没有<span class="contact-empty-text">最近联系人</span>信息哦~</p></div></div></div><div class="contact-frequent"><div></div><div><p class="contact-frequent-top"><i></i><span>添加常用联系人</span><i class="contact-frequent-close"></i></p><div class="contact-frequent-search"><span><input type="text" autocomplete="off" class="contact-frequent-input" placeholder="请输入姓名/用户编号搜索"/><i class="contact-frequent-clear"></i></span><button type="button" class="contact-frequent-commit">查找</button></div><p class="contact-search-p">共找到<b class="contact-search-number">0</b>个联系人 </p><ul class="contact-search-ul"></ul><div class="frame_pager_center pager5 clearfix"></div></div></div><div class="contact-info"><div></div><div class="contact-info-main"><div><i class="contact-info-close"></i><i class="contact-info-image"></i><span><span><b>张佳乐的家长</b><i></i></span><b class="contact-info-id">1200430501</b><i></i><b class="contact-info-class">一年级1班</b></span><span class="contact-info-sign"><i></i>含泪播种的人泪播种的人一一定能含笑收获~</span></div><ul class="contact-message-ul"><li><span>电话</span><span><b id="contact-copy-text1">13126011111</b><b name="1" class="contact-info-copy">复制</b></span></li><li><span>QQ</span><span><b id="contact-copy-text2">623226323</b><b name="2" class="contact-info-copy">复制</b></span><a class="lgAssistant-main-QQ"></a></li><li><span>微信</span><span><b id="contact-copy-text3">YT13143sdae</b><b name="3" class="contact-info-copy">复制</b></span><a href="https://wx.qq.com/"  class="lgAssistant-main-WX"></a></li><li><span>微博</span><span><b id="contact-copy-text4">合格王企鹅</b><b name="4" class="contact-info-copy">复制</b></span><a  href="https://weibo.com/login.php"  class="lgAssistant-main-WB"></a></li></ul></div></div><ul class="contact-left-popup"></ul></div><div class="popup-main-nav popup-main5"><ul><li class="assistant-deliver-notice"><i></i><span>发布通知</span></li><li class="assistant-deliver-questionnaire"><i></i><span>发布问卷调查</span></li><li class="assistant-student-admin"><i></i><span>学生档案管理</span></li><li class="assistant-teaClass-admin"><i></i><span>教学班管理</span></li></ul></div><div class="assistant-popup-loading"><div class="frame_point_loading_container"><div class="point_container"><span class="point1 point"></span><span class="point2 point"></span><span class="point3 point"></span><span class="point4 point"></span></div></div></div></div></div></div></div'
+		'<div class="lgAssistant-main"><div class="assistant-box"><div id="assistant-box"><canvas id="assistant-box-canvas" width="225" height="150"></canvas></div><div class="assistant-prompt"><p>金老师</p><p>您好~</p></div><div class="assistant-remind-count"><canvas class="assistant-remind-count " style="position:absolute;left: 0;z-index: -1;margin: -50px 0 0 0; "></canvas><ul><li>0</li></ul></div><div class="assistant-info-prompt"><i></i><div class="assistant-remind-div"><ul class="assistant-remind-ul"></ul></div></div><div class="assistant-schedule-prompt"><span class="schedule-prompt-text">上午，10:30 教学主楼606 “学科教研会”</span><p class="schedule-prompt-close">我知道了</p></div><canvas class="assistant-hover-box"></canvas><div class="assistant-popup"><div class="assistant-popup-nav"><div class="assistant-popup-logo"><ul><li><i></i></li><li>教学小助手</li><li><i class="assistant-popup-close "></i></li></ul><div class="lgAssistant-clear"></div></div><div class="popup-nav-list"><ul class="popup-nav-ul"><li class="assistant-active" name="1"><i></i><b></b><p>消息中心</p></li><li name="2"><i></i><p>日程与课表</p></li><li name="3"><i></i><p>学情总结</p></li><li name="4"><i></i><p>通讯录</p></li><li name="5"><i></i><p>教务窗口</p></li></ul><div class="assistant-popup-weather"><i class="assistant-weather3"></i><div><p class="assistant-weather1">晴转多云</p><p class="assistant-weather2">26°~34°</p></div></div></div></div><div class="popup-main"><p class="popup-main-shadow"></p><p class=" popup-main-shade"></p><div class="assistant-small-success"><span><i></i><b class="assistant-small-text">操作成功！</b></span></div><div class="assistant-tips"><span><i></i><b class="assistant-tips-text">未找到相关联系人！</b></span></div><div class="assistant-big-success"><span><i></i><b class="assistant-big-text">操作成功~</b></span></div><div class="assistant-remind"><span class="assistant-remind-span"  ><i class="assistant-remind-close"></i><p><i></i><span class="assistant-remind-text">操作询操作询问操作询问问</span></p><span class="assistant-remind-true">确定删除</span><span class="assistant-remind-false">再想想</span></span></div><div class="assistant-outline"><span><p><i></i><span class="assistant-outline-text">您已经掉线，请重新登录！</span></p><span class="assistant-outline-true">重新登录</span></span></div><div class="popup-main-nav popup-main1"><ul><li class="info-active" name="1"><p class="info-active">待办事项<i><span><b></b></span></i></p></li><li name="2"><p>通知<i><span><b></b></span></i></p></li><li name="4"><p>系统消息<i><span><b></b></span></i></p></li></ul><div class="infoCenter-setting"><i></i><span>设置</span></div><div class="infoCenter-empty"><i></i><p>暂时还没有<span class="infoCenter-empty-text">待办事项</span>哦~</p></div><div class="lgAssistant-clear"></div><div class="setting-popup"><div></div><div><div class="setting-close"><i></i><span>设置</span><i class="lgAssistant-close"></i></div><ul><li class="setting-active" name="setting-option1"><p class="setting-active">系统消息接收设置</p></li></ul><div class="lgAssistant-clear"></div><div></div><div class="setting-option setting-option1"></div><div class="setting-option setting-option2"></div><div class="setting-option setting-option3"></div></div><div></div></div><div class="infoCenter-option todo"><span class="todo-type-span" data-name="0"> 全部内容(共<strong>0</strong>项)<i></i><p></p><ul class="todo-type-ul"></ul></span><span> 期限 </span><div class="infoCenter-option-box todo-box"></div></div><div class="infoCenter-option message"><span> 标题(有<strong>0</strong>个未读通知)</span><span> 发布人 </span><span> 发布时间 </span><div class="infoCenter-option-box message-box"></div></div><div class="infoCenter-option chat"><span> 共有<strong>0</strong>条新消息</span><div class="infoCenter-option-box chat-box"><div class="chat-clear"><span><b></b>清除交流信息</span></div></div></div><div class="infoCenter-option notice"><span> 消息内容(有<strong>0</strong>条新消息)</span><span> 来源 </span><span> 时间 </span><div class="infoCenter-option-box notice-box"><div class="notice-clear"><span><b></b>清空系统信息</span></div></div></div><div class="infoCenter-option news"><div class="news-box"></div></div></div><div class="popup-main-nav popup-main2"><div class="schedule-setting-popup"><div></div><div class="schedule-setting-main"><p><i></i><b class="schedule-change-type">新建日程</b><i class="schedule-setting-close"></i></p><div><ul><li class="schedule-type"><span>类型:</span><i name="1"></i><b>备课</b><i name="2"></i><b>会议</b><i name="3" class="schedule-type-true"></i><b>重要活动</b><i name="4"></i><b class="schedule-edit-name">自定义</b><input type="text" class="schedule-type-name" placeholder="班级活动" maxlength="4"></li><li><span>日期:</span><div class="schedule-setting-date"><input type="text" autocomplete="off" id="lgAssistant-next3"><i></i></li><li><span>时间:</span><input type="text" id="schedule-test1"><span><i></i><i></i></span><span>到</span><input type="text" id="schedule-test2"><span><i></i><i></i></span></li><li><span>内容:</span><textarea class="schedule-topic" maxlength="50"></textarea><b class="schedule-topic-length">0/50</b></li></ul><div class="schedule-setting-clock"><p>提醒设置:<span><i class="schedule-clocks-setting" name="true"></i>开启提醒</span></p><p class="schedule-clocks-setting1"><i name="1"></i>按开始时间提醒</p><p class="schedule-clocks-setting1"><i class="schedule-input-clocks" name="2"></i>提前提醒<span>计划开始前</span><input class="schedule-clocks-time" type="number" value="30" max="999"  min="1"/><span>分钟提醒</span></p></div></div><div><span class="schedule-setting-true">确定</span><span class="schedule-setting-false">取消</span></div><div class="schedule-edit-popup"></div></div></div><div class="popup-main22"><span class="new-schedule"><i></i>新建日程</span><span class="assistant-mySchedule"><i></i>查看全部课表</span></div><div class="popup-main22"><span class="schedule-choose-day"><i name="1">今天</i><i name="2">明天</i><i name="3">后天</i></span><span><b class="schedule-choose-date">2019-08-21</b><b class="schedule-choose-week">(第11周 星期三)</b></span><div class="chooose-schedule-date"><i id="lgAssistant-next2"></i></div></div><div class="personal-schedule-box popup-main22"><ul class="personal-schedule-ul1"></ul><ul class="personal-schedule-ul2"></ul><ul class="personal-schedule-ul3"></ul></div><div class="personal-schedule-empty popup-main22"><i></i><p>暂时还没有日程安排哦~</p></div></div><div class="popup-main-nav popup-main3"><div class="summary-main"><div class="summary-title"><p class="summary-title1"><i></i>考勤及学习情况</p></div><div><ul class="summary-choose-time clearfix"><li class="summary-time-active" name="1">近一周</li><li name="2">近一月</li><li name="3">本学期</li><li name="4">指定时间 <div class="summary-input-time"><input type="text" class="layui-input" autocomplete="off" id="lgAssistant-next4" placeholder="开始时间"><b> - </b><input type="text" class="layui-input" autocomplete="off" id="lgAssistant-next5" placeholder="结束时间"><span>确定</span></div></li></ul><div class="assistant-empty assistant-empty1"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table "><tr class="summary-table-header"><th width="176"></th><th width="180">上课/考试出勤率</th><th width="180">作业完成率</th><th width="180">自学计划完成率</th><th width="90">详情</th></tr></table><div class="summary-title"><p><i></i>成绩总览 <span>成绩管理<i></i></span></p></div><div class="assistant-empty assistant-empty2"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><div class="summary-grade-main"></div></div><p class=" popup-main3-padding"></p></div><div class="summary-popup summary-popup0" name="1"><div class="summary-popup-shade" name="1" ></div><div class="summary-popup-main summary-popup0-main"><p><span class="summary-popup0-class">一年级一班</span>的考勤及学习情况 <i class="summary-popup-close" name ="1" ></i></p><p>总体上课考试出勤率<span class="summary-popup0-class1"> 0% </span> 总体作业完成率<span class="summary-popup0-class2"> 0%</span> 总体自学计划完成率: <span class="summary-popup0-class3">0%</span></p><div class="assistant-empty assistant-empty3"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table1"><thead><tr><th width="75">序号</th><th width="80">姓名</th><th width="120">学号</th><th width="191">上课/考试出勤率</th><th width="154">作业完成率</th><th width="189">自学计划完成率</th></tr></thead><tbody></tbody></table></div></div><div class="summary-popup summary-popup1"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup1-main"><p><span class="summary-popup1-name"></span>的上课/考试考勤情况 <i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span1" name="1"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="1">全部<li><li name="0">缺勤<li></ul></div><span class="summary-popup1-border"></span>总体上课/考试出勤率:<i class="summary-popup1-AllRate"> 0% </i><span class="summary-popup1-AllAttendence">(0/0次)</span> 课堂考勤:<i class="summary-popup1-LessonAttendence green">出勤0</i>/<span class="summary-popup1-LessonAbsence red">缺勤0</span> 考试出勤:<i class=" summary-popup1-ExamAttendence green">出考0</i>/<span class=" summary-popup1-ExamAbsence red">缺考0</span><br/><div class="assistant-empty assistant-empty4"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table2"><thead><tr><th width="75">序号</th><th width="191">时间<i></i></th><th width="180">学科</th><th width="310">内容</th><th width="80">状态</th><th width="66"></th></tr></thead><tbody></tbody></table></div></div><div class="summary-popup summary-popup2"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup2-main"><p><span class="summary-popup2-name"></span>作业完成情况 <i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span21" name="0"><p>全部作业</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部作业<li><li name="1">预习作业<li><li name="2">课业作业<li></ul></div><div class="assistant-select-span assistant-select-span22" name="0"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部<li><li name="1">未完成<li><li name="2">已完成<li></ul></div><span class="summary-popup1-border"></span>总体作业完成率: <i class="summary-popup2-HomeworkCompleteRate">0%</i><span class="summary-popup2-CompleteHomework">(0/0次) </span><br/><div class="assistant-empty assistant-empty5"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table3"><thead><tr><th width="75">序号</th><th width="223">标题</th><th width="99">学科</th><th width="80">发布老师</th><th width="187">完成时间</th><th width="53">成绩</th><th width="100">详情</th></tr></thead><tbody></tbody></table></div></div><div class=" summary-popup summary-popup3"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup3-main"><p><span class="summary-popup3-name"></span>的自学计划完成情况 <i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span3" name="0"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部<li><li name="1">未完成<li></ul></div><span class="summary-popup1-border"></span>总体自学计划完成率: <i class="summary-popup3-PassRate">0%</i><span class="summary-popup3-PassPlan"> (0/0次) </span><div class="assistant-empty assistant-empty6"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table4"><thead><tr><th width="75">序号</th><th width="200">计划名称<i></i></th><th width="70">学科</th><th width="285">计划时间</th><th width="90">完成情况</th><th width="70">详情</th><th width="23"></th></tr></thead><tbody></tbody></table></div></div></div><div class="popup-main-nav popup-main4"><div class="contact-left"><div class="contact-left-search"><input class="contact-search-input"  type="text" placeholder="请输入姓名/用户编号搜索"/><i class="contact-search-choose"></i><i class="contact-search-clear"></i></div><ul><li class="contact-list-choose" name="最近联系人"><i class="i-middle"></i><span>最近联系人</span><i class="contact-tab"></i></li><li name="常用联系人"><i class="i-middle"></i><span>常用联系人</span><i class="contact-tab"></i></li><li name="我的班级"><i class="i-middle"></i><span>我的班级</span><i class="contact-tab"></i></li><li name="我的教师组"><i class="i-middle"></i><span>我的教师组</span><i class="contact-tab"></i></li><li name="全校师生"><i class="i-middle"></i><span>全校师生</span><i class="contact-tab"></i></li></ul></div><div class="contact-right "><div class="contact-list1"><ul class="contact-type"><li><p class="contact-type-p" data-class="contact-Initialization">最近联系人</p><span>></span></li></ul><span class="contact-type-text" name="1"><i></i>清空</span><ul class="contact-li"></ul><div class="contact-right-empty"><i></i><p>暂时还没有<span class="contact-empty-text">最近联系人</span>信息哦~</p></div></div></div><div class="contact-frequent"><div></div><div><p class="contact-frequent-top"><i></i><span>添加常用联系人</span><i class="contact-frequent-close"></i></p><div class="contact-frequent-search"><span><input type="text" autocomplete="off" class="contact-frequent-input" placeholder="请输入姓名/用户编号搜索"/><i class="contact-frequent-clear"></i></span><button type="button" class="contact-frequent-commit">查找</button></div><p class="contact-search-p">共找到<b class="contact-search-number">0</b>个联系人 </p><ul class="contact-search-ul"></ul><div class="frame_pager_center pager5 clearfix"></div></div></div><div class="contact-info"><div></div><div class="contact-info-main"><div><i class="contact-info-close"></i><i class="contact-info-image"></i><span><span><b>张佳乐的家长</b><i></i></span><b class="contact-info-id">1200430501</b><i></i><b class="contact-info-class">一年级1班</b></span><span class="contact-info-sign"><i></i>含泪播种的人泪播种的人一一定能含笑收获~</span></div><ul class="contact-message-ul"><li><span>电话</span><span><b id="contact-copy-text1">13126011111</b><b name="1" class="contact-info-copy">复制</b></span></li><li><span>QQ</span><span><b id="contact-copy-text2">623226323</b><b name="2" class="contact-info-copy">复制</b></span><a class="lgAssistant-main-QQ"></a></li><li><span>微信</span><span><b id="contact-copy-text3">YT13143sdae</b><b name="3" class="contact-info-copy">复制</b></span><a href="https://wx.qq.com/"  class="lgAssistant-main-WX"></a></li><li><span>微博</span><span><b id="contact-copy-text4">合格王企鹅</b><b name="4" class="contact-info-copy">复制</b></span><a  href="https://weibo.com/login.php"  class="lgAssistant-main-WB"></a></li></ul></div></div><ul class="contact-left-popup"></ul></div><div class="popup-main-nav popup-main5"><ul><li class="assistant-deliver-notice"><i></i><span>发布通知</span></li><li class="assistant-deliver-questionnaire"><i></i><span>发布问卷调查</span></li><li class="assistant-student-admin"><i></i><span>学生档案管理</span></li><li class="assistant-teaClass-admin"><i></i><span>教学班管理</span></li></ul></div><div class="assistant-popup-loading"><div class="frame_point_loading_container"><div class="point_container"><span class="point1 point"></span><span class="point2 point"></span><span class="point3 point"></span><span class="point4 point"></span></div></div></div></div></div></div></div'
 	));
+	if (SubjectIDArr.length > 1) {
+		var summary ='<div class="assistant-select-span assistant-select-span66 " name='+SubjectIDArr[0]+'><p>'+SubjectNameArr[0]+'</p><i></i><b></b><ul class="assistant-select-ul" >';
+		
+		 SubjectNameArr.map(function (item, idx) {
+			summary += '<li name=' + SubjectIDArr[idx] + '>' + item + '</li>'
+		})
+		$('.summary-title1').append($(
+			summary + '</ul></div>'
+		))
+	} else {
+	
+	}
 	// $('.abcd').hide();
-// $('#assistant-box-canvas1').click(function(){
-// 	
-// 	
-// })
-// $('#assistant-box-canvas1').hover(function(){
-// 	alert(5555);
-// },function(){
-// 
-// })
+	// $('#assistant-box-canvas1').click(function(){
+	// 	
+	// 	
+	// })
+	// $('#assistant-box-canvas1').hover(function(){
+	// 	alert(5555);
+	// },function(){
+	// 
+	// })
 	//小助手动画参数
 	var assistantInitialize = false; //初始化是否完成7777777777777777777777777777777 false 为生产环境  true为开发环境
 	var assistantTimer = null; //动画定时器
@@ -2189,17 +2190,17 @@ function AgassitantCallbackFunction(result) {
 	//设置浏览器背景图片的高度
 	// $('.lgAssistant-main').css('height', backgroundImgHeight + 'px');
 
-	window.requestAnimFrame = (function() {
+	window.requestAnimFrame = (function () {
 		return window.requestAnimationFrame ||
 			window.webkitRequestAnimationFrame ||
 			window.mozRequestAnimationFrame ||
-			function(callback) {
+			function (callback) {
 				window.setTimeout(callback, 20);
 			};
 	})();
 	var canvas = document.getElementById("assistant-box-canvas");
 	//点击可穿透，Through.init("click", document.getElementById("assistant-box-canvas"));
-	var Through = (function() {
+	var Through = (function () {
 		var elems = [],
 			eName, parent;
 
@@ -2241,10 +2242,10 @@ function AgassitantCallbackFunction(result) {
 			elems = [];
 			//loop over element in current position
 			recurFind(x, y);
-			elems.map(function(node) {
+			elems.map(function (node) {
 				node.style.display = "block";
 			});
-			elems.map(function(node, i) {
+			elems.map(function (node, i) {
 				if (i === 0) return; //skip current element to prevent event repeat;
 				node[eName]();
 			});
@@ -2253,7 +2254,7 @@ function AgassitantCallbackFunction(result) {
 			init: init
 		};
 	})();
-	Through.init("click", document.getElementById("assistant-box-canvas"));
+	// Through.init("click", document.getElementById("assistant-box-canvas"));
 	var context = canvas.getContext('2d');
 	var stop = null; //暂停动画
 	var assistantPromptTimer = '';
@@ -2262,6 +2263,8 @@ function AgassitantCallbackFunction(result) {
 	var imgLength = 0;
 	var imgLengthCount = 1;
 	var PromptTimerConut = 0;
+	var canvasX = 0;
+	var canvasY = 0;
 
 	function canvasFn(imgName) {
 		cancelAnimationFrame(stop); //暂停动画
@@ -2361,7 +2364,7 @@ function AgassitantCallbackFunction(result) {
 				animatinSpeedCount = 120;
 				context.clearRect(0, 0, width, height);
 				imgLengthCount++;
-				context.drawImage(img, imgLengthCount * width, 0, width, height, 0, 0, width, height);
+				context.drawImage(img, imgLengthCount * width, 0, width, height, canvasX, canvasY, width, height);
 				if (imgName == '入场' && imgLengthCount == 84) {
 					$('.assistant-box').css('transition', 'all .6s');
 					// $('.assistant-box').css('right', '3.5%');
@@ -2385,6 +2388,14 @@ function AgassitantCallbackFunction(result) {
 				}
 				if (imgLengthCount >= imgLength) {
 					if (imgName == '打招呼' && wakeupState == 0) {
+						// canvas.css('width','150px');
+						// canvas.css('height','100px');
+						$('#assistant-box').css('top', '15px');
+						$('#assistant-box').css('left', '40px');
+						canvas.height = 138;
+						canvas.width = 145;
+						canvasX = -40;
+						canvasY = -15;
 						assistantInitialize = true;
 						$('.assistant-hover-box').css('cursor', 'pointer');
 					}
@@ -2449,7 +2460,7 @@ function AgassitantCallbackFunction(result) {
 						};
 						if ($('.assistant-popup').css('opacity') == 0) {
 							$('.assistant-prompt').css('display', 'block');
-							assistantPromptTimer = setInterval(function() {
+							assistantPromptTimer = setInterval(function () {
 								if (PromptTimerConut >= 5) {
 									clearInterval(assistantPromptTimer);
 									return;
@@ -2496,8 +2507,8 @@ function AgassitantCallbackFunction(result) {
 					};
 					if (imgName != '入场' || imgName != '打招呼') {
 						if (imgName != '喇叭') {
-							context.drawImage(img, (imgLengthCount - 1) * width, 0, width, height, 0,
-								0, width, height);
+							context.drawImage(img, (imgLengthCount - 1) * width, 0, width, height, canvasX,
+								canvasY, width, height);
 						}
 
 					}
@@ -2508,7 +2519,7 @@ function AgassitantCallbackFunction(result) {
 						canvasFn('待机动作四');
 					} else if (standbyAll1.indexOf(imgName) != -1) {
 						assistantStandby = false;
-						setTimeout(function() {
+						setTimeout(function () {
 							canvasFn('待机动作四');
 						}, 400)
 					}
@@ -2522,12 +2533,12 @@ function AgassitantCallbackFunction(result) {
 			}
 		};
 
-		img.onload = function() {
+		img.onload = function () {
 			stop = window.requestAnimFrame(drawImg);
 		}
 	}
 	canvasFn('入场');
-	$('.assistant-info-prompt i').click(function(event) {
+	$('.assistant-info-prompt i').click(function (event) {
 		$('.assistant-info-prompt').hide();
 		if ($('.assistant-popup').css('opacity') == 0) {
 			$('.assistant-remind-count').show();
@@ -2660,7 +2671,7 @@ function AgassitantCallbackFunction(result) {
 		// window.requestAnimFrame(assistantStandbyFn);
 		clearInterval(assistantStandbyassistantTimer);
 		//待机7*8=56秒，随机做一个动作
-		assistantStandbyassistantTimer = setInterval(function() {
+		assistantStandbyassistantTimer = setInterval(function () {
 			if (assistantInitialize == true) {
 				if (assistantRemindArr && assistantRemindArr.length > 0) {
 					assistantStandby = false;
@@ -2722,8 +2733,8 @@ function AgassitantCallbackFunction(result) {
 	// window.requestAnimFrame(assistantStandbyFn);
 	var isassistantOnClick = false;
 	//小助手点击事件
-	$('.assistant-hover-box').click(function(event) {
-		
+	$('.assistant-hover-box').click(function (event) {
+
 		event.stopPropagation();
 		if ($('.assistant-remind').css('display') != 'none') {
 			normal('.assistant-remind-span');
@@ -2762,7 +2773,7 @@ function AgassitantCallbackFunction(result) {
 
 			}
 			isassistantOnClick = true;
-			setTimeout(function() {
+			setTimeout(function () {
 				isassistantOnClick = false;
 			}, 500)
 			cancelAnimationFrame(stop);
@@ -2811,7 +2822,7 @@ function AgassitantCallbackFunction(result) {
 
 			}
 			isassistantOnClick = true;
-			setTimeout(function() {
+			setTimeout(function () {
 				isassistantOnClick = false;
 			}, 500)
 			count = 0;
@@ -2838,7 +2849,7 @@ function AgassitantCallbackFunction(result) {
 	});
 	//小助手鼠标经过事件
 
-	$('.assistant-hover-box').hover(function() {
+	$('.assistant-hover-box').hover(function () {
 		assistantStandby = false;
 		count = 0;
 		if (assistantInitialize) {
@@ -2852,8 +2863,8 @@ function AgassitantCallbackFunction(result) {
 			cancelAnimationFrame(stop);
 			canvasFn('唤醒');
 		};
-	}, function() {});
-	$('.assistant-hover-box').blur(function() {
+	}, function () {});
+	$('.assistant-hover-box').blur(function () {
 		assistantStandby = false;
 		count = 0;
 	});
@@ -2869,7 +2880,7 @@ function AgassitantCallbackFunction(result) {
 
 
 	//点击小助手主页面关闭按钮
-	$('.assistant-popup-close').click(function() {
+	$('.assistant-popup-close').click(function () {
 		$('.assistant-popup').css('transition', 'all 0.3s');
 		$('.assistant-popup').css('bottom', '-104%');
 		$('.assistant-popup').css('right', '-102%');
@@ -2889,7 +2900,7 @@ function AgassitantCallbackFunction(result) {
 
 	//点击小气泡跳转事件
 
-	$('.assistant-remind-count').click(function() {
+	$('.assistant-remind-count').click(function () {
 		if (!initialization) {
 			if ($(this).attr(name) == 1) {
 				initializationFn('message');
@@ -2983,7 +2994,7 @@ function AgassitantCallbackFunction(result) {
 	var popopMain4Initialize = true;
 	var popupNavChoose = 1; //主模块防止多次点击
 	var summaryCacheData = []; //学情总结缓存信息
-	$('.popup-nav-list ul li').click(function() {
+	$('.popup-nav-list ul li').click(function () {
 		if (popupNavChoose == $(this).attr('name')) {
 			return;
 		} else {
@@ -3090,7 +3101,7 @@ function AgassitantCallbackFunction(result) {
 
 	});
 	//消息中心子模块 新消息提醒点击刷新页面
-	$('.popup-main').on('click', '.isassistant-message-reminder', function() {
+	$('.popup-main').on('click', '.isassistant-message-reminder', function () {
 		if ($(this).attr('name') == 1) {
 			todoFn(0);
 			$('.popup-main1 ul li').eq(0).children().children().attr('class', '');
@@ -3112,7 +3123,7 @@ function AgassitantCallbackFunction(result) {
 
 	var lastRemindNum = '';
 	//消息中心子模块的选择
-	$('.popup-main1>ul li').click(function() {
+	$('.popup-main1>ul li').click(function () {
 		$('.assistant-tips').hide();
 		if ($(this).attr('name') != infoCenterOption) {
 			$('.popup-main2').hide();
@@ -3196,15 +3207,15 @@ function AgassitantCallbackFunction(result) {
 	});
 
 
-	$('.todo-type-span').hover(function() {
+	$('.todo-type-span').hover(function () {
 		$('.todo-type-ul').show();
 		$('.todo-type-span p').show();
-	}, function() {
+	}, function () {
 		$('.todo-type-span p').hide();
 		$('.todo-type-ul').hide();
 	})
 	//待办事项分类
-	$('.todo-type-span').on('click', ' .todo-type-ul li', function() {
+	$('.todo-type-span').on('click', ' .todo-type-ul li', function () {
 		// if($('.todo-type-span').attr('data-name')==$(this).attr('data-name')){
 		// 	return;
 		// }else{
@@ -3217,13 +3228,13 @@ function AgassitantCallbackFunction(result) {
 		todoFn(0, $(this).attr('data-id'));
 	})
 	//消息中心设置按钮hover
-	$('.infoCenter-setting').hover(function() {
+	$('.infoCenter-setting').hover(function () {
 		$('.infoCenter-setting').children('span').css('color', '#FF6600');
 		// console.log($('.assistant-popupclose'))
-	}, function() {
+	}, function () {
 		$('.infoCenter-setting').children('span').css('color', '#0099ff');
 	});
-	$('.infoCenter-setting').click(function() {
+	$('.infoCenter-setting').click(function () {
 		$('.setting-popup').show();
 
 		settingOption1Fn();
@@ -3231,25 +3242,25 @@ function AgassitantCallbackFunction(result) {
 	});
 
 	//消息中心 设置窗口关闭
-	$('.setting-close .lgAssistant-close').click(function() {
+	$('.setting-close .lgAssistant-close').click(function () {
 		$('.setting-popup  div').eq(0).hide();
 		$('.setting-popup div').eq(1).animate({
 			right: '-680px'
-		}, 'slow', function() {
+		}, 'slow', function () {
 			$('.setting-popup').hide();
 		});
 	});
-	$('.setting-popup  div').eq(0).click(function() {
+	$('.setting-popup  div').eq(0).click(function () {
 		$('.setting-popup  div').eq(0).hide();
 		$('.setting-popup div').eq(1).animate({
 			right: '-680px'
-		}, 'slow', function() {
+		}, 'slow', function () {
 			$('.setting-popup').hide();
 		});
 	});
 	var settingOption = '';
 	//消息中心设置子模块的选择
-	$('.setting-popup>div>ul li').click(function() {
+	$('.setting-popup>div>ul li').click(function () {
 		$('.setting-popup>div>ul li').attr('class', '');
 		$(this).attr('class', 'setting-active');
 		$('.setting-popup>div>ul li p').attr('class', '');
@@ -3270,7 +3281,7 @@ function AgassitantCallbackFunction(result) {
 
 	});
 	//小助手消息提醒点击跳转
-	$('.assistant-box').on('click', '.assistant-remind-ul li', function() {
+	$('.assistant-box').on('click', '.assistant-remind-ul li', function () {
 		if (!initialization) {
 			if ($(this).children().attr('name') == 1) {
 				initializationFn('message');
@@ -3361,114 +3372,103 @@ function AgassitantCallbackFunction(result) {
 			return;
 		}
 		allRemindCount == 0;
-		ajaxN('PsnMgr/Schedule/GetScheduleRemindList', 'get', {
-			ScheduleDate: serverTime.slice(0, 10)
-		}, function(data) {
+
+		ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function (data) {
 			if (data.StatusCode == 200 && data.ErrCode == 0) {
-				if (data.Data.length > 0) {
-					scheduleRemindCount = data.Data.length;
-					// $('.popup-main1 ul li').eq(2).children().children().attr('class', 'info-unread4');
-					scheduleRemindList = data.Data;
-				}
-			}else{
-				scheduleRemindCount = 0;
-				}
-			ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function(data) {
-				if (data.StatusCode == 200 && data.ErrCode == 0) {
-					if (data.Data.TotalCount != 0) {
-						$('.popup-nav-ul li').eq(0).children('b').attr('class', 'info-unread');
-						if (data.Data.TodoListCount != 0) {
-							TodoRemindCount = data.Data.TodoListCount;
-							$('.popup-main1 ul li').eq(0).children().children().attr('class', 'info-unread4');
-						} else {
-							$('.popup-main1 ul li').eq(0).children().children().attr('class', '');
-						}
-						if (data.Data.NoticeCount != 0) {
-							$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
-							NoticeRemindCount = data.Data.NoticeCount;
-						} else {
-							$('.popup-main1 ul li').eq(1).children().children().attr('class', '');
-						}
-						if (data.Data.ChatCount != 0) {
-							$('.popup-main1 ul li').eq(3).children().children().attr('class', 'info-unread4');
-							ChatRemindCount = data.Data.ChatCount;
-						} else {
-							$('.popup-main1 ul li').eq(3).children().children().attr('class', '');
-						}
-						if (data.Data.MessageCount > 0) {
-							$('.popup-main1 ul li').eq(2).children().children().attr('class', 'info-unread4');
-							MessageRemindCount = data.Data.MessageCount;
-						} else {
-							$('.popup-main1 ul li').eq(2).children().children().attr('class', '');
-						}
-						if (data.Data.NewsCount != 0) {
-							$('.popup-main1 ul li').eq(4).children().children().attr('class', 'info-unread4');
-							NewsRemindCount = data.Data.NewsCount;
-						} else {
-							$('.popup-main1 ul li').eq(4).children().children().attr('class', '');
-						}
-
+				if (data.Data.TotalCount != 0) {
+					$('.popup-nav-ul li').eq(0).children('b').attr('class', 'info-unread');
+					if (data.Data.TodoListCount != 0) {
+						TodoRemindCount = data.Data.TodoListCount;
+						$('.popup-main1 ul li').eq(0).children().children().attr('class', 'info-unread4');
 					} else {
-						$('.popup-nav-ul li').eq(0).children('b').attr('class', '');
+						$('.popup-main1 ul li').eq(0).children().children().attr('class', '');
 					}
-				} else {
-					assistantTipsFn(data.Msg);
-				}
-				allRemindCount = TodoRemindCount + NoticeRemindCount + ChatRemindCount + MessageRemindCount +
-					NewsRemindCount + scheduleRemindCount; //日程提醒总数
-				if (allRemindCount == 0) {
-					$('.assistant-remind-count').hide();
-					$('.assistant-info-prompt').hide();
-					onlyRemindType = 1;
-					$('.assistant-remind-count').attr('name', '-1');
-					$('.popup-nav-ul li').eq(0).children('b').attr('class', '');
-					return;
-				}
+					if (data.Data.NoticeCount != 0) {
+						$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
+						NoticeRemindCount = data.Data.NoticeCount;
+					} else {
+						$('.popup-main1 ul li').eq(1).children().children().attr('class', '');
+					}
+					if (data.Data.ChatCount != 0) {
+						$('.popup-main1 ul li').eq(3).children().children().attr('class', 'info-unread4');
+						ChatRemindCount = data.Data.ChatCount;
+					} else {
+						$('.popup-main1 ul li').eq(3).children().children().attr('class', '');
+					}
+					if (data.Data.MessageCount > 0) {
+						$('.popup-main1 ul li').eq(2).children().children().attr('class', 'info-unread4');
+						MessageRemindCount = data.Data.MessageCount;
+					} else {
+						$('.popup-main1 ul li').eq(2).children().children().attr('class', '');
+					}
+					if (data.Data.NewsCount != 0) {
+						$('.popup-main1 ul li').eq(4).children().children().attr('class', 'info-unread4');
+						NewsRemindCount = data.Data.NewsCount;
+					} else {
+						$('.popup-main1 ul li').eq(4).children().children().attr('class', '');
+					}
 
-				if (!assistantPopupActive) {
-					return;
-				}
-				if (data.Data.TotalCount == data.Data.TodoListCount || data.Data.TotalCount == data.Data.NoticeCount ||
-					data.Data.TotalCount == data.Data.ChatCount || data.Data.TotalCount == data.Data.MessageCount || data.Data
-					.TotalCount == data.Data.NewsCount) {
-					onlyRemindType == 1;
 				} else {
-					onlyRemindType = 0;
+					$('.popup-nav-ul li').eq(0).children('b').attr('class', '');
 				}
-				var allRemindCount1 = allRemindCount;
-				if (allRemindCount > 99) {
-					allRemindCount1 = '...';
-				}
-				$('.assistant-remind-count ul li').text(allRemindCount1);
-				$('.assistant-remind-count').show();
-				if (scheduleRemindCount > 0) {
-					$('.assistant-remind-count').attr('name', '2');
-				} else if (TodoRemindCount > 0) {
-					$('.assistant-remind-count').attr('name', '0');
-				} else if (NoticeRemindCount > 0) {
-					$('.assistant-remind-count').attr('name', '1');
-				} else if (MessageRemindCount > 0) {
-					$('.assistant-remind-count').attr('name', '2');
-				} else if (ChatRemindCount > 0) {
-					$('.assistant-remind-count').attr('name', '3');
-				} else if (NewsRemindCount > 0) {
-					$('.assistant-remind-count').attr('name', '4');
-				}
-				scheduleRemindCount = 0;
-				TodoRemindCount = 0;
-				NoticeRemindCount = 0;
-				ChatRemindCount = 0;
-				MessageRemindCount = 0;
-				NewsRemindCount = 0;
-			})
+			} else {
+				assistantTipsFn(data.Msg);
+			}
+			allRemindCount = TodoRemindCount + NoticeRemindCount + ChatRemindCount + MessageRemindCount +
+				NewsRemindCount; //日程提醒总数
+			if (allRemindCount == 0) {
+				$('.assistant-remind-count').hide();
+				$('.assistant-info-prompt').hide();
+				onlyRemindType = 1;
+				$('.assistant-remind-count').attr('name', '-1');
+				$('.popup-nav-ul li').eq(0).children('b').attr('class', '');
+				return;
+			}
+
+			if (!assistantPopupActive) {
+				return;
+			}
+			if (data.Data.TotalCount == data.Data.TodoListCount || data.Data.TotalCount == data.Data.NoticeCount ||
+				data.Data.TotalCount == data.Data.ChatCount || data.Data.TotalCount == data.Data.MessageCount || data.Data
+				.TotalCount == data.Data.NewsCount) {
+				onlyRemindType == 1;
+			} else {
+				onlyRemindType = 0;
+			}
+			var allRemindCount1 = allRemindCount;
+			if (allRemindCount > 99) {
+				allRemindCount1 = '...';
+			}
+			$('.assistant-remind-count ul li').text(allRemindCount1);
+			$('.assistant-remind-count').show();
+			if (scheduleRemindCount > 0) {
+				$('.assistant-remind-count').attr('name', '2');
+			} else if (TodoRemindCount > 0) {
+				$('.assistant-remind-count').attr('name', '0');
+			} else if (NoticeRemindCount > 0) {
+				$('.assistant-remind-count').attr('name', '1');
+			} else if (MessageRemindCount > 0) {
+				$('.assistant-remind-count').attr('name', '2');
+			} else if (ChatRemindCount > 0) {
+				$('.assistant-remind-count').attr('name', '3');
+			} else if (NewsRemindCount > 0) {
+				$('.assistant-remind-count').attr('name', '4');
+			}
+			scheduleRemindCount = 0;
+			TodoRemindCount = 0;
+			NoticeRemindCount = 0;
+			ChatRemindCount = 0;
+			MessageRemindCount = 0;
+			NewsRemindCount = 0;
 		})
+
 
 
 	}
 
 	//重新计算未读消息的数量
 	function againCountunreadFn() {
-		ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function(data) {
+		ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function (data) {
 			if (data.StatusCode == 200 && data.ErrCode == 0) {
 				if (data.Data.TotalCount > 0) {
 					$('.popup-nav-ul li').eq(0).children('b').attr('class', 'info-unread');
@@ -3478,7 +3478,7 @@ function AgassitantCallbackFunction(result) {
 						$('.popup-main1 ul li').eq(0).children().children().attr('class', '');
 						$('.popup-main1 ul li').eq(0).children().children().children().children().text('');
 					}
-					if (data.Data.NoticeCount >0) {
+					if (data.Data.NoticeCount > 0) {
 
 						$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
 
@@ -3521,7 +3521,7 @@ function AgassitantCallbackFunction(result) {
 	// 个人日程
 	//日程初始化参数
 	//个人日程今明后转换
-	$('.schedule-choose-day i').click(function() {
+	$('.schedule-choose-day i').click(function () {
 		$('.personal-schedule-ul1').hide();
 		$('.personal-schedule-ul2').hide();
 		$('.personal-schedule-ul3').hide();
@@ -3560,14 +3560,14 @@ function AgassitantCallbackFunction(result) {
 		// console.log($(this).attr("name"));
 	});
 	//跳转到我的课表
-	$('.assistant-mySchedule').click(function() {
+	$('.assistant-mySchedule').click(function () {
 		var tabURL = PsnMgrMainServerAddr + 'html/schedule#/teacher/mine';
 		window.open(tabURL, "_blank");
 	});
 	// 点击日程日期
 	var next2LayKey = '';
-	$(document).on('click', '#lgAssistant-next2', function() {
-		setTimeout(function() {
+	$(document).on('click', '#lgAssistant-next2', function () {
+		setTimeout(function () {
 			$('.laydate-prev-y').text(' ');
 			$('.laydate-prev-m').text(' ');
 			$('.laydate-next-y').text(' ');
@@ -3627,8 +3627,8 @@ function AgassitantCallbackFunction(result) {
 		}, 5)
 	})
 	var next3LayKey = '';
-	$('.schedule-setting-date').click(function() {
-		setTimeout(function() {
+	$('.schedule-setting-date').click(function () {
+		setTimeout(function () {
 			$('.laydate-prev-y').text(' ');
 			$('.laydate-prev-m').text(' ');
 			$('.laydate-next-y').text(' ');
@@ -3674,8 +3674,8 @@ function AgassitantCallbackFunction(result) {
 	});
 
 	var next3LayKey = '';
-	$('.schedule-setting-date').click(function() {
-		setTimeout(function() {
+	$('.schedule-setting-date').click(function () {
+		setTimeout(function () {
 			$('.laydate-prev-y').text(' ');
 			$('.laydate-prev-m').text(' ');
 			$('.laydate-next-y').text(' ');
@@ -3718,8 +3718,8 @@ function AgassitantCallbackFunction(result) {
 		}, 5)
 	})
 	var next4LayKey = '';
-	$('#lgAssistant-next4').click(function() {
-		setTimeout(function() {
+	$('#lgAssistant-next4').click(function () {
+		setTimeout(function () {
 			$('.laydate-prev-y').text(' ');
 			$('.laydate-prev-m').text(' ');
 			$('.laydate-next-y').text(' ');
@@ -3762,8 +3762,8 @@ function AgassitantCallbackFunction(result) {
 	})
 
 	var next5LayKey = '';
-	$('#lgAssistant-next5').click(function() {
-		setTimeout(function() {
+	$('#lgAssistant-next5').click(function () {
+		setTimeout(function () {
 			$('.laydate-prev-y').text(' ');
 			$('.laydate-prev-m').text(' ');
 			$('.laydate-next-y').text(' ');
@@ -3813,9 +3813,9 @@ function AgassitantCallbackFunction(result) {
 
 	var text1LayKey = '';
 
-	$('#schedule-test1').click(function() {
+	$('#schedule-test1').click(function () {
 		if (!text1LayKey) {
-			setTimeout(function() {
+			setTimeout(function () {
 				document.styleSheets[0].addRule('#layui-laydate' + $('#schedule-test1').attr('lay-key') +
 					' .laydate-footer-btns span', 'background-color: #0099ff;color: #fff; border-radius: 4px;');
 				document.styleSheets[0].addRule('#layui-laydate' + $('#schedule-test1').attr('lay-key') +
@@ -3827,7 +3827,7 @@ function AgassitantCallbackFunction(result) {
 			' .layui-this').css('cssText', 'background-color: #fff!important;color: #333!important;');
 
 
-		$('.layui-laydate-list').click(function(e) {
+		$('.layui-laydate-list').click(function (e) {
 
 
 			$('#schedule-test1').val($('.layui-this').text().slice(-6, -4) + '时' + $('.layui-this').text().slice(-4, -2) +
@@ -3852,10 +3852,10 @@ function AgassitantCallbackFunction(result) {
 		$(this).blur();
 
 	});
-	$('#schedule-test1').focus(function() {
+	$('#schedule-test1').focus(function () {
 		$('#layui-laydate' + $('#schedule-test1').attr('lay-key') +
 			' .layui-this').css('cssText', 'background-color: #fff!important;color: #333!important;');
-		$('.layui-laydate-list').click(function(e) {
+		$('.layui-laydate-list').click(function (e) {
 			$('#schedule-test1').val($('.layui-this').text().slice(-6, -4) + '时' + $('.layui-this').text().slice(-4, -2) +
 				'分');
 			var $e = $(e.target);
@@ -3878,9 +3878,9 @@ function AgassitantCallbackFunction(result) {
 
 	});
 	var text2LayKey = '';
-	$('#schedule-test2').click(function() {
+	$('#schedule-test2').click(function () {
 		if (!text2LayKey) {
-			setTimeout(function() {
+			setTimeout(function () {
 				document.styleSheets[0].addRule('#layui-laydate' + $('#schedule-test2').attr('lay-key') +
 					' .laydate-footer-btns span', 'background-color: #0099ff;color: #fff; border-radius: 4px;');
 				document.styleSheets[0].addRule('#layui-laydate' + $('#schedule-test2').attr('lay-key') +
@@ -3894,7 +3894,7 @@ function AgassitantCallbackFunction(result) {
 			$('#schedule-test2').val($('#schedule-test1').val());
 		}
 
-		$('.layui-laydate-list').click(function(e) {
+		$('.layui-laydate-list').click(function (e) {
 			$('.assistant-tips').hide();
 			$('#schedule-test2').val($('.layui-this').text().slice(-6, -4) + '时' + $('.layui-this').text().slice(-4, -2) +
 				'分');
@@ -3930,13 +3930,13 @@ function AgassitantCallbackFunction(result) {
 		$(this).blur();
 	});
 
-	$('#schedule-test2').focus(function() {
+	$('#schedule-test2').focus(function () {
 		if (!$('#schedule-test2').val()) {
 			$('#schedule-test2').val($('#schedule-test1').val());
 		}
 		$('#layui-laydate' + $('#schedule-test2').attr('lay-key') +
 			' .layui-this').css('cssText', 'background-color: #fff!important;color: #333!important;');
-		$('.layui-laydate-list').click(function(e) {
+		$('.layui-laydate-list').click(function (e) {
 			$('.assistant-tips').hide();
 			$('#schedule-test2').val($('.layui-this').text().slice(-6, -4) + '时' + $('.layui-this').text().slice(-4, -2) +
 				'分');
@@ -3971,7 +3971,7 @@ function AgassitantCallbackFunction(result) {
 	});
 
 	//打开新建日程的弹窗
-	$('.new-schedule').click(function() {
+	$('.new-schedule').click(function () {
 
 		$('.schedule-edit-popup').hide();
 		$('.schedule-type-name').show();
@@ -3999,19 +3999,19 @@ function AgassitantCallbackFunction(result) {
 		$('.schedule-topic').css('color', '#999');
 		$('.schedule-setting-popup div').eq(1).animate({
 			right: '0'
-		}, 'slow', function() {
+		}, 'slow', function () {
 			$('.schedule-setting-popup div').eq(0).show();
 		});
 		$('.schedule-change-type').text('新建日程');
 		$('.schedule-topic-length').text('0/50');
 	});
 	//关闭新建日程的弹窗
-	$('.schedule-setting-close').click(function() {
+	$('.schedule-setting-close').click(function () {
 		$('.schedule-message').attr('class', '');
 		$('.schedule-setting-popup div').eq(0).hide();
 		$('.schedule-setting-popup div').eq(1).animate({
 			right: '-680px'
-		}, 'slow', function() {
+		}, 'slow', function () {
 			if ($('.schedule-setting-true').attr('name') != '22' && $('.schedule-setting-true').attr('name') != '11') {
 
 				personalScheduleFn($('.schedule-choose-date').text());
@@ -4024,13 +4024,13 @@ function AgassitantCallbackFunction(result) {
 	});
 	var scheduleCloseTimer = ''; //防止多次点击
 	var isscheduleClose = true; //编辑日程是否关闭
-	$('.schedule-setting-popup div').eq(0).click(function() {
+	$('.schedule-setting-popup div').eq(0).click(function () {
 		$('.schedule-message').attr('class', '');
 		if (isscheduleClose == true) {
 			$('.schedule-setting-popup div').eq(0).hide();
 			$('.schedule-setting-popup div').eq(1).animate({
 				right: '-680px'
-			}, 'slow', function() {
+			}, 'slow', function () {
 				if ($('.schedule-setting-true').attr('name') != '22' && $('.schedule-setting-true').attr('name') != '11') {
 					personalScheduleFn($('.schedule-choose-date').text());
 				} else {
@@ -4039,7 +4039,7 @@ function AgassitantCallbackFunction(result) {
 				$(".schedule-setting-popup").hide();
 			});
 			isscheduleClose = false;
-			scheduleCloseTimer = setTimeout(function() {
+			scheduleCloseTimer = setTimeout(function () {
 				isscheduleClose = true;
 				clearTimeout(scheduleCloseTimer);
 			}, 1000)
@@ -4052,7 +4052,7 @@ function AgassitantCallbackFunction(result) {
 	var nowDate = new Date();
 	var nowHours = conver(nowDate.getHours());
 	var nowinutes = conver(nowDate.getMinutes());
-	layui.use('laydate', function() {
+	layui.use('laydate', function () {
 		var laydate = layui.laydate;
 		var date1 = nowHours + '时' + nowinutes + '分';
 		laydate.render({
@@ -4063,14 +4063,14 @@ function AgassitantCallbackFunction(result) {
 			showBottom: false,
 			position: 'fixed',
 			value: date1,
-			done: function(value, date, endDate) {
+			done: function (value, date, endDate) {
 				// console.log(value); //得到日期生成的值，如：2017-08-18
 				// console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
 				// console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
 			}
 		});
 	});
-	layui.use('laydate', function() {
+	layui.use('laydate', function () {
 		var laydate = layui.laydate;
 		laydate.render({
 			elem: '#schedule-test2',
@@ -4080,7 +4080,7 @@ function AgassitantCallbackFunction(result) {
 			showBottom: false,
 			// showBottom: false,
 			position: 'fixed',
-			done: function(value, date, endDate) {
+			done: function (value, date, endDate) {
 				// console.log(value);
 				// console.log(value); //得到日期生成的值，如：2017-08-18
 				// console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
@@ -4094,58 +4094,58 @@ function AgassitantCallbackFunction(result) {
 
 
 	//选择日程类型
-	$('.schedule-type i').click(function() {
+	$('.schedule-type i').click(function () {
 		$('.schedule-type i').attr('class', '');
 		$(this).attr('class', 'schedule-type-true');
 	});
-	$('.schedule-type b').click(function() {
+	$('.schedule-type b').click(function () {
 		$('.schedule-type i').attr('class', '');
 		$(this).prev().attr('class', 'schedule-type-true');
 	});
 	//输入框点击选择日程类型
-	$('.schedule-type input').click(function() {
+	$('.schedule-type input').click(function () {
 		$('.schedule-type i').attr('class', '');
 		$(this).prev().prev().attr('class', 'schedule-type-true');
 	});
 	//textarea默认值
 	$('.schedule-topic').val('请输入日程内容...');
-	$('.schedule-topic').focus(function() {
+	$('.schedule-topic').focus(function () {
 		if ($(this).val() == '请输入日程内容...') {
 			$(this).val('');
 			$(this).css('color', '#333');
 		}
 		$(this).css('border', 'solid 1px #5897ed');
 	});
-	$('.schedule-type-name').focus(function() {
+	$('.schedule-type-name').focus(function () {
 		$(this).css('border', 'solid 1px #5897ed');
 	});
-	$('.schedule-type-name').blur(function() {
+	$('.schedule-type-name').blur(function () {
 		$(this).css('border', 'solid 1px #bac7d9');
 	});
-	$('.schedule-clocks-time').focus(function() {
+	$('.schedule-clocks-time').focus(function () {
 		$(this).css('border', 'solid 1px #5897ed');
 	});
-	$('.schedule-clocks-time').blur(function() {
+	$('.schedule-clocks-time').blur(function () {
 		$(this).css('border', 'solid 1px #bac7d9');
 	});
 
-	$('.schedule-topic').keyup(function() {
+	$('.schedule-topic').keyup(function () {
 		var num = $(this).val().length;
 		$('.schedule-topic-length').text(num + '/50');
 		$('.schedule-topic').css('color', '#333');
 	})
-	$('.schedule-topic').blur(function() {
+	$('.schedule-topic').blur(function () {
 		if (!$(this).val()) {
 			$(this).val('请输入日程内容...');
 			$(this).css('color', '#999');
 
-		}else{
+		} else {
 			$('.schedule-topic').css('color', '#333');
 		}
 		$(this).css('border', 'solid 1px #bac7d9');
 	});
 
-	$('.schedule-clocks-time').blur(function() {
+	$('.schedule-clocks-time').blur(function () {
 		if ($('.schedule-clocks-time').val() < 1) {
 			$('.schedule-clocks-time').val(1);
 		}
@@ -4153,7 +4153,7 @@ function AgassitantCallbackFunction(result) {
 			$('.schedule-clocks-time').val(999);
 		}
 	});
-	$('.schedule-clocks-time').keyup(function() {
+	$('.schedule-clocks-time').keyup(function () {
 		if ($('.schedule-clocks-time').val() < 1) {
 			$('.schedule-clocks-time').val(1);
 		}
@@ -4162,7 +4162,7 @@ function AgassitantCallbackFunction(result) {
 		}
 	});
 	//设置是否开启入场提醒闹钟
-	$('.schedule-setting-clock p span').eq(0).click(function() {
+	$('.schedule-setting-clock p span').eq(0).click(function () {
 		if ($('.schedule-clocks-setting ').attr('name') == 'true') {
 			$('.schedule-clocks-setting ').css('background', 'url(' + PsnMgrLgAssistantAddr +
 				'/PsnMgr/LgAssistant/images/复选_1.png) no-repeat');
@@ -4175,7 +4175,7 @@ function AgassitantCallbackFunction(result) {
 			$('.schedule-clocks-setting1').css('display', 'block');
 		}
 	})
-	$('.schedule-clocks-setting ').click(function(event) {
+	$('.schedule-clocks-setting ').click(function (event) {
 		if ($(this).attr('name') == 'true') {
 			$(this).css('background', 'url(' + PsnMgrLgAssistantAddr + '/PsnMgr/LgAssistant/images/复选_1.png) no-repeat');
 			$(this).attr('name', 'false');
@@ -4189,25 +4189,25 @@ function AgassitantCallbackFunction(result) {
 
 	});
 	//设置闹钟提醒时间
-	$('.schedule-clocks-setting1 i').click(function() {
+	$('.schedule-clocks-setting1 i').click(function () {
 		$('.schedule-clocks-setting1 i').attr('class', '');
 		$(this).attr('class', 'schedule-input-clocks');
 	});
-	$('.schedule-setting-clock p ').eq(1).click(function() {
+	$('.schedule-setting-clock p ').eq(1).click(function () {
 		$('.schedule-clocks-setting1 i').eq(1).attr('class', '');
 		$('.schedule-clocks-setting1 i').eq(0).attr('class', 'schedule-input-clocks');
 	})
-	$('.schedule-setting-clock p ').eq(2).click(function() {
+	$('.schedule-setting-clock p ').eq(2).click(function () {
 		$('.schedule-clocks-setting1 i').eq(0).attr('class', '');
 		$('.schedule-clocks-setting1 i').eq(1).attr('class', 'schedule-input-clocks');
 	})
 	//输入框点击获取选项
-	$('.schedule-clocks-setting1 input').click(function() {
+	$('.schedule-clocks-setting1 input').click(function () {
 		$('.schedule-clocks-setting1 i').eq(0).attr('class', '');
 		$('.schedule-clocks-setting1 i').eq(1).attr('class', 'schedule-input-clocks');
 	});
 	//确定添加日程
-	$(".schedule-setting-true").click(function() {
+	$(".schedule-setting-true").click(function () {
 		// console.log($('.schedule-change-type').text());
 		if ($('.schedule-change-type').text() == '新建日程') {
 			scheduleChangeFn(1);
@@ -4216,12 +4216,12 @@ function AgassitantCallbackFunction(result) {
 		}
 	});
 	//取消添加日程
-	$(".schedule-setting-false").click(function() {
+	$(".schedule-setting-false").click(function () {
 		$('.schedule-message').attr('class', '');
 		$('.schedule-setting-popup div').eq(0).hide();
 		$('.schedule-setting-popup div').eq(1).animate({
 			right: '-680px'
-		}, 'slow', function() {
+		}, 'slow', function () {
 			$(".schedule-setting-popup").hide();
 		});
 	});
@@ -4237,7 +4237,7 @@ function AgassitantCallbackFunction(result) {
 	var summaryTable3info = ''; //保存个人课外计划信息用于Select选择后，请求数据
 
 	//学情总结时间选择
-	$('.summary-choose-time li').click(function() {
+	$('.summary-choose-time li').click(function () {
 		$('.summary-choose-time li').attr('class', '');
 		$(this).attr('class', 'summary-time-active');
 		if ($(this).attr('name') == 1) {
@@ -4256,7 +4256,7 @@ function AgassitantCallbackFunction(result) {
 		}
 	})
 	//学情总结时间选择的指定时间选择
-	$('.summary-input-time span').click(function() {
+	$('.summary-input-time span').click(function () {
 		if ($('#lgAssistant-next4').val()) {
 			if ($('#lgAssistant-next5').val()) {
 				if (Date.parse($('#lgAssistant-next4').val()) > Date.parse($('#lgAssistant-next5').val())) {
@@ -4277,38 +4277,38 @@ function AgassitantCallbackFunction(result) {
 	//学情总结第一层弹窗班级学情
 	$('.summary-table').on('click',
 		'.summary-more',
-		function() {
+		function () {
 			summaryTable0info = $(this);
-			summaryTable0Fn(summaryTable0info, 0);
+			summaryTable0Fn(summaryTable0info, 0,1);
 			summaryCacheData.push(1);
 		}
 	);
 	//学情总结关闭弹窗
-	$('.summary-popup-close').click(function() {
+	$('.summary-popup-close').click(function () {
 		summaryCacheData.pop();
 		var $this = $(this);
 		$(this).parent().parent().animate({
 			left: '850px'
-		}, 'slow', function() {
+		}, 'slow', function () {
 			if ($this.attr('name') == 1) {
 				summaryTableFn();
 			} else {
-				summaryTable0Fn(summaryTable0info, 0);
+				summaryTable0Fn(summaryTable0info,$('.summary-popup0-class').attr('data-page')*1);
 			}
 			$this.parent().parent().parent().hide();
 		});
 	});
 	//学情总结的点击阴影关闭弹窗
-	$('.summary-popup-shade').click(function() {
+	$('.summary-popup-shade').click(function () {
 		summaryCacheData.pop();
 		var $this = $(this);
 		$(this).next().animate({
 			left: '850px'
-		}, 'slow', function() {
+		}, 'slow', function () {
 			if ($this.attr('name') == 1) {
 				summaryTableFn();
 			} else {
-				summaryTable0Fn(summaryTable0info, 0);
+				summaryTable0Fn(summaryTable0info, $('.summary-popup0-class').attr('data-page')*1);
 			}
 			$this.parent().hide();
 		});
@@ -4316,7 +4316,7 @@ function AgassitantCallbackFunction(result) {
 	//学情总结打开个人上课/考试考勤情况
 	$('.popup-main3').on('click',
 		'.summary-open-table1',
-		function() {
+		function () {
 			summaryTable1info = $(this);
 			summaryTableSelect1 = 1;
 			$('.summary-popup1-name').text($(this).attr('data-name'));
@@ -4330,7 +4330,7 @@ function AgassitantCallbackFunction(result) {
 	//学情总结打开个人作业情况
 	$('.popup-main3').on('click',
 		'.summary-open-table2',
-		function() {
+		function () {
 			summaryTable2info = $(this);
 			summaryTableSelect2 = 0;
 			summaryTableSelect3 = 0;
@@ -4347,7 +4347,7 @@ function AgassitantCallbackFunction(result) {
 	//学情总结打开个人课外计划情况
 	$('.popup-main3').on('click',
 		'.summary-open-table3',
-		function() {
+		function () {
 			summaryTable3info = $(this);
 			summaryTableSelect4 = 0;
 			$('.summary-popup3-name').text($(this).attr('data-name'));
@@ -4365,7 +4365,7 @@ function AgassitantCallbackFunction(result) {
 	// 		summaryCacheData[1] = 1;
 	// 	}
 	// });
-	$('.summary-popup1-main .assistant-select-span1 .assistant-select-ul li').click(function() {
+	$('.summary-popup1-main .assistant-select-span1 .assistant-select-ul li').click(function () {
 		if ($(this).attr('name') != $('.assistant-select-span1').attr('name')) {
 			$('.assistant-select-span1 p').text($(this).text());
 			$('.assistant-select-span1').attr('name', $(this).attr('name'));
@@ -4384,13 +4384,13 @@ function AgassitantCallbackFunction(result) {
 	// 			summaryCacheData[1] = 2;
 	// 		}
 	// 	});
-	$('.assistant-select-span').hover(function() {
+	$('.assistant-select-span').hover(function () {
 		$(this).children('.assistant-select-ul').show();
 
-	}, function() {
+	}, function () {
 		$(this).children('.assistant-select-ul').hide();
 	})
-	$('.assistant-select-span21 .assistant-select-ul li').click(function() {
+	$('.assistant-select-span21 .assistant-select-ul li').click(function () {
 		if ($(this).attr('name') != $('.assistant-select-span21').attr('name')) {
 			$('.assistant-select-span21 p').text($(this).text());
 			$('.assistant-select-span21').attr('name', $(this).attr('name'));
@@ -4400,7 +4400,7 @@ function AgassitantCallbackFunction(result) {
 		}
 		$('.assistant-select-ul').hide();
 	})
-	$('.assistant-select-span22 .assistant-select-ul li').click(function() {
+	$('.assistant-select-span22 .assistant-select-ul li').click(function () {
 		if ($(this).attr('name') != $('.assistant-select-span22').attr('name')) {
 			$('.assistant-select-span22 p').text($(this).text());
 			$('.assistant-select-span22').attr('name', $(this).attr('name'));
@@ -4428,7 +4428,7 @@ function AgassitantCallbackFunction(result) {
 	// 		summaryCacheData[1] = 3;
 	// 	}
 	// });
-	$('.assistant-select-span3 .assistant-select-ul li').click(function() {
+	$('.assistant-select-span3 .assistant-select-ul li').click(function () {
 		if ($(this).attr('name') != $('.assistant-select-span3').attr('name')) {
 			$('.assistant-select-span3 p').text($(this).text());
 			$('.assistant-select-span3').attr('name', $(this).attr('name'));
@@ -4457,9 +4457,9 @@ function AgassitantCallbackFunction(result) {
 	// 	//点击成绩面板跳转
 	$('.popup-main3').on('click',
 		'.summary-grade-class',
-		function() {
+		function () {
 			var $this = $(this);
-			getSysWeb('810', function(data) {
+			getSysWeb('810', function (data) {
 				var tabURL = data + $this.attr('data-url');
 
 				window.open(tabURL, "_blank");
@@ -4468,22 +4468,26 @@ function AgassitantCallbackFunction(result) {
 		});
 
 	//学情总结改变科目动态生成教学班的学情
-	$('.popup-main3').on('change',
-		'.summary-subjects',
-		function() {
-			if (SubjectID != $(this).val()) {
-				SubjectID = $(this).val();
-				summaryTableFn();
-			}
-		});
-	$('.summary-title p  span').click(function() {
-		getSysWeb('810', function(data) {
+	$('.assistant-select-span66 .assistant-select-ul li').click(function () {
+		if ($(this).attr('name') != $('.assistant-select-span66').attr('name')) {
+			$('.assistant-select-span66 p').text($(this).text());
+			$('.assistant-select-span66').attr('name', $(this).attr('name'));
+			summaryTableFn( $(this).attr('name'));
+		}
+		$('.assistant-select-ul').hide();
+	})
+	
+	$('.summary-title p  span').click(function () {
+		getSysWeb('810', function (data) {
 			window.open(data + '/cjzp/index', "_blank");
 		})
 
 	})
 	//学情总结所有班级表动态生成
-	function summaryTableFn() {
+	function summaryTableFn(SubjectID1) {
+		if(!SubjectID1){
+			SubjectID1=SubjectID;
+		}
 		summaryStartTime = summaryStartTime.slice(0, 10) + ' 00:00:00';
 		summaryEndTime = summaryEndTime.slice(0, 10) + ' 00:00:00';
 		$('.assistant-empty1').hide();
@@ -4491,13 +4495,11 @@ function AgassitantCallbackFunction(result) {
 			URL: summaryURL,
 			TeacherGH: UserID,
 			SchoolID: SchoolID,
-			SubjectID: SubjectID,
+			SubjectID: SubjectID1,
 			StartTime: summaryStartTime,
 			EndTime: summaryEndTime,
-		}, function(data) {
-
+		}, function (data) {
 			if (data.InfoList.ClassList) {
-
 			} else {
 				$('.assistant-empty1').show();
 				$('.summary-table').hide();
@@ -4512,7 +4514,7 @@ function AgassitantCallbackFunction(result) {
 			}
 			$('.assistant-empty1').hide();
 			$('.summary-table').show();
-			InfoList.map(function(item) {
+			InfoList.map(function (item) {
 				if (item.LessonAndExamRate >= 0.9) {
 					var class1 = 'green';
 				} else if (item.LessonAndExamRate >= 0.6) {
@@ -4548,7 +4550,7 @@ function AgassitantCallbackFunction(result) {
 					'次）</td><td class="summary-more" data-classid= ' + item.ClassID + ' data-ClassType= ' + item.ClassType +
 					' ><i></i></td></tr>'));
 			})
-		}, function(error) {
+		}, function (error) {
 			$('.assistant-empty1').show();
 			$('.summary-table').hide();
 			return;
@@ -4557,7 +4559,8 @@ function AgassitantCallbackFunction(result) {
 	}
 	var table1TotalCount = 0;
 	//学情总结每个班级表动态生成
-	function summaryTable0Fn($this, page) {
+	function summaryTable0Fn($this, page,state) {
+		
 		summaryStartTime = summaryStartTime.slice(0, 10) + ' 00:00:00';
 		summaryEndTime = summaryEndTime.slice(0, 10) + ' 00:00:00';
 		$('.assistant-empty3').hide();
@@ -4571,7 +4574,7 @@ function AgassitantCallbackFunction(result) {
 			ClassID: $this.attr('data-classid'),
 			PageIndex: page + 1,
 			PageSize: 10,
-		}, function(data) {
+		}, function (data) {
 			$('.summary-pager1').remove();
 			var InfoList = data.InfoList;
 			$('.summary-popup0-class').text(InfoList.ClassName);
@@ -4613,13 +4616,12 @@ function AgassitantCallbackFunction(result) {
 				$('.summary-popup0').show();
 				$('.summary-popup0-main').animate({
 					left: '42px'
-				}, 'slow', function() {});
+				}, 'slow', function () {});
 				return;
 			}
-
 			$('.assistant-empty3').hide();
 			$('.summary-table1').show();
-			Table1list.map(function(item, idx) {
+			Table1list.map(function (item, idx) {
 				if (item.LessonAndExamRate >= 0.9) {
 					var class1 = 'green';
 				} else if (item.LessonAndExamRate >= 0.6) {
@@ -4668,10 +4670,13 @@ function AgassitantCallbackFunction(result) {
 				} else {
 					$('.summary-table1 thead').css('width', 'calc(100% - 1em)');
 				}
-				console.log(navigator.userAgent.toLowerCase());
+				// console.log(navigator.userAgent.toLowerCase());
 			} else {
 				$('.summary-table1 tbody').css('overflow-y', 'hidden');
 				$('.summary-table1 thead').css('width', '100%');
+			}
+			if(page!=$('.summary-popup0-class').attr('data-page')){
+				$('.summary-popup0-class').attr('data-page',page);
 			}
 			if (table1TotalCount > 10) {
 				$('.summary-table1 tbody').append($('<div class="frame_pager_center summary-pager1"></div>'));
@@ -4681,11 +4686,13 @@ function AgassitantCallbackFunction(result) {
 			$('.summary-popup2').hide();
 			$('.summary-popup3').hide();
 			$('.summary-popup0').show();
-			$('.summary-table1 tbody').scrollTop(0);
+			if(state==1){
+				$('.summary-table1 tbody').scrollTop(0);
+			}
 			$('.summary-popup0-main').animate({
 				left: '42px'
-			}, 'slow', function() {});
-		}, function() {
+			}, 'slow', function () {});
+		}, function () {
 			assistantTipsFn('数据连接失败,请重试~');
 			$('.assistant-empty3').show();
 			$('.summary-table1').hide();
@@ -4695,7 +4702,7 @@ function AgassitantCallbackFunction(result) {
 			$('.summary-popup0').show();
 			$('.summary-popup0-main').animate({
 				left: '42px'
-			}, 'slow', function() {});
+			}, 'slow', function () {});
 			return;
 
 			// 			$('.summary-pager1').remove();
@@ -4951,7 +4958,7 @@ function AgassitantCallbackFunction(result) {
 		$('.summary-pager1 .pagination .pagination_go_button').css('position', 'relative');
 		$('.summary-pager1 .pagination .pagination_go_button').append($(
 			'<div class="summarypager-click-shadow1 pager-click-shadow"></div>'))
-		$('.summarypager-click-shadow1').off().click(function(event) {
+		$('.summarypager-click-shadow1').off().click(function (event) {
 			if (isRealNum($(this).parent().parent().children('.pagination_go_input').val()) && $(this).parent().parent().children(
 					'.pagination_go_input').val() > 0) {
 				var num = 0;
@@ -4985,7 +4992,7 @@ function AgassitantCallbackFunction(result) {
 	var table2TotalCount = 0;
 	//学情总结个人上课/考试考勤表动态生成
 	function summaryTable1Fn($this, page) {
-		$('.summary-popup-main tbody').scrollTop(0);
+		$('.summary-popup1-main tbody').scrollTop(0);
 		summaryStartTime = summaryStartTime.slice(0, 10) + ' 00:00:00';
 		summaryEndTime = summaryEndTime.slice(0, 10) + ' 00:00:00';
 		$('.assistant-empty4').hide();
@@ -5001,7 +5008,7 @@ function AgassitantCallbackFunction(result) {
 			EndTime: summaryEndTime,
 			PageIndex: page + 1,
 			PageSize: 10
-		}, function(data) {
+		}, function (data) {
 			$('.summary-pager2').remove();
 			$('.summary-popup1-name').text($this.attr('data-name'));
 			var InfoList = data.InfoList;
@@ -5027,13 +5034,13 @@ function AgassitantCallbackFunction(result) {
 				$('.summary-popup1').show();
 				$('.summary-popup1-main').animate({
 					left: '62px'
-				}, 'slow', function() {});
+				}, 'slow', function () {});
 				return;
 			}
 			$('.assistant-empty4').hide();
 			$('.summary-table2').show();
 
-			Table2list.map(function(item, idx) {
+			Table2list.map(function (item, idx) {
 				idx = conver(idx * 1 + 1 + page * 10);
 				item.BeginTime = item.BeginTime.slice(0, -3);
 				item.EndTime = item.EndTime.slice(0, -3);
@@ -5080,8 +5087,8 @@ function AgassitantCallbackFunction(result) {
 			$('.summary-popup1').show();
 			$('.summary-popup1-main').animate({
 				left: '62px'
-			}, 'slow', function() {});
-		}, function(data) {
+			}, 'slow', function () {});
+		}, function (data) {
 			assistantTipsFn('数据连接失败,请重试~');
 			$('.assistant-empty4').show();
 			$('.summary-popup1-AllRate').text('0%');
@@ -5094,8 +5101,8 @@ function AgassitantCallbackFunction(result) {
 			$('.summary-popup1').show();
 			$('.summary-popup1-main').animate({
 				left: '62px'
-			}, 'slow', function() {});
-			
+			}, 'slow', function () {});
+
 		})
 
 	}
@@ -5124,7 +5131,7 @@ function AgassitantCallbackFunction(result) {
 		$('.summary-pager2 .pagination .pagination_go_button').css('position', 'relative');
 		$('.summary-pager2 .pagination .pagination_go_button').append($(
 			'<div class="summarypager-click-shadow2 pager-click-shadow"></div>'))
-		$('.summarypager-click-shadow2').off().click(function(event) {
+		$('.summarypager-click-shadow2').off().click(function (event) {
 			if (isRealNum($(this).parent().parent().children('.pagination_go_input').val()) && $(this).parent().parent().children(
 					'.pagination_go_input').val() > 0) {
 				var num = 0;
@@ -5160,7 +5167,7 @@ function AgassitantCallbackFunction(result) {
 	var table3TotalCount = 0;
 	//学情总结个人作业情况表动态生成
 	function summaryTable2Fn($this, page) {
-		$('.summary-popup-main tbody').scrollTop(0);
+		$('.summary-popup2-main tbody').scrollTop(0);
 		summaryStartTime = summaryStartTime.slice(0, 10) + ' 00:00:00';
 		summaryEndTime = summaryEndTime.slice(0, 10) + ' 00:00:00';
 		$('.assistant-empty5').hide();
@@ -5177,7 +5184,7 @@ function AgassitantCallbackFunction(result) {
 				EndTime: summaryEndTime,
 				PageIndex: 1 + page,
 				PageSize: 10
-			}, function(data) {
+			}, function (data) {
 				$('.summary-pager3').remove();
 				$('.summary-popup2-name').text($this.attr('data-name'));
 				var InfoList = data.InfoList;
@@ -5199,12 +5206,12 @@ function AgassitantCallbackFunction(result) {
 					$('.summary-popup2').show();
 					$('.summary-popup2-main').animate({
 						left: '62px'
-					}, 'slow', function() {});
+					}, 'slow', function () {});
 					return;
 				}
 				$('.assistant-empty5').hide();
 				$('.summary-table3').show();
-				Table3list.map(function(item, idx) {
+				Table3list.map(function (item, idx) {
 					idx = conver(idx * 1 + 1 + page * 10);
 					if (item.Score >= 90) {
 						class1 = 'green';
@@ -5237,7 +5244,7 @@ function AgassitantCallbackFunction(result) {
 					$('.summary-table3 tbody').append($('<div class="frame_pager_center summary-pager3"></div>'));
 					setTable3Pager(table3TotalCount, page);
 				}
-				$('.summary-table3-go').off().click(function() {
+				$('.summary-table3-go').off().click(function () {
 					if ($(this).attr('data-type') == 1) {
 						window.open(summaryURL.slice(0, -1) + (this).attr('data-url'), '_blank');
 					} else {
@@ -5249,9 +5256,9 @@ function AgassitantCallbackFunction(result) {
 				$('.summary-popup2').show();
 				$('.summary-popup2-main').animate({
 					left: '62px'
-				}, 'slow', function() {});
+				}, 'slow', function () {});
 			},
-			function(data) {
+			function (data) {
 				assistantTipsFn('数据连接失败,请重试~');
 				$('.summary-pager3').remove();
 				$('.assistant-empty5').show();
@@ -5261,7 +5268,7 @@ function AgassitantCallbackFunction(result) {
 				$('.summary-popup2').show();
 				$('.summary-popup2-main').animate({
 					left: '62px'
-				}, 'slow', function() {});
+				}, 'slow', function () {});
 				return;
 
 			})
@@ -5292,7 +5299,7 @@ function AgassitantCallbackFunction(result) {
 		$('.summary-pager3 .pagination .pagination_go_button').css('position', 'relative');
 		$('.summary-pager3 .pagination .pagination_go_button').append($(
 			'<div class="summarypager-click-shadow3 pager-click-shadow"></div>'))
-		$('.summarypager-click-shadow3').off().click(function() {
+		$('.summarypager-click-shadow3').off().click(function () {
 			if (isRealNum($(this).parent().parent().children('.pagination_go_input').val()) && $(this).parent().parent().children(
 					'.pagination_go_input').val() > 0) {
 				var num = 0;
@@ -5326,7 +5333,7 @@ function AgassitantCallbackFunction(result) {
 	var table4TotalCount = 0;
 	//学情总结个人课外计划表动态生成
 	function summaryTable3Fn($this, page) {
-		$('.summary-popup-main tbody').scrollTop(0);
+		$('.summary-popup3-main tbody').scrollTop(0);
 		summaryStartTime = summaryStartTime.slice(0, 10) + ' 00:00:00';
 		summaryEndTime = summaryEndTime.slice(0, 10) + ' 00:00:00';
 		$('.assistant-empty6').hide();
@@ -5343,7 +5350,7 @@ function AgassitantCallbackFunction(result) {
 				EndTime: summaryEndTime,
 				PageIndex: 1 + page,
 				PageSize: 10
-			}, function(data) {
+			}, function (data) {
 				$('.summary-pager4').remove();
 				$('.summary-popup3-name').text($this.attr('data-name'));
 				var InfoList = data.InfoList;
@@ -5365,12 +5372,12 @@ function AgassitantCallbackFunction(result) {
 					$('.summary-popup3').show();
 					$('.summary-popup3-main').animate({
 						left: '62px'
-					}, 'slow', function() {});
+					}, 'slow', function () {});
 					return;
 				}
 				$('.assistant-empty6').hide();
 				$('.summary-table4').show();
-				Table4list.map(function(item, idx) {
+				Table4list.map(function (item, idx) {
 					idx = conver(idx * 1 + 1 + page * 10);
 					if (item.Pass == 1) {
 						class1 = 'green';
@@ -5394,7 +5401,7 @@ function AgassitantCallbackFunction(result) {
 						' > <i> </i></td><td></td></tr>'))
 
 				});
-				$('.summary-table4-go').click(function() {
+				$('.summary-table4-go').click(function () {
 					if ($(this).attr('data-type') == 1) {
 						window.open(summaryURL.slice(0, -1) + $(this).attr('data-url'), '_blank');
 					} else {
@@ -5423,9 +5430,9 @@ function AgassitantCallbackFunction(result) {
 				$('.summary-popup3').show();
 				$('.summary-popup3-main').animate({
 					left: '62px'
-				}, 'slow', function() {});
+				}, 'slow', function () {});
 			},
-			function(data) {
+			function (data) {
 				assistantTipsFn('数据连接失败,请重试~');
 				$('.summary-pager4').remove();
 				$('.assistant-empty6').show();
@@ -5435,7 +5442,7 @@ function AgassitantCallbackFunction(result) {
 				$('.summary-popup3').show();
 				$('.summary-popup3-main').animate({
 					left: '62px'
-				}, 'slow', function() {});
+				}, 'slow', function () {});
 				return;
 			})
 
@@ -5464,7 +5471,7 @@ function AgassitantCallbackFunction(result) {
 		$('.summary-pager4 .pagination .pagination_go_button').css('position', 'relative');
 		$('.summary-pager4 .pagination .pagination_go_button').append($(
 			'<div class="summarypager-click-shadow4 pager-click-shadow"></div>'))
-		$('.summarypager-click-shadow4').off().click(function(event) {
+		$('.summarypager-click-shadow4').off().click(function (event) {
 			if (isRealNum($(this).parent().parent().children('.pagination_go_input').val()) && $(this).parent().parent().children(
 					'.pagination_go_input').val() > 0) {
 				var num = 0;
@@ -5511,7 +5518,7 @@ function AgassitantCallbackFunction(result) {
 	var keyupTimer = ''; //按键后500ms的定时器；做联想搜索；
 	var keyupValue = ''; //按键结束后500ms的值，用于过滤相同值频繁请求
 	//左边选择
-	$('.contact-search-choose').click(function(event) {
+	$('.contact-search-choose').click(function (event) {
 		if ($('.contact-search-input').val().replace(/\s*/g, "")) {
 			clearTimeout(keyupTimer);
 			contactSearchFn($('.contact-search-input').val(), 1, 0);
@@ -5529,7 +5536,7 @@ function AgassitantCallbackFunction(result) {
 	});
 
 	//左边搜索框清除搜索内容
-	$('.contact-search-input').keyup(function() {
+	$('.contact-search-input').keyup(function () {
 		if ($(this).val()) {
 			$('.contact-search-clear').show();
 		} else {
@@ -5537,18 +5544,19 @@ function AgassitantCallbackFunction(result) {
 		}
 	});
 
-	$('.contact-search-input').blur(function() {
+	$('.contact-search-input').blur(function () {
 		if (!$(this).val()) {
 			$('.contact-search-clear').hide();
 		}
 	});
-	$('.contact-search-clear').click(function() {
+	$('.contact-search-clear').click(function () {
 		$('.contact-search-input').val('');
 		$('.contact-search-input').focus();
 		$('.contact-search-clear').hide();
 	});
 	// 左边回车搜索
-	$('.contact-search-input').keyup(function(event) {
+	$('.contact-search-input').keyup(function (event) {
+		console.log(event);
 		clearTimeout(keyupTimer);
 		if (event.keyCode == 13) {
 			if ($('.contact-search-input').val().replace(/\s*/g, "")) {
@@ -5566,7 +5574,7 @@ function AgassitantCallbackFunction(result) {
 
 		}
 		if ($('.contact-search-input').val().replace(/\s*/g, "") && keyupValue != $('.contact-search-input').val()) {
-			keyupTimer = setTimeout(function() {
+			keyupTimer = setTimeout(function () {
 				clearTimeout(keyupTimer);
 				contactSearchFn($('.contact-search-input').val(), 1, 0);
 				keyupValue = $('.contact-search-input').val();
@@ -5583,12 +5591,12 @@ function AgassitantCallbackFunction(result) {
 
 
 	//关闭搜索结果窗口
-	$('.assistant-popup').click(function() {
+	$('.assistant-popup').click(function () {
 		$('.contact-left-popup').hide();
 		keyupValue = '';
 	});
 	//通讯录左边选项卡功能实现和右边数据的生成
-	$(".contact-left ul li").click(function() {
+	$(".contact-left ul li").click(function () {
 		$(".contact-left ul li").attr('class', '');
 		$(this).attr('class', 'contact-list-choose');
 		$(".contact-type-p").eq(0).text($(this).attr('name'));
@@ -5636,30 +5644,30 @@ function AgassitantCallbackFunction(result) {
 	});
 
 	//关闭个人信息页面
-	$('.contact-info-close').click(function() {
+	$('.contact-info-close').click(function () {
 		$('.contact-info div').eq(0).hide();
 		$('.contact-mask').hide();
 		$('.contact-info div').eq(1).animate({
 			right: '-300px'
-		}, 'slow', function() {
+		}, 'slow', function () {
 			$('.contact-info').hide();
 		});
 		$('.contact-li li').attr('class', '');
 		// $('.contact-li li').css('background', '#fff');
 	});
-	$('.contact-info div').eq(0).click(function() {
+	$('.contact-info div').eq(0).click(function () {
 		$('.contact-info div').eq(0).hide();
 		$('.contact-mask').hide();
 		$('.contact-info div').eq(1).animate({
 			right: '-300px'
-		}, 'slow', function() {
+		}, 'slow', function () {
 			$('.contact-info').hide();
 		});
 		$('.contact-li li').attr('class', '');
 		// $('.contact-li li').css('background', '#fff');
 	});
 	//查找页面通讯录添加联系人
-	$('.contact-frequent-commit').click(function() {
+	$('.contact-frequent-commit').click(function () {
 		if (!$('.contact-frequent-input').val().replace(/\s*/g, "")) {
 			$('.contact-left-popup').hide();
 			normal('.contact-frequent-input', 3);
@@ -5671,13 +5679,13 @@ function AgassitantCallbackFunction(result) {
 	});
 
 	// 右边搜索页面关闭
-	$('.contact-frequent-close').click(function() {
+	$('.contact-frequent-close').click(function () {
 		keyupValue = '';
 		$('.contact-frequent div').eq(0).hide();
 		$('.pager5').hide();
 		$('.contact-frequent div').eq(1).animate({
 			right: '-680px'
-		}, 'slow', function() {
+		}, 'slow', function () {
 			$('.contact-frequent').hide();
 		});
 		// $('.contact-frequent div').eq(1).css('transition', 'all 0.5s');
@@ -5692,13 +5700,13 @@ function AgassitantCallbackFunction(result) {
 		recentContactType = 2;
 		recentContactFn(0, 2, '');
 	});
-	$('.contact-frequent div').eq(0).click(function() {
+	$('.contact-frequent div').eq(0).click(function () {
 		keyupValue = '';
 		$('.contact-frequent div').eq(0).hide();
 		$('.pager5').hide();
 		$('.contact-frequent div').eq(1).animate({
 			right: '-680px'
-		}, 'slow', function() {
+		}, 'slow', function () {
 			$('.contact-frequent').hide();
 		});
 		// $('.contact-frequent div').eq(1).css('transition', 'all 0.5s');
@@ -5715,7 +5723,7 @@ function AgassitantCallbackFunction(result) {
 	});
 
 
-	$('.contact-frequent-input').keyup(function() {
+	$('.contact-frequent-input').keyup(function () {
 		clearTimeout(keyupTimer);
 		if (event.keyCode == 13) {
 			if (!$('.contact-frequent-input').val().replace(/\s*/g, "")) {
@@ -5728,7 +5736,7 @@ function AgassitantCallbackFunction(result) {
 			}
 		}
 		if ($('.contact-frequent-input').val().replace(/\s*/g, "") && keyupValue != $('.contact-frequent-input').val()) {
-			keyupTimer = setTimeout(function() {
+			keyupTimer = setTimeout(function () {
 				clearTimeout(keyupTimer);
 				contactSearchFn($('.contact-frequent-input').val(), 2, 0);
 				keyupValue = $('.contact-frequent-input').val();
@@ -5744,14 +5752,14 @@ function AgassitantCallbackFunction(result) {
 
 
 	//清空联系人或者是添加常联系人
-	$('.contact-type-text').click(function() {
+	$('.contact-type-text').click(function () {
 		if ($('.contact-type-text').attr('name') == 1) {
-			assistantRemindFn(['确定清空最近联系人信息？', '确定', '取消'], function(data) {
+			assistantRemindFn(['确定清空最近联系人信息？', '确定', '取消'], function (data) {
 				if (data) {
 					ajaxN('PsnMgr/Contact/OperateRecentContact', 'post', {
 						"OperateFlag": -2, //  1添加  -2 清空
 						"SecretKey": "55555",
-					}, function(data) {
+					}, function (data) {
 						$('.contact-li li').remove();
 						$('.contact-right-empty').show();
 						$('.contact-empty-text').text($('.contact-type-p').last().text());
@@ -5774,7 +5782,7 @@ function AgassitantCallbackFunction(result) {
 
 			$('.contact-frequent div').eq(1).animate({
 				right: '0'
-			}, 'slow', function() {
+			}, 'slow', function () {
 				$('.contact-frequent div').eq(0).show();
 				$('.contact-frequent-input').focus();
 			});
@@ -5804,12 +5812,12 @@ function AgassitantCallbackFunction(result) {
 
 
 	//联系人搜索清除按钮
-	$('.contact-frequent-input').blur(function() {
+	$('.contact-frequent-input').blur(function () {
 		if ($(this).val() == '') {
 			$('.contact-frequent-clear').hide();
 		}
 	});
-	$('.contact-frequent-clear').click(function() {
+	$('.contact-frequent-clear').click(function () {
 		$('.contact-frequent-input').val('');
 		$('.contact-frequent-input').focus();
 		$(this).hide();
@@ -5818,7 +5826,7 @@ function AgassitantCallbackFunction(result) {
 
 
 	//复制功能
-	$(".contact-info-copy").on('click', function() {
+	$(".contact-info-copy").on('click', function () {
 		var copytxt = '';
 		if ($(this).attr('name') == 1) {
 			copytxt = document.querySelector('#contact-copy-text1');
@@ -5930,7 +5938,7 @@ function AgassitantCallbackFunction(result) {
 
 
 	//初始化websocket
-	ajaxN('PsnMgr/InfoCentre/GetWebSocketInfo', 'get', {}, function(data) {
+	ajaxN('PsnMgr/InfoCentre/GetWebSocketInfo', 'get', {}, function (data) {
 		if (data.StatusCode == 200) {
 			if (!window.WebSocket) {
 				alert('您的浏览器不支持WebSocket，请选择其他的浏览器再尝试连接服务器');
@@ -5938,7 +5946,7 @@ function AgassitantCallbackFunction(result) {
 			var wsClient;
 			var lockReconnect = false;
 			var wsPushUrl = data.Data;
-			$(function() {
+			$(function () {
 				createPushWebSocket(wsPushUrl);
 			})
 			//创建连接
@@ -5959,7 +5967,7 @@ function AgassitantCallbackFunction(result) {
 			CLOSED：值为3，表示连接已经关闭，或者打开连接失败。
 			*/
 			function initEventHandle() {
-				wsClient.onopen = function(e) {
+				wsClient.onopen = function (e) {
 					wsClient.send(JSON.stringify(new Object({
 						MessageType: 1,
 						ClientUserID: UserID,
@@ -5970,10 +5978,10 @@ function AgassitantCallbackFunction(result) {
 					})));
 					heartCheck.reset().start();
 				}
-				wsClient.onclose = function(e) {
+				wsClient.onclose = function (e) {
 					reconnectpush(wsPushUrl);
 				}
-				wsClient.onmessage = function(e) {
+				wsClient.onmessage = function (e) {
 					try {
 						var result = JSON.parse(e.data);
 						console.log(result);
@@ -6040,10 +6048,16 @@ function AgassitantCallbackFunction(result) {
 								if (!$('.popup-main1 ul li').eq(2).children().children().children().children().text()) {
 									$('.popup-main1 ul li').eq(2).children().children().children().children().text('1');
 								} else {
-									var count1 = $('.popup-main1 ul li').eq(2).children().children().children().children().text() * 1 + 1;
-									if (count1 > 99) {
-										count1 = 99;
+									var count1='';
+									if ($('.popup-main1 ul li').eq(2).children().children().children().children().text() == '...') {
+										count1 = '...';
+									} else {
+										 count1 = $('.popup-main1 ul li').eq(2).children().children().children().children().text() * 1 + 1;
+										if (count1 > 99) {
+											count1 = '...';
+										}
 									}
+
 									$('.popup-main1 ul li').eq(2).children().children().children('span').append($(' <b>' + count1 + '</b>'));
 									$('.popup-main1 ul li').eq(2).children().children().children('span').css('transform', 'translate(0, ' + -12 *
 										($('.popup-main1 ul li').eq(2).children().children().children('span').children().length - 1) + 'px)');
@@ -6051,7 +6065,7 @@ function AgassitantCallbackFunction(result) {
 								$('.assistant-remind-count').attr('name', '5');
 								ajaxN('PsnMgr/Schedule/GetScheduleRemindList', 'get', {
 									ScheduleDate: serverTime.slice(0, 10)
-								}, function(data) {
+								}, function (data) {
 									scheduleRemindList = data.Data;
 								})
 							}
@@ -6135,7 +6149,7 @@ function AgassitantCallbackFunction(result) {
 										}, 'slow');
 									}
 									if (data.TodoListCount > 99) {
-										data.TodoListCount = 99;
+										data.TodoListCount = '...';
 									}
 									$('.popup-main1 ul li').eq(0).children().children().attr('class', 'info-unread4');
 									if (!$('.popup-main1 ul li').eq(0).children().children().children().children().text()) {
@@ -6162,7 +6176,7 @@ function AgassitantCallbackFunction(result) {
 									}
 									$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
 									if (data.NoticeCount > 99) {
-										data.NoticeCount = 99;
+										data.NoticeCount =  '...';
 									}
 									if (!$('.popup-main1 ul li').eq(1).children().children().children().children().text()) {
 
@@ -6186,7 +6200,7 @@ function AgassitantCallbackFunction(result) {
 										}, 'slow');
 									}
 									if (data.ChatCount > 99) {
-										data.ChatCount = 99;
+										data.ChatCount =  '...';
 									}
 									$('.popup-main1 ul li').eq(3).children().children().attr('class', 'info-unread4');
 									if (!$('.popup-main1 ul li').eq(3).children().children().children().children().text()) {
@@ -6210,7 +6224,7 @@ function AgassitantCallbackFunction(result) {
 										}, 'slow');
 									}
 									if (data.MessageCount > 99) {
-										data.MessageCount = 99;
+										data.MessageCount =  '...';
 									}
 									$('.popup-main1 ul li').eq(2).children().children().attr('class', 'info-unread4');
 									if (!$('.popup-main1 ul li').eq(2).children().children().children().children().text()) {
@@ -6234,7 +6248,7 @@ function AgassitantCallbackFunction(result) {
 										}, 'slow');
 									}
 									if (data.NewsCount > 99) {
-										data.NewsCount = 99;
+										data.NewsCount =  '...';
 									}
 									$('.popup-main1 ul li').eq(4).children().children().attr('class', 'info-unread4');
 									if (!$('.popup-main1 ul li').eq(4).children().children().children().children().text()) {
@@ -6260,7 +6274,7 @@ function AgassitantCallbackFunction(result) {
 						// console.log(e);
 					}
 				}
-				wsClient.onerror = function(e) {
+				wsClient.onerror = function (e) {
 					reconnectpush(wsPushUrl);
 				}
 			}
@@ -6270,7 +6284,7 @@ function AgassitantCallbackFunction(result) {
 					return;
 				}
 				lockReconnect = true;
-				setTimeout(function() {
+				setTimeout(function () {
 					createPushWebSocket(url);
 					lockReconnect = false;
 				}, 1000);
@@ -6285,18 +6299,18 @@ function AgassitantCallbackFunction(result) {
 				timeout: 60000,
 				timeoutObj: null,
 				serverTimeoutObj: null,
-				reset: function() {
+				reset: function () {
 					clearTimeout(this.timeoutObj);
 					clearTimeout(this.serverTimeoutObj);
 					return this;
 				},
-				start: function() {
+				start: function () {
 					var self = this;
-					this.timeoutObj = setTimeout(function() {
+					this.timeoutObj = setTimeout(function () {
 						//这里发送一个心跳，后端收到后，返回一个心跳消息，onmessage拿到返回的心跳就说明连接正常
 						//obj.MessageType = 2;
 						wsClient.send(JSON.stringify(obj1));
-						self.serverTimeoutObj = setTimeout(function() {
+						self.serverTimeoutObj = setTimeout(function () {
 							//如果超过一定时间还没重置，说明后端主动断开了
 							wsClient.close();
 							//如果onclose会执行reconnect，我们执行ws.close()就行了.
@@ -6334,7 +6348,7 @@ function AgassitantCallbackFunction(result) {
 			if (assistantRemindArrOld.length == 0) {
 				assistantRemindArrOld = assistantRemindArr;
 			} else {
-				assistantRemindArr.map(function(item) {
+				assistantRemindArr.map(function (item) {
 					if (assistantRemindArrOld.indexOf(item) == -1) {
 						assistantRemindArrOld.push(item);
 					}
@@ -6343,21 +6357,39 @@ function AgassitantCallbackFunction(result) {
 			$('.assistant-remind-ul li').remove();
 			$('.assistant-info-prompt').show();
 			if (assistantRemindArr.indexOf('0005') != -1) {
+				if (scheduleRemindCount > 99) {
+					scheduleRemindCount = '...';
+				}
 				$('.assistant-remind-ul').append($('<li>您有<b name="2">' + scheduleRemindCount + '</b>个日程提醒</li>'));
 			}
 			if (assistantRemindArr.indexOf('0000') != -1) {
+				if (TodoRemindCount > 99) {
+					TodoRemindCount = '...';
+				}
 				$('.assistant-remind-ul').append($('<li>您有<b name="0">' + TodoRemindCount + '</b>个新的待办事项</li>'));
 			}
 			if (assistantRemindArr.indexOf('0001') != -1) {
+				if (NoticeRemindCount > 99) {
+					NoticeRemindCount = '...';
+				}
 				$('.assistant-remind-ul').append($('<li>您有<b name="1">' + NoticeRemindCount + '</b>个通知未阅读</li>'));
 			}
 			if (assistantRemindArr.indexOf('0004') != -1) {
+				if (NewsRemindCount > 99) {
+					NewsRemindCount = '...';
+				}
 				$('.assistant-remind-ul').append($('<li>您有<b name="4">' + NewsRemindCount + '</b>个新闻可资讯</li>'));
 			}
 			if (assistantRemindArr.indexOf('0003') != -1) {
+				if (MessageRemindCount > 99) {
+					MessageRemindCount = '...';
+				}
 				$('.assistant-remind-ul').append($('<li>您有<b name="2">' + MessageRemindCount + '</b>个新的系统消息</li>'));
 			}
 			if (assistantRemindArr.indexOf('0002') != -1) {
+				if (ChatRemindCount > 99) {
+					ChatRemindCount = '...';
+				}
 				$('.assistant-remind-ul').append($('<li>您有<b name="3">' + ChatRemindCount + '</b>个新的聊天消息</li>'));
 			}
 			assistantRemindArr = [];
@@ -6366,7 +6398,7 @@ function AgassitantCallbackFunction(result) {
 				clearInterval(remindtimer);
 				clearInterval(remindtimer1);
 				clearInterval(remindTypetimer);
-				remindtimer = setTimeout(function() {
+				remindtimer = setTimeout(function () {
 					$('.assistant-info-prompt').hide();
 					$('.assistant-remind-ul li').remove();
 					assistantRemindArrOld = [];
@@ -6390,7 +6422,7 @@ function AgassitantCallbackFunction(result) {
 						wakeupState = 1;
 						cancelAnimationFrame(stop);
 						canvasFn('唤醒');
-						remindTypetimer = setTimeout(function() {
+						remindTypetimer = setTimeout(function () {
 							assistantStandby = false;
 							canvasFn('摇铃');
 						}, 6000)
@@ -6408,7 +6440,7 @@ function AgassitantCallbackFunction(result) {
 						wakeupState = 1;
 						cancelAnimationFrame(stop);
 						canvasFn('唤醒');
-						remindTypetimer = setTimeout(function() {
+						remindTypetimer = setTimeout(function () {
 							cancelAnimationFrame(stop);
 							assistantStandby = false;
 							canvasFn('喇叭');
@@ -6425,7 +6457,7 @@ function AgassitantCallbackFunction(result) {
 						wakeupState = 1;
 						cancelAnimationFrame(stop);
 						canvasFn('唤醒');
-						remindTypetimer = setTimeout(function() {
+						remindTypetimer = setTimeout(function () {
 							cancelAnimationFrame(stop);
 							assistantStandby = false;
 							canvasFn('摇铃');
@@ -6442,7 +6474,7 @@ function AgassitantCallbackFunction(result) {
 						wakeupState = 1;
 						cancelAnimationFrame(stop);
 						canvasFn('唤醒');
-						remindTypetimer = setTimeout(function() {
+						remindTypetimer = setTimeout(function () {
 							assistantStandby = false;
 							cancelAnimationFrame(stop);
 							canvasFn('摇铃');
@@ -6459,7 +6491,7 @@ function AgassitantCallbackFunction(result) {
 						wakeupState = 1;
 						cancelAnimationFrame(stop);
 						canvasFn('唤醒');
-						remindTypetimer = setTimeout(function() {
+						remindTypetimer = setTimeout(function () {
 							assistantStandby = false;
 							canvasFn('摇铃');
 						}, 6000)
@@ -6475,7 +6507,7 @@ function AgassitantCallbackFunction(result) {
 						wakeupState = 1;
 						cancelAnimationFrame(stop);
 						canvasFn('唤醒');
-						remindTypetimer = setTimeout(function() {
+						remindTypetimer = setTimeout(function () {
 							assistantStandby = false;
 							cancelAnimationFrame(stop);
 							canvasFn('台历');
@@ -6493,7 +6525,7 @@ function AgassitantCallbackFunction(result) {
 				var count = 0;
 				clearInterval(remindtimer);
 				clearInterval(remindtimer1);
-				remindtimer = setInterval(function() {
+				remindtimer = setInterval(function () {
 					$('.assistant-remind-ul').css('transition', 'all 1s ease');
 					$('.assistant-remind-ul').css('transform', 'translate(0,-25px)');
 					count++;
@@ -6514,7 +6546,7 @@ function AgassitantCallbackFunction(result) {
 							$('.assistant-remind-count').show();
 						}
 					} else {
-						setTimeout(function() {
+						setTimeout(function () {
 							$('.assistant-remind-ul').append($('<li>' + $('.assistant-remind-ul li').eq(0).html() + '</li>'));
 							$('.assistant-remind-ul li').eq(0).remove();
 							$('.assistant-remind-ul').css('transition', 'all 0s ');
@@ -6537,20 +6569,20 @@ function AgassitantCallbackFunction(result) {
 		$('.assistant-popup-loading').show();
 		ajaxN('PsnMgr/WorkSpace/GetWorkSpaceList', 'get', {
 			UserClass: UserClass
-		}, function(data) {
+		}, function (data) {
 			$('.assistant-popup-loading').hide();
 			if (data.StatusCode == 200) {
 				if (data.Data && data.Data.length > 0) {
-					data.Data.map(function(item) {
+					data.Data.map(function (item) {
 						if (item.ModuleName == '发布通知') {
 							$('.assistant-deliver-notice').css('display', 'inline-block');
-							$('.assistant-deliver-notice').off().click(function() {
+							$('.assistant-deliver-notice').off().click(function () {
 								if (item.PCLinkType == 1) {
 									if (item.SysID == '000') {
 										var tabURL = PsnMgrMainServerAddr + item.PCLink;
 										window.open(tabURL, "_blank");
 									} else {
-										getSysWeb(item.SysID, function(data) {
+										getSysWeb(item.SysID, function (data) {
 											var tabURL = data + item.PCLink + '?lg_tk=' + PsnMgrToken;
 											window.open(tabURL, "_blank");
 										})
@@ -6563,13 +6595,13 @@ function AgassitantCallbackFunction(result) {
 						}
 						if (item.ModuleName == '发布问卷调查') {
 							$('.assistant-deliver-questionnaire').css('display', 'inline-block');
-							$('.assistant-deliver-questionnaire').off().click(function() {
+							$('.assistant-deliver-questionnaire').off().click(function () {
 								if (item.PCLinkType == 1) {
 									if (item.SysID == '000') {
 										var tabURL = PsnMgrMainServerAddr + item.PCLink;
 										window.open(tabURL, "_blank");
 									} else {
-										getSysWeb(item.SysID, function(data) {
+										getSysWeb(item.SysID, function (data) {
 											var tabURL = data + item.PCLink + '?lg_tk=' + PsnMgrToken;
 											window.open(tabURL, "_blank");
 
@@ -6580,7 +6612,7 @@ function AgassitantCallbackFunction(result) {
 						}
 						if (item.ModuleName == '学生档案管理') {
 							$('.assistant-student-admin').css('display', 'inline-block');
-							$('.assistant-student-admin').off().click(function() {
+							$('.assistant-student-admin').off().click(function () {
 								if (item.PCLinkType == 1) {
 									if (item.SysID == '000') {
 										var tabURL = PsnMgrMainServerAddr + item.PCLink;
@@ -6589,7 +6621,7 @@ function AgassitantCallbackFunction(result) {
 										ajaxN('PsnMgr/InfoCenter/GetSystemWeb', 'get', {
 											SysID: item.SysID,
 											SubjectID: item.SubjectID
-										}, function(data) {
+										}, function (data) {
 											var tabURL = data.Data + item.PCLink;
 											window.open(tabURL, "_blank");
 										})
@@ -6599,7 +6631,7 @@ function AgassitantCallbackFunction(result) {
 						}
 						if (item.ModuleName == '教学班管理') {
 							$('.assistant-teaClass-admin').css('display', 'inline-block');
-							$('.assistant-teaClass-admin').off().click(function() {
+							$('.assistant-teaClass-admin').off().click(function () {
 								if (item.PCLinkType == 1) {
 									if (item.SysID == '000') {
 										var tabURL = PsnMgrMainServerAddr + item.PCLink;
@@ -6608,7 +6640,7 @@ function AgassitantCallbackFunction(result) {
 										ajaxN('PsnMgr/InfoCenter/GetSystemWeb', 'get', {
 											SysID: item.SysID,
 											SubjectID: item.SubjectID
-										}, function(data) {
+										}, function (data) {
 											var tabURL = data.Data + item.PCLink;
 											window.open(tabURL, "_blank");
 										})
@@ -6733,10 +6765,10 @@ function AgassitantCallbackFunction(result) {
 		if (!initialization) {
 			initializationFn();
 		}
-		ajaxN('PsnMgr/InfoCentre/GetTodoListSortCount', 'get', {}, function(data) {
+		ajaxN('PsnMgr/InfoCentre/GetTodoListSortCount', 'get', {}, function (data) {
 			$('.todo-type-ul li').remove();
 			if (data.Data.length > 1) {
-				data.Data.map(function(item) {
+				data.Data.map(function (item) {
 					$('.todo-type-ul').append($('<li name=' + item.InfoSourceName + ' data-id=' + item.InfoSourceID + ' data-num=' +
 						item.InfoSourceID + ' >' + item.InfoSourceName + '<b>(' + item.AllCount + ')</b></li>'))
 				})
@@ -6772,7 +6804,7 @@ function AgassitantCallbackFunction(result) {
 		}
 		todoLsitTotalCount = 0;
 		$('.assistant-popup-loading').show();
-		ajaxN(todoUrl, 'get', todoData, function(data) {
+		ajaxN(todoUrl, 'get', todoData, function (data) {
 			$('.pager1').remove();
 			$('.pager2').remove();
 			$(".pager3").remove();
@@ -6803,7 +6835,7 @@ function AgassitantCallbackFunction(result) {
 				assistantTimeUpdata = false;
 				ajaxN('PsnMgr/InfoCentre/RecordLastReadTime', 'post', {
 					ModuleID: 1,
-				}, function() {
+				}, function () {
 					assistantTimeUpdata = true;
 					if ($('.assistant-popup').css('opacity') == '0') {
 						againCountRemindFn();
@@ -6814,7 +6846,7 @@ function AgassitantCallbackFunction(result) {
 				$('.infoCenter-empty').hide();
 				$("div").remove(".todo-div");
 				$('.assistant-popup-loading').hide();
-				todoLsit.map(function(item, idx) {
+				todoLsit.map(function (item, idx) {
 					var dateTime = Date.parse(item.ExpireTime) - Date.parse(serverTime);
 					dateTime = dateTime / 1000 / 60;
 					var classname6 = 'todo-div-name';
@@ -6922,11 +6954,11 @@ function AgassitantCallbackFunction(result) {
 					// $('.todo-div-content').css('transform', 'translate(-359px, -50%)');
 				}
 				$('.todo-box').css('overflow-y', 'auto');
-				$('.todo-added').off().click(function(event) {
+				$('.todo-added').off().click(function (event) {
 					$this = $(this).children('.goto-schedule');
 					ajaxN('/PsnMgr/Schedule/GetScheduleInfoByID', 'get', {
 						ScheduleID: $this.attr('data-id')
-					}, function(data) {
+					}, function (data) {
 						popupNavChoose = 2;
 						$('.popup-nav-list ul li').attr('class', '');
 						$('.popup-nav-list ul li').eq(1).attr('class', 'assistant-active');
@@ -7050,13 +7082,13 @@ function AgassitantCallbackFunction(result) {
 						$('.schedule-setting-popup').show();
 						$('.schedule-setting-popup div').eq(1).animate({
 							right: '0'
-						}, 'slow', function() {
+						}, 'slow', function () {
 							$('.schedule-setting-popup div').eq(0).show();
 						});
 					})
 					event.stopPropagation();
 				})
-				$('.todo-add-schedule').off().click(function(event) {
+				$('.todo-add-schedule').off().click(function (event) {
 					// $('.popup-nav-list ul li').attr('class', '');
 					// $('.popup-nav-list ul li').eq(1).attr('class', 'active');
 					// $('.popup-main1').hide();
@@ -7076,7 +7108,7 @@ function AgassitantCallbackFunction(result) {
 					$('.schedule-clocks-setting1').eq(1).children('i').attr('class', 'schedule-input-clocks');
 					$('.schedule-setting-popup div').eq(1).animate({
 						right: '0'
-					}, 'slow', function() {
+					}, 'slow', function () {
 						$('.schedule-setting-popup div').eq(0).show();
 					});
 
@@ -7097,7 +7129,7 @@ function AgassitantCallbackFunction(result) {
 					}
 					$('.schedule-setting-popup div').eq(1).animate({
 						right: '0'
-					}, 'slow', function() {
+					}, 'slow', function () {
 						$('.schedule-setting-popup div').eq(0).show();
 					});
 					$('.popup-main22').hide();
@@ -7139,10 +7171,10 @@ function AgassitantCallbackFunction(result) {
 					$('.schedule-topic-length').text($('.schedule-topic').val().length + '/50');
 					event.stopPropagation();
 				})
-				$('.todo-div').off().click(function() {
+				$('.todo-div').off().click(function () {
 					var $this = $(this);
 					if ($(this).attr('data-PCLinkType') == 1) {
-						getSysIP($(this).attr('data-SysID'), function(data) {
+						getSysIP($(this).attr('data-SysID'), function (data) {
 							var todoURL = data + $this.attr('data-url');
 							window.open(todoURL, '_blank');
 						})
@@ -7151,7 +7183,7 @@ function AgassitantCallbackFunction(result) {
 							623) {
 							$('.assistant-popup-loading').show();
 							commonOpenClient($this.attr('data-url'));
-							setTimeout(function() {
+							setTimeout(function () {
 								$('.assistant-popup-loading').hide();
 							}, 3000)
 
@@ -7213,7 +7245,7 @@ function AgassitantCallbackFunction(result) {
 		});
 		$('.pager1 .pagination .pagination_go_button').css('position', 'relative');
 		$('.pager1 .pagination .pagination_go_button').append($('<div class="pager-click-shadow pager-click-shadow1"></div>'))
-		$('.pager-click-shadow1').off().click(function(ev) {
+		$('.pager-click-shadow1').off().click(function (ev) {
 			if (isRealNum($(this).parent().parent().children('.pagination_go_input').val()) && $(this).parent().parent().children(
 					'.pagination_go_input').val() > 0) {
 				var num = 0;
@@ -7266,7 +7298,7 @@ function AgassitantCallbackFunction(result) {
 			URL: messageURL,
 			PageIndex: page + 1,
 			PageSize: 15
-		}, function(data) {
+		}, function (data) {
 			if (data.StatusCode == 200) {
 				$('.assistant-popup-loading').hide();
 				messageLsit = data.Data.Item.NoticeList;
@@ -7289,7 +7321,7 @@ function AgassitantCallbackFunction(result) {
 					assistantTimeUpdata = false;
 					ajaxN('PsnMgr/InfoCentre/RecordLastReadTime', 'post', {
 						ModuleID: 2,
-					}, function() {
+					}, function () {
 						assistantTimeUpdata = true;
 						//、11111111111111111111111111111111111111
 						if ($('.assistant-popup').css('opacity') == '0') {
@@ -7304,7 +7336,7 @@ function AgassitantCallbackFunction(result) {
 						$('.infoCenter-option span strong').text(data.Data.Item.UnReadCount);
 						$('.message').css('display', 'block');
 					}
-					messageLsit.map(function(item, idx) {
+					messageLsit.map(function (item, idx) {
 
 						var classname1 = '';
 						var classname2 = '';
@@ -7355,9 +7387,9 @@ function AgassitantCallbackFunction(result) {
 				}
 
 				$('.message-box').scrollTop(0);
-				$('.message-div').off().click(function() {
-					window.open($(this).attr('data-url')+ '&lg_tk=' + PsnMgrToken, '_blank');
-					setTimeout(function() {
+				$('.message-div').off().click(function () {
+					window.open($(this).attr('data-url') + '&lg_tk=' + PsnMgrToken, '_blank');
+					setTimeout(function () {
 						noticeFn(page, 'update');
 					}, 3000)
 				})
@@ -7394,7 +7426,7 @@ function AgassitantCallbackFunction(result) {
 		})
 		$('.pager3 .pagination .pagination_go_button').css('position', 'relative');
 		$('.pager3 .pagination .pagination_go_button').append($('<div class="pager-click-shadow pager-click-shadow3"></div>'))
-		$('.pager-click-shadow3').off().click(function(ev) {
+		$('.pager-click-shadow3').off().click(function (ev) {
 			if (isRealNum($(this).parent().parent().children('.pagination_go_input').val()) && $(this).parent().parent().children(
 					'.pagination_go_input').val() > 0) {
 				var num = 0;
@@ -7480,7 +7512,7 @@ function AgassitantCallbackFunction(result) {
 			number: '1',
 			imgurl: PsnMgrLgAssistantAddr + '/PsnMgr/LgAssistant/images/模块图标_教务窗口.png'
 		}];
-		chatLsit.map(function(item) {
+		chatLsit.map(function (item) {
 			var newtime = '';
 			var date = new Date();
 			var year = date.getFullYear(); //年
@@ -7537,7 +7569,7 @@ function AgassitantCallbackFunction(result) {
 		ajaxN('PsnMgr/InfoCentre/GetMessageList', 'get', {
 			PageIndex: page + 1,
 			PageSize: 15
-		}, function(data) {
+		}, function (data) {
 			noticeTotalCount = data.Data.TotalCount;
 			noticeLsit = data.Data.Children;
 			$('.infoCenter-empty').hide();
@@ -7556,7 +7588,7 @@ function AgassitantCallbackFunction(result) {
 			var ScheduleDate = '';
 			// console.log(scheduleRemindList);
 			if (scheduleRemindList.length > 0) {
-				scheduleRemindList.map(function(item) {
+				scheduleRemindList.map(function (item) {
 					ScheduleIDList += item.ScheduleID + ',';
 					ScheduleTypeList += item.ScheduleType + ',';
 					RemindFlagList += '0,';
@@ -7569,8 +7601,8 @@ function AgassitantCallbackFunction(result) {
 					RemindFlag: RemindFlagList.slice(0, -1),
 					DeletePlanFlag: DeletePlanFlagList.slice(0, -1),
 					ScheduleDate: ScheduleDate,
-				}, function(data1) {
-
+				}, function (data1) {
+					scheduleRemindCount=0;
 					message1Fn(page, noticeLsit);
 
 
@@ -7582,12 +7614,12 @@ function AgassitantCallbackFunction(result) {
 	};
 
 	function message1Fn(page, noticeLsit) {
-		ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function(data) {
+		ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function (data) {
 			$('.notice strong').text(data.Data.MessageCount);
 			assistantTimeUpdata = false;
 			ajaxN('PsnMgr/InfoCentre/RecordLastReadTime', 'post', {
 				ModuleID: 4,
-			}, function() {
+			}, function () {
 				assistantTimeUpdata = true;
 				if ($('.assistant-popup').css('opacity') == '0') {
 					againCountRemindFn();
@@ -7596,7 +7628,7 @@ function AgassitantCallbackFunction(result) {
 				}
 			})
 
-			noticeLsit.map(function(item, idx) {
+			noticeLsit.map(function (item, idx) {
 				item.InfoContent = htmlEncode(item.InfoContent);
 				item.InfoSourceName = htmlEncode(item.InfoSourceName);
 				if (item.InfoContent && item.InfoContent.length > 69) {
@@ -7628,14 +7660,14 @@ function AgassitantCallbackFunction(result) {
 			$('.todo').css('display', 'none');
 			$('.news').css('display', 'none');
 			$('.notice').css('display', 'block');
-			$('.notice-del').off().click(function(event) {
+			$('.notice-del').off().click(function (event) {
 				var $this = $(this);
-				assistantRemindFn(['确定删除该系统消息？', '确定', '取消'], function(data) {
+				assistantRemindFn(['确定删除该系统消息？', '确定', '取消'], function (data) {
 					if (data) {
 						ajaxN('PsnMgr/InfoCentre/OperateMessage', 'post', {
 							"OperateFlag": -1,
 							"InfoID": $this.attr('data-id'),
-						}, function(data) {
+						}, function (data) {
 							if (data.StatusCode == 200) {
 								assistantSmallSuccessFn('删除成功~');
 								messageFn(page);
@@ -7649,17 +7681,17 @@ function AgassitantCallbackFunction(result) {
 
 				event.stopPropagation();
 			})
-			$('.notice-shield').off().click(function(event) {
+			$('.notice-shield').off().click(function (event) {
 				var $this = $(this)
 				ajaxN('PsnMgr/InfoCentre/ReceiveSetting', 'post', {
 					"SortIDStr": $(this).attr('data-SortID'), // 消息类型字符串 以 ,号分割
 					"FlagStr": "1", //  
-				}, function(data) {
+				}, function (data) {
 					if (data.StatusCode == 200) {
 						ajaxN('PsnMgr/InfoCentre/OperateMessage', 'post', {
 							"OperateFlag": -1,
 							"InfoID": $this.attr('data-id')
-						}, function(data1) {
+						}, function (data1) {
 							if (data1.StatusCode == 200) {
 								assistantSmallSuccessFn('屏蔽此类消息成功~');
 								messageFn(page);
@@ -7674,14 +7706,14 @@ function AgassitantCallbackFunction(result) {
 
 				event.stopPropagation();
 			})
-			$('.notice-clear span').off().click(function() {
+			$('.notice-clear span').off().click(function () {
 
-				assistantRemindFn(['确定清空所有的系统消息？', '确定', '取消'], function(data) {
+				assistantRemindFn(['确定清空所有的系统消息？', '确定', '取消'], function (data) {
 					if (data) {
 						ajaxN('PsnMgr/InfoCentre/OperateMessage', 'post', {
 							"OperateFlag": -2,
 							"InfoID": "",
-						}, function(data) {
+						}, function (data) {
 							if (data.StatusCode == 200) {
 								$('.notice-div').remove();
 								assistantSmallSuccessFn('清空成功~')
@@ -7703,23 +7735,23 @@ function AgassitantCallbackFunction(result) {
 			// 	$('.infoCenter-empty').show();
 			// 	$('.infoCenter-empty-text').text($('.info-active').eq(1).text());
 			// }
-			$('.notice-div').off().click(function() {
+			$('.notice-div').off().click(function () {
 
 				var $this = $(this);
 				if ($(this).attr('data-PCLinkType') == 1) {
-					getSysIP($(this).attr('data-SysID'), function(data) {
+					getSysIP($(this).attr('data-SysID'), function (data) {
 						var notiveURL = data + $this.attr('data-url');
 						if ($this.attr('data-SysID') == 400) {
 
-							setTimeout(function() {
-								ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function(data) {
+							setTimeout(function () {
+								ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function (data) {
 									if (data.Data.NoticeCount == 0) {
 										$('.popup-main1 ul li').eq(1).children().children().attr('class', '');
 									} else {
 
 										$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
 										if (data.Data.NoticeCount > 99) {
-											data.Data.NoticeCount = 99;
+											data.Data.NoticeCount = '...';
 										}
 										if (!$('.popup-main1 ul li').eq(1).children().children().children().children().text()) {
 
@@ -7754,7 +7786,7 @@ function AgassitantCallbackFunction(result) {
 						623) {
 						$('.assistant-popup-loading').show();
 						commonOpenClient($this.attr('data-url'));
-						setTimeout(function() {
+						setTimeout(function () {
 							$('.assistant-popup-loading').hide();
 						}, 3000)
 
@@ -7867,7 +7899,7 @@ function AgassitantCallbackFunction(result) {
 		})
 		$('.pager2 .pagination .pagination_go_button').css('position', 'relative');
 		$('.pager2 .pagination .pagination_go_button').append($('<div class="pager-click-shadow pager-click-shadow2"></div>'))
-		$('.pager-click-shadow2').off().click(function(ev) {
+		$('.pager-click-shadow2').off().click(function (ev) {
 			if (isRealNum($(this).parent().parent().children('.pagination_go_input').val()) && $(this).parent().parent().children(
 					'.pagination_go_input').val() > 0) {
 				var num = 0;
@@ -7929,7 +7961,7 @@ function AgassitantCallbackFunction(result) {
 			time: '2019-09-17-11:00',
 			imgurl: PsnMgrLgAssistantAddr + '/PsnMgr/LgAssistant/images/个人报告_更换.png'
 		}];
-		newslsit.map(function(item) {
+		newslsit.map(function (item) {
 			if (item.content && item.content.length > 62) {
 				// console.log(item.content.length);
 				item.content = item.content.substring(0, 61) + '...';
@@ -7965,14 +7997,14 @@ function AgassitantCallbackFunction(result) {
 		$('.assistant-popup-loading').show();
 		ajaxN('PsnMgr/InfoCentre/GetMessageSettingList', 'get', {
 			UserClass: 0
-		}, function(data) {
+		}, function (data) {
 			$('.assistant-popup-loading').hide();
 			if (data.StatusCode == 200) {
 				shieldList = data.Data;
-				shieldList.map(function(item, idx) {
+				shieldList.map(function (item, idx) {
 					var settingClassName = ' ';
 
-					settingClassName = item.Children.some(function(ite) {
+					settingClassName = item.Children.some(function (ite) {
 						return ite.IsUnPush == 0;
 					});
 					if (settingClassName) {
@@ -7985,7 +8017,7 @@ function AgassitantCallbackFunction(result) {
 					var settingOption1Div = '<div> <p>' + item.InfoSourceName + ' <b name=' + idx + ' class=' + settingClassName +
 						' ></b> </p> ';
 
-					item.Children.map(function(it) {
+					item.Children.map(function (it) {
 						settingClassName = ' ';
 						if (it.IsUnPush == 0) {
 							settingClassName = 'choosetrue';
@@ -8009,20 +8041,20 @@ function AgassitantCallbackFunction(result) {
 
 			}
 			//消息中心的设置的系统消息接收设置模块的总开关变换
-			$('.setting-option1 p>b').off().click(function() {
+			$('.setting-option1 p>b').off().click(function () {
 				var SortIDStr = '';
 				var FlagStr = '';
 				if ($(this).attr('class')) {
 					$(this).attr('class', '');
 					$(this).parent().parent().children('span').children('b').attr('class', '');
-					shieldList[$(this).attr('name')].Children.map(function(item) {
+					shieldList[$(this).attr('name')].Children.map(function (item) {
 						SortIDStr += item.SortID + ',';
 						FlagStr += 1 + ',';
 					})
 				} else {
 					$(this).attr('class', 'choosetrue');
 					$(this).parent().parent().children('span').children('b').attr('class', 'choosetrue');
-					shieldList[$(this).attr('name')].Children.map(function(item) {
+					shieldList[$(this).attr('name')].Children.map(function (item) {
 						SortIDStr += item.SortID + ',';
 						FlagStr += 0 + ',';
 					})
@@ -8032,7 +8064,7 @@ function AgassitantCallbackFunction(result) {
 				ajaxN('PsnMgr/InfoCentre/ReceiveSetting', 'post', {
 					"SortIDStr": SortIDStr, // 消息类型字符串 以 ,号分割
 					"FlagStr": FlagStr, //  屏蔽或接收设置字符串，与SortIDStr一一对应 以 ,号分割;  0--取消屏蔽   1--屏蔽
-				}, function(data) {
+				}, function (data) {
 					if (data.StatusCode == 200) {
 						// console.log(data.Msg);
 						// assistantSmallSuccessFn('设置成功')
@@ -8041,7 +8073,7 @@ function AgassitantCallbackFunction(result) {
 
 			});
 			//消息中心的设置的系统消息接收设置模块的开关变换
-			$('.setting-option1 span>b').off().click(function() {
+			$('.setting-option1 span>b').off().click(function () {
 				var SortIDStr = '';
 				var FlagStr = '';
 				if ($(this).attr('class')) {
@@ -8062,7 +8094,7 @@ function AgassitantCallbackFunction(result) {
 				ajaxN('PsnMgr/InfoCentre/ReceiveSetting', 'post', {
 					"SortIDStr": SortIDStr, // 消息类型字符串 以 ,号分割
 					"FlagStr": FlagStr, //  屏蔽或接收设置字符串，与MsgDealTypeStr一一对应 以 ,号分割;  0--取消屏蔽   1--屏蔽
-				}, function(data) {
+				}, function (data) {
 					if (data.StatusCode == 200) {
 						// console.log(data.Msg);
 						// assistantSmallSuccessFn('设置成功')
@@ -8072,7 +8104,7 @@ function AgassitantCallbackFunction(result) {
 			$('.setting-popup').show();
 			$('.setting-popup div').eq(1).animate({
 				right: '0'
-			}, 'slow', function() {
+			}, 'slow', function () {
 				$('.setting-popup  div').eq(0).show();
 			});
 		})
@@ -8103,7 +8135,7 @@ function AgassitantCallbackFunction(result) {
 			name: '小米小米',
 			tel: '1313123213'
 		}];
-		shieldList.map(function(item) {
+		shieldList.map(function (item) {
 			var settingOption2Span = $("<span class='setting-option-span'><i></i><b>" + item.name +
 				"<i>(" +
 				item.tel +
@@ -8111,7 +8143,7 @@ function AgassitantCallbackFunction(result) {
 			$('.setting-option2 ').append(settingOption2Span);
 		});
 		//消息中心的设置的在线交流屏蔽名单模块的移除
-		$('.setting-option2 a').click(function() {
+		$('.setting-option2 a').click(function () {
 			$(this).parent().remove();
 
 			if ($('.setting-option2 ').children() && $('.setting-option2 ').children().length == 0) {
@@ -8152,7 +8184,7 @@ function AgassitantCallbackFunction(result) {
 			name: '111111111111',
 			open: 'false'
 		}];
-		groupList.map(function(item) {
+		groupList.map(function (item) {
 			var settingOption3Span = '';
 			if (item.open == 'true') {
 				settingOption3Span = $("<span class='setting-option-span'> <i></i><b>" + item.name +
@@ -8164,7 +8196,7 @@ function AgassitantCallbackFunction(result) {
 			$('.setting-option3 ').append(settingOption3Span);
 		});
 
-		$('.setting-option3 a').click(function() {
+		$('.setting-option3 a').click(function () {
 			if ($(this).attr('class')) {
 				$(this).attr('class', '');
 			} else {
@@ -8179,14 +8211,14 @@ function AgassitantCallbackFunction(result) {
 		$('.assistant-popup-loading').show();
 		ajaxN('PsnMgr/Schedule/GetScheduleInformation', 'get', {
 			ScheduleDate: date
-		}, function(data) {
+		}, function (data) {
 			$('.assistant-popup-loading').hide();
 			if (data.StatusCode == 200) {
 				$(".personal-schedule-box>ul>li").remove();
 				$('.personal-schedule-empty').hide();
 				$('.personal-schedule-box').show();
 				var personalScheduleLsit = data.Data;
-				personalScheduleLsit.map(function(item) {
+				personalScheduleLsit.map(function (item) {
 					var scheduleClassEdit = ''; //控制编辑按钮是否生成
 					var scheduleClassDel = ''; //控制删除按钮是否生成
 					var scheduleClassInfo = ''; //控制班级信息是否生成
@@ -8292,9 +8324,9 @@ function AgassitantCallbackFunction(result) {
 			}
 
 			//日程删除
-			$('.schedule-del').off().click(function() {
+			$('.schedule-del').off().click(function () {
 				var li = $(this).parent().parent();
-				assistantRemindFn(['确定删除该日程安排?', '确定', '取消'], function(data) {
+				assistantRemindFn(['确定删除该日程安排?', '确定', '取消'], function (data) {
 					if (data) {
 						// console.log(li.attr('data-ScheduleType'));
 						var param = {
@@ -8325,7 +8357,7 @@ function AgassitantCallbackFunction(result) {
 							"BackUpOne": "",
 							"BackUpTwo": ""
 						};
-						ajaxN('PsnMgr/Schedule/OperateSchedule', 'post', param, function(data) {
+						ajaxN('PsnMgr/Schedule/OperateSchedule', 'post', param, function (data) {
 							if (data.StatusCode == 200) {
 								assistantBigSuccessFn('删除成功~');
 								li.remove();
@@ -8358,7 +8390,7 @@ function AgassitantCallbackFunction(result) {
 			});
 
 			//编辑日程
-			$('.schedule-edit').off().click(function() {
+			$('.schedule-edit').off().click(function () {
 				// $('.next-li span').eq(4).attr('class','');
 				$(this).parent().attr('class', 'schedule-message');
 				$('.schedule-change-type').text('编辑日程');
@@ -8366,7 +8398,7 @@ function AgassitantCallbackFunction(result) {
 				$('.schedule-setting-popup').show();
 				$('.schedule-setting-popup div').eq(1).animate({
 					right: '0'
-				}, 'slow', function() {
+				}, 'slow', function () {
 					$('.schedule-setting-popup div').eq(0).show();
 				});
 
@@ -8511,7 +8543,7 @@ function AgassitantCallbackFunction(result) {
 			return;
 		}
 		$('.assistant-popup-loading').show();
-		ajaxN('PsnMgr/Schedule/GetServerTime', 'get', {}, function(data) {
+		ajaxN('PsnMgr/Schedule/GetServerTime', 'get', {}, function (data) {
 			var nowdate = data.Data;
 			if ($('#lgAssistant-next3').val().slice(0, 10) == nowdate.slice(0, 10)) {
 				if ($('#schedule-test1').val().slice(0, 2) > nowdate.slice(11, 13)) {
@@ -8563,7 +8595,7 @@ function AgassitantCallbackFunction(result) {
 			} else {
 				remindFlag = -1;
 			}
-			
+
 			if ($('.schedule-type-true').attr('name') == 1) {
 				scheduleTypeName = '备课';
 				ScheduleType = 2;
@@ -8663,7 +8695,7 @@ function AgassitantCallbackFunction(result) {
 				"BackUpTwo": ""
 			};
 			$('.assistant-popup-loading').show();
-			ajaxN('PsnMgr/Schedule/OperateSchedule', 'post', param, function(data) {
+			ajaxN('PsnMgr/Schedule/OperateSchedule', 'post', param, function (data) {
 				$('.schedule-message').attr('class', '');
 
 				if (data.StatusCode == 200) {
@@ -8750,15 +8782,15 @@ function AgassitantCallbackFunction(result) {
 			// SchoolID:'S15-130-773A',
 			// UserType:'1',
 			// URL:'http://192.168.129.1:10103/',
-		}, function(data) {
+		}, function (data) {
 			var mark = {};
 			var dateArr = data.Data.split(',');
-			dateArr.map(function(item) {
+			dateArr.map(function (item) {
 				mark[item] = '';
 			})
 			$('#lgAssistant-next2').remove();
 			$('.chooose-schedule-date').append($('<i id="lgAssistant-next2"></i>'));
-			layui.use('laydate', function() {
+			layui.use('laydate', function () {
 				var laydate = layui.laydate;
 				laydate.render({
 					elem: '#lgAssistant-next2', //指定元素
@@ -8771,7 +8803,7 @@ function AgassitantCallbackFunction(result) {
 					isInitValue: false,
 					mark: mark,
 					trigger: 'click',
-					done: function(value, date, endDate) {
+					done: function (value, date, endDate) {
 						$('#lgAssistant-next2').css('font-size', '0');
 						$('.personal-schedule-ul1').hide();
 						$('.personal-schedule-ul2').hide();
@@ -8893,7 +8925,7 @@ function AgassitantCallbackFunction(result) {
 			}
 
 			$('.assistant-popup-loading').show();
-			ajaxN(ContactUrl, 'get', param, function(data) {
+			ajaxN(ContactUrl, 'get', param, function (data) {
 				$(".pager4").remove();
 				$('.contact-right-empty').hide();
 				$('.contact-type-text').show();
@@ -8914,7 +8946,7 @@ function AgassitantCallbackFunction(result) {
 
 
 
-				contactClassList.map(function(item) {
+				contactClassList.map(function (item) {
 
 					if (!state) {
 						if ($('.contact-type-p') && $('.contact-type-p').length < 3) {
@@ -9003,7 +9035,7 @@ function AgassitantCallbackFunction(result) {
 			$('.contact-right>div').attr('class', 'contact-list3');
 			$('.contact-li ').css('overflow-y', 'hidden');
 
-			SubjectNameArr.map(function(item, idx) {
+			SubjectNameArr.map(function (item, idx) {
 				var ContactRightLi = $(
 					'<li data-class=' + SubjectIDArr[idx] + ' data-name=' + item + '教师组  ><i style="background-image:url(' +
 					PsnMgrLgAssistantAddr +
@@ -9040,7 +9072,7 @@ function AgassitantCallbackFunction(result) {
 				state = '';
 			}
 			$('.assistant-popup-loading').show();
-			ajaxN(ContactUrl, 'get', param, function(data) {
+			ajaxN(ContactUrl, 'get', param, function (data) {
 				$(".pager4").remove();
 				$('.contact-right-empty').hide();
 				$('.contact-type-text').show();
@@ -9075,7 +9107,7 @@ function AgassitantCallbackFunction(result) {
 		$('.contact-li li').remove();
 		$(".pager4").remove();
 		$('.contact-type-text').show();
-		recentContactList.map(function(item, idx) {
+		recentContactList.map(function (item, idx) {
 			if (idx >= page * 15 && idx < (page + 1) * 15) {
 				if (name == 1 || name == 2) {
 					var isContactFlag = 'contact-add ';
@@ -9142,7 +9174,7 @@ function AgassitantCallbackFunction(result) {
 		})
 		$('.pager4 .pagination .pagination_go_button').css('position', 'relative');
 		$('.pager4 .pagination .pagination_go_button').append($('<div class="pager-click-shadow pager-click-shadow4"></div>'))
-		$('.pager-click-shadow4').off().click(function(ev) {
+		$('.pager-click-shadow4').off().click(function (ev) {
 			if (isRealNum($(this).parent().parent().children('.pagination_go_input').val()) && $(this).parent().parent().children(
 					'.pagination_go_input').val() > 0) {
 				var num = 0;
@@ -9178,10 +9210,10 @@ function AgassitantCallbackFunction(result) {
 		//通讯录右边列表点击效果
 		var contactClick = false;
 		console.log(page, name, state);
-		$('.contact-li li').off('hover').hover(function() {
+		$('.contact-li li').off('hover').hover(function () {
 			$(this).children().children('.contact-mask').css('display', 'inline-block');
 			contactClick = false;
-		}, function() {
+		}, function () {
 			if (!contactClick) {
 				$(this).children().children('.contact-mask').css('display', 'none');
 			} else {
@@ -9189,7 +9221,7 @@ function AgassitantCallbackFunction(result) {
 			}
 
 		});
-		$('.contact-li li').off('click').click(function() {
+		$('.contact-li li').off('click').click(function () {
 			if (name == 6) {
 				ContactRightLi = $(
 					'<li class="contact-create"><p class="contact-type-p" data-class=' + $(this).attr('data-class') + '>' + $(
@@ -9257,7 +9289,7 @@ function AgassitantCallbackFunction(result) {
 
 		});
 		//移除出常用联系人
-		$('.contact-del').off('click').click(function(event) {
+		$('.contact-del').off('click').click(function (event) {
 			if ($('.contact-type').parent().attr('class') == "contact-list2") {
 				$(this).parent().parent().remove();
 				$(this).attr('title', '添加到常用联系人');
@@ -9267,7 +9299,7 @@ function AgassitantCallbackFunction(result) {
 					"SecretKey": "55555",
 					"ContactID": $(this).parent().parent().attr('data-id'),
 					"ContactUserType": $(this).parent().parent().attr('data-usertype'),
-				}, function(data) {
+				}, function (data) {
 					$('.assistant-popup-loading').hide();
 					if (data.StatusCode == 200) {
 						assistantSmallSuccessFn('移除成功');
@@ -9304,7 +9336,7 @@ function AgassitantCallbackFunction(result) {
 						"SecretKey": "55555",
 						"ContactID": $(this).parent().parent().attr('data-id'),
 						"ContactUserType": $(this).parent().parent().attr('data-usertype'),
-					}, function(data) {
+					}, function (data) {
 						$('.assistant-popup-loading').hide();
 						if (data.StatusCode == 200) {
 							assistantSmallSuccessFn('添加成功');
@@ -9322,7 +9354,7 @@ function AgassitantCallbackFunction(result) {
 						"SecretKey": "55555",
 						"ContactID": $(this).parent().parent().attr('data-id'),
 						"ContactUserType": $(this).parent().parent().attr('data-usertype'),
-					}, function(data) {
+					}, function (data) {
 						$('.assistant-popup-loading').hide();
 						if (data.StatusCode == 200) {
 							assistantSmallSuccessFn('移除成功');
@@ -9344,7 +9376,7 @@ function AgassitantCallbackFunction(result) {
 			event.stopPropagation();
 		});
 		//加入常用联系人
-		$('.contact-add').off('click').click(function(event) {
+		$('.contact-add').off('click').click(function (event) {
 			if ($(this).attr('class') == 'contact-add') {
 				$(this).attr('class', 'contact-del');
 				$(this).attr('title', '移除常用联系人');
@@ -9354,7 +9386,7 @@ function AgassitantCallbackFunction(result) {
 					"SecretKey": "55555",
 					"ContactID": $(this).parent().parent().attr('data-id'),
 					"ContactUserType": $(this).parent().parent().attr('data-usertype'),
-				}, function(data) {
+				}, function (data) {
 					$('.assistant-popup-loading').hide();
 					if (data.StatusCode == 200) {
 						assistantSmallSuccessFn('添加成功');
@@ -9371,7 +9403,7 @@ function AgassitantCallbackFunction(result) {
 					"SecretKey": "55555",
 					"ContactID": $(this).parent().parent().attr('data-id'),
 					"ContactUserType": $(this).parent().parent().attr('data-usertype'),
-				}, function(data) {
+				}, function (data) {
 					$('.assistant-popup-loading').hide();
 					if (data.StatusCode == 200) {
 						assistantSmallSuccessFn('移除成功');
@@ -9390,14 +9422,14 @@ function AgassitantCallbackFunction(result) {
 			// console.log(2, $('.contact-type').parent().attr('class'));
 		});
 		//跳转聊天
-		$('.contact-chats').off('click').click(function(event) {
+		$('.contact-chats').off('click').click(function (event) {
 			// console.log('跳转聊天');
 
 
 			event.stopPropagation();
 		});
 		//点击右边顶部分类跳转栏
-		$('.contact-type-p').off('click').click(function() {
+		$('.contact-type-p').off('click').click(function () {
 			// console.log(111111);
 			if ($('.contact-type-p') && $('.contact-type-p').length > 1) {
 				$(this).parent().nextAll("li").remove();
@@ -9436,7 +9468,7 @@ function AgassitantCallbackFunction(result) {
 		ajaxN('PsnMgr/Contact/GetContactList', 'get', {
 			UserID: id,
 			UserType: type
-		}, function(Data) {
+		}, function (Data) {
 			$('.assistant-popup-loading').hide();
 			if (Data.StatusCode == 200) {
 				data = Data.Data;
@@ -9502,19 +9534,19 @@ function AgassitantCallbackFunction(result) {
 				$('#contact-copy-text3').text(data.Weixin);
 				$('#contact-copy-text4').text(data.Weibo);
 				$('.contact-info').show();
-				$('.contact-message-ul li a').off().click(function() {
+				$('.contact-message-ul li a').off().click(function () {
 					ajaxN('PsnMgr/Contact/OperateRecentContact', 'post', {
 						"OperateFlag": 1, //  1添加  -2 清空
 						"SecretKey": "55555",
 						"ContactID": $('.contact-info-id').text(), //  所要添加的常用联系人ID
 						"ContactUserType": $('.contact-info-id').attr('data-type'), //  所要添加的常用联系人用户类型   0或6代表管理员  1教师 2学生 3家长
-					}, function(data) {
+					}, function (data) {
 
 					})
 				});
 				$('.contact-info div').eq(1).animate({
 					right: '0'
-				}, 'slow', function() {
+				}, 'slow', function () {
 					$('.contact-info div').eq(0).show();
 				});
 			} else {
@@ -9535,7 +9567,7 @@ function AgassitantCallbackFunction(result) {
 		$('.assistant-popup-loading').show();
 		ajaxN('PsnMgr/Contact/SearchContactInfo', 'get', {
 			SearchType: searchType
-		}, function(data) {
+		}, function (data) {
 			$('.frame_point_loading_container').show();
 			$('.pager5').hide();
 			if (data.StatusCode == 200) {
@@ -9546,12 +9578,12 @@ function AgassitantCallbackFunction(result) {
 				var UserNameArr = [];
 				var UserIDAr = [];
 				lastSearchList = [];
-				contactSearchList.map(function(item) {
+				contactSearchList.map(function (item) {
 					var searchNameCount = 0;
 					var searchIdCount = 0;
 					UserNameArr = item.UserName.split('');
 					UserIDArr = item.UserID.split('');
-					searchArr.map(function(it) {
+					searchArr.map(function (it) {
 						if (UserNameArr.indexOf(it) != -1) {
 							searchNameCount++;
 						}
@@ -9572,11 +9604,11 @@ function AgassitantCallbackFunction(result) {
 					var searchListLi = '';
 					var UserNameB = '';
 					var UserIDB = '';
-					lastSearchList.map(function(item, idx) {
+					lastSearchList.map(function (item, idx) {
 						UserNameArr = item.UserName.split('');
 						UserNameB = '';
 						var arrLength1 = UserNameArr.length;
-						UserNameArr.map(function(it, index) {
+						UserNameArr.map(function (it, index) {
 							if (index < 29) {
 								if (searchArr.indexOf(it) != -1) {
 									// searchNameCount++;
@@ -9592,7 +9624,7 @@ function AgassitantCallbackFunction(result) {
 						UserIDArr = item.UserID.split('');
 						UserIDB = '';
 						var arrLength2 = UserIDArr.length;
-						UserIDArr.map(function(it, index) {
+						UserIDArr.map(function (it, index) {
 							if ((arrLength1 * 1 + index * 1) < 29) {
 								if (searchArr.indexOf(it) != -1) {
 									// searchNameCount++;
@@ -9620,7 +9652,7 @@ function AgassitantCallbackFunction(result) {
 						}
 
 					});
-					$('.search-left-li').off().click(function() {
+					$('.search-left-li').off().click(function () {
 						contactIofoFn($(this).attr('data-id'), $(this).attr('data-usertype'))
 
 					});
@@ -9642,7 +9674,7 @@ function AgassitantCallbackFunction(result) {
 					$('.contact-search-li').remove();
 					if (lastSearchList && lastSearchList.length > 0) {
 						// console.log(lastSearchList.length);
-						lastSearchList.map(function(item, idx) {
+						lastSearchList.map(function (item, idx) {
 							if (idx >= page * 9 && idx < (page + 1) * 9) {
 								var contactSearchClass1 = '';
 								var contactSearchClass2 = '';
@@ -9678,7 +9710,7 @@ function AgassitantCallbackFunction(result) {
 						$('.pagination').hide();
 					};
 					//点击添加按钮添加常用联系人
-					$('.contact-search-add').click(function() {
+					$('.contact-search-add').click(function () {
 						// console.log($(this).parent().parent());
 						$(this).parent().attr('class', 'contact-search-li contact-search-button2');
 						$('.assistant-popup-loading').show();
@@ -9687,7 +9719,7 @@ function AgassitantCallbackFunction(result) {
 							"ContactID": $(this).attr('data-id'), //当前用户ID
 							"ContactUserType": $(this).attr('data-usertype'), //当前用户类型 
 							"SecretKey": "55555"
-						}, function(data) {
+						}, function (data) {
 							$('.assistant-popup-loading').hide();
 							if (data.StatusCode == 200) {
 								assistantSmallSuccessFn('添加成功~');
@@ -9726,7 +9758,7 @@ function AgassitantCallbackFunction(result) {
 		})
 		$('.pager5 .pagination .pagination_go_button').css('position', 'relative');
 		$('.pager5 .pagination .pagination_go_button').append($('<div class="pager-click-shadow pager-click-shadow5"></div>'))
-		$('.pager-click-shadow5').off().click(function(ev) {
+		$('.pager-click-shadow5').off().click(function (ev) {
 			if (isRealNum($(this).parent().parent().children('.pagination_go_input').val()) && $(this).parent().parent().children(
 					'.pagination_go_input').val() > 0) {
 				var num = 0;
@@ -9811,7 +9843,7 @@ function AgassitantCallbackFunction(result) {
 		return succeed;
 	};
 	//点击重新登录刷新页面
-	$('.assistant-outline-true').click(function() {
+	$('.assistant-outline-true').click(function () {
 		history.go(0);
 	})
 };
@@ -9822,7 +9854,7 @@ function AgassitantCallbackFn(result) {
 		if (result.data.result.charAt(result.data.result.length - 1) == 0) {
 			$('.assistant-outline').show();
 			clearInterval(laAssistantOnlineTimer);
-			$('.assistant-hover-box').off().click(function() {
+			$('.assistant-hover-box').off().click(function () {
 				history.go(0);
 			});
 		}
@@ -9830,7 +9862,7 @@ function AgassitantCallbackFn(result) {
 	if (result.error == 3) {
 		$('.assistant-outline').show();
 		clearInterval(laAssistantOnlineTimer);
-		$('.assistant-hover-box').off().click(function() {
+		$('.assistant-hover-box').off().click(function () {
 			history.go(0);
 		});
 	}

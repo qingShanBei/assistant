@@ -1980,7 +1980,7 @@ function AgassitantCallbackFunction(result) {
 						classname6 = 'notice-unshield';
 					}
 					noticeDiv = $(
-						'<div class="notice-div clearfix" data-SysID="' + item.SysID + '" data-type="' + item.PCLinkType +
+						'<div class="notice-div lgAssistantClearfix" data-SysID="' + item.SysID + '" data-type="' + item.PCLinkType +
 						'" data-url=' +
 						item.PCLink +
 						'><span></span><span title=' + item.InfoContentAll +
