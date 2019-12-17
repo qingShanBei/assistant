@@ -397,7 +397,7 @@
 	display: none;
 	position: absolute;
 	top: 50px;
-	left: 25px;
+	left:17px;
 	width: 30px;
 	height: 30px;
 	font-family: MicrosoftYaHei;
@@ -434,22 +434,22 @@
 .lgAssistant-main .assistant-info-prompt {
 	display: none;
 	position: absolute;
-	top: -58px;
-	left: -19px;
-	width: 152px;
-	height: 90px;
-	font-family: MicrosoftYaHei;
-	font-size: 14px;
-	font-weight: normal;
-	font-stretch: normal;
-	letter-spacing: 0px;
-	color: #333333;
-	text-align: center;
-	line-height: 73px;
-	background: url(../images/气泡_0.png) no-repeat 0 0;
-	z-index: 1109;
-	background-position: center;
-	background-size: contain;
+    top: -62px;
+    left: -30px;
+    width: 169px;
+    height: 90px;
+    font-family: MicrosoftYaHei;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    letter-spacing: 0px;
+    color: #333333;
+    text-align: center;
+    line-height: 73px;
+    background: url(../images/气泡_0.png) no-repeat 0 0;
+    z-index: 1109;
+    background-position: center;
+    background-size: contain;
 }
 
 .lgAssistant-main .assistant-info-prompt:hover i {
@@ -2801,7 +2801,7 @@
 	height: 16px;
 	background: url(../images/personalSchedule/小图标_日期选择.png) no-repeat 207px 0;
 	position: absolute;
-	top: 5px;
+	top: 6px;
 	right: 0px;
 	z-index: 6;
 	cursor: pointer;
@@ -3094,7 +3094,7 @@
 	background-size: contain;
 	background-position: center;
 	vertical-align: middle;
-	margin: -2px 2px 0 0;
+	margin: 0px 1px 0 0;
 }
 
 .lgAssistant-main .popup-main2>div:nth-child(2) .new-schedule:hover i {
@@ -5012,7 +5012,7 @@
 	width: 16px;
 	height: 16px;
 	background: url("../images/contact/小图标_新建.png") no-repeat;
-	vertical-align: sub;
+	margin:  0 1px 0 0;
 }
 
 .lgAssistant-main .contact-right .contact-list2 .contact-type-text:hover i {

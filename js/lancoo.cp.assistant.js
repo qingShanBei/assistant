@@ -2597,7 +2597,7 @@ function AgassitantCallbackFunction(result) {
 	// 			canvasFn('打招呼');
 	// 			if (assistantPopupActive) {
 	// 				$('.assistant-popup').css('transition', 'all 0.25s ease-in-out');
-	// 				$('.assistant-popup').css('bottom', '49%');
+	// 				$('.assistant-popup').css('bottom', '53%');
 	// 				$('.assistant-popup').css('right', '50%');
 	// 				$('.assistant-popup').css('transform', 'scale(1)');
 	// 				$('.assistant-popup').css('opacity', '1');
@@ -2644,7 +2644,7 @@ function AgassitantCallbackFunction(result) {
 	// 			count = 0;
 	// 			if (assistantPopupActive) {
 	// 				$('.assistant-popup').css('transition', 'all 0.25s ease-in-out');
-	// 				$('.assistant-popup').css('bottom', '49%');
+	// 				$('.assistant-popup').css('bottom', '53%');
 	// 				$('.assistant-popup').css('right', '50%');
 	// 				$('.assistant-popup').css('transform', 'scale(1)');
 	// 				$('.assistant-popup').css('opacity', '1');
@@ -2661,7 +2661,6 @@ function AgassitantCallbackFunction(result) {
 	// 			};
 	// 		}
 	// 		
-	// 		console.log(111111111111111111111111111);
 	// 	}
 	// })
 	var count = 0; //动画待机计数
@@ -2781,7 +2780,7 @@ function AgassitantCallbackFunction(result) {
 			canvasFn('打招呼');
 			if (assistantPopupActive) {
 				$('.assistant-popup').css('transition', 'all 0.25s ease-in-out');
-				$('.assistant-popup').css('bottom', '49%');
+				$('.assistant-popup').css('bottom', '53%');
 				$('.assistant-popup').css('right', '50%');
 				$('.assistant-popup').css('transform', 'scale(1)');
 				$('.assistant-popup').css('opacity', '1');
@@ -2828,7 +2827,7 @@ function AgassitantCallbackFunction(result) {
 			count = 0;
 			if (assistantPopupActive) {
 				$('.assistant-popup').css('transition', 'all 0.25s ease-in-out');
-				$('.assistant-popup').css('bottom', '49%');
+				$('.assistant-popup').css('bottom', '53%');
 				$('.assistant-popup').css('right', '50%');
 				$('.assistant-popup').css('transform', 'scale(1)');
 				$('.assistant-popup').css('opacity', '1');
@@ -2914,7 +2913,7 @@ function AgassitantCallbackFunction(result) {
 		$('.assistant-remind-count').hide();
 		$('.assistant-info-prompt').hide();
 		$('.assistant-popup').css('transition', 'all 0.25s ease-in-out');
-		$('.assistant-popup').css('bottom', '49%');
+		$('.assistant-popup').css('bottom', '53%');
 		$('.assistant-popup').css('right', '50%');
 		$('.assistant-popup').css('transform', 'scale(1)');
 		$('.assistant-popup').css('opacity', '1');
@@ -3292,7 +3291,7 @@ function AgassitantCallbackFunction(result) {
 		$('.assistant-remind-count').hide();
 		$('.assistant-info-prompt').hide();
 		$('.assistant-popup').css('transition', 'all 0.25s ease-in-out');
-		$('.assistant-popup').css('bottom', '49%');
+		$('.assistant-popup').css('bottom', '53%');
 		$('.assistant-popup').css('right', '50%');
 		$('.assistant-popup').css('transform', 'scale(1)');
 		$('.assistant-popup').css('opacity', '1');
@@ -3382,30 +3381,35 @@ function AgassitantCallbackFunction(result) {
 						$('.popup-main1 ul li').eq(0).children().children().attr('class', 'info-unread4');
 					} else {
 						$('.popup-main1 ul li').eq(0).children().children().attr('class', '');
+						$('.popup-main1 ul li').eq(0).children().children().children().children().text('');
 					}
 					if (data.Data.NoticeCount != 0) {
 						$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
 						NoticeRemindCount = data.Data.NoticeCount;
 					} else {
 						$('.popup-main1 ul li').eq(1).children().children().attr('class', '');
+						$('.popup-main1 ul li').eq(1).children().children().children().children().text('');
 					}
 					if (data.Data.ChatCount != 0) {
 						$('.popup-main1 ul li').eq(3).children().children().attr('class', 'info-unread4');
 						ChatRemindCount = data.Data.ChatCount;
 					} else {
 						$('.popup-main1 ul li').eq(3).children().children().attr('class', '');
+						$('.popup-main1 ul li').eq(3).children().children().children().children().text('');
 					}
 					if (data.Data.MessageCount > 0) {
 						$('.popup-main1 ul li').eq(2).children().children().attr('class', 'info-unread4');
 						MessageRemindCount = data.Data.MessageCount;
 					} else {
 						$('.popup-main1 ul li').eq(2).children().children().attr('class', '');
+						$('.popup-main1 ul li').eq(2).children().children().children().children().text('');
 					}
 					if (data.Data.NewsCount != 0) {
 						$('.popup-main1 ul li').eq(4).children().children().attr('class', 'info-unread4');
 						NewsRemindCount = data.Data.NewsCount;
 					} else {
 						$('.popup-main1 ul li').eq(4).children().children().attr('class', '');
+						$('.popup-main1 ul li').eq(4).children().children().children().children().text('');
 					}
 
 				} else {
@@ -3474,13 +3478,20 @@ function AgassitantCallbackFunction(result) {
 					$('.popup-nav-ul li').eq(0).children('b').attr('class', 'info-unread');
 					if (data.Data.TodoListCount > 0) {
 						$('.popup-main1 ul li').eq(0).children().children().attr('class', 'info-unread2');
+						if(data.Data.TodoListCount>99){
+							data.Data.TodoListCount='...';
+						}
+						$('.popup-main1 ul li').eq(0).children().children().children().children().text(data.Data.TodoListCount);
 					} else {
 						$('.popup-main1 ul li').eq(0).children().children().attr('class', '');
 						$('.popup-main1 ul li').eq(0).children().children().children().children().text('');
 					}
 					if (data.Data.NoticeCount > 0) {
-
 						$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
+						if(data.Data.NoticeCount>99){
+							data.Data.NoticeCount='...';
+						}
+						$('.popup-main1 ul li').eq(1).children().children().children().children().text(data.Data.NoticeCount);
 
 					} else {
 						$('.popup-main1 ul li').eq(1).children().children().attr('class', '');
@@ -3488,18 +3499,30 @@ function AgassitantCallbackFunction(result) {
 					}
 					if (data.Data.ChatCount > 0) {
 						$('.popup-main1 ul li').eq(3).children().children().attr('class', 'info-unread4');
+						if(data.Data.ChatCount>99){
+							data.Data.ChatCount='...';
+						}
+						$('.popup-main1 ul li').eq(3).children().children().children().children().text(data.Data.ChatCount);
 					} else {
 						$('.popup-main1 ul li').eq(3).children().children().attr('class', '');
 						$('.popup-main1 ul li').eq(3).children().children().children().children().text('');
 					}
 					if (data.Data.MessageCount > 0) {
 						$('.popup-main1 ul li').eq(2).children().children().attr('class', 'info-unread4');
+						if(data.Data.MessageCount>99){
+							data.Data.MessageCount='...';
+						}
+						$('.popup-main1 ul li').eq(2).children().children().children().children().text(data.Data.MessageCount);
 					} else {
 						$('.popup-main1 ul li').eq(2).children().children().attr('class', '');
 						$('.popup-main1 ul li').eq(2).children().children().children().children().text('');
 					}
 					if (data.Data.NewsCount > 0) {
 						$('.popup-main1 ul li').eq(4).children().children().attr('class', 'info-unread4');
+						if(data.Data.NewsCount>99){
+							data.Data.NewsCount='...';
+						}
+						$('.popup-main1 ul li').eq(4).children().children().children().children().text(data.Data.NewsCount);
 
 					} else {
 						$('.popup-main1 ul li').eq(4).children().children().attr('class', '');
@@ -3516,7 +3539,6 @@ function AgassitantCallbackFunction(result) {
 			}
 		})
 	}
-
 
 	// 个人日程
 	//日程初始化参数
@@ -4129,7 +4151,7 @@ function AgassitantCallbackFunction(result) {
 		$(this).css('border', 'solid 1px #bac7d9');
 	});
 
-	$('.schedule-topic').keyup(function () {
+	$('.schedule-topic').keypress(function () {
 		var num = $(this).val().length;
 		$('.schedule-topic-length').text(num + '/50');
 		$('.schedule-topic').css('color', '#333');
@@ -4153,7 +4175,7 @@ function AgassitantCallbackFunction(result) {
 			$('.schedule-clocks-time').val(999);
 		}
 	});
-	$('.schedule-clocks-time').keyup(function () {
+	$('.schedule-clocks-time').keypress(function () {
 		if ($('.schedule-clocks-time').val() < 1) {
 			$('.schedule-clocks-time').val(1);
 		}
@@ -4560,7 +4582,10 @@ function AgassitantCallbackFunction(result) {
 	var table1TotalCount = 0;
 	//学情总结每个班级表动态生成
 	function summaryTable0Fn($this, page,state) {
-		
+		if(page!=$('.summary-popup0-class').attr('data-page')){
+			$('.summary-popup0-class').attr('data-page',page);
+			$('.summary-table1 tbody').scrollTop(0);
+		}
 		summaryStartTime = summaryStartTime.slice(0, 10) + ' 00:00:00';
 		summaryEndTime = summaryEndTime.slice(0, 10) + ' 00:00:00';
 		$('.assistant-empty3').hide();
@@ -4674,9 +4699,6 @@ function AgassitantCallbackFunction(result) {
 			} else {
 				$('.summary-table1 tbody').css('overflow-y', 'hidden');
 				$('.summary-table1 thead').css('width', '100%');
-			}
-			if(page!=$('.summary-popup0-class').attr('data-page')){
-				$('.summary-popup0-class').attr('data-page',page);
 			}
 			if (table1TotalCount > 10) {
 				$('.summary-table1 tbody').append($('<div class="frame_pager_center summary-pager1"></div>'));
@@ -5536,7 +5558,7 @@ function AgassitantCallbackFunction(result) {
 	});
 
 	//左边搜索框清除搜索内容
-	$('.contact-search-input').keyup(function () {
+	$('.contact-search-input').keypress(function () {
 		if ($(this).val()) {
 			$('.contact-search-clear').show();
 		} else {
@@ -5555,7 +5577,8 @@ function AgassitantCallbackFunction(result) {
 		$('.contact-search-clear').hide();
 	});
 	// 左边回车搜索
-	$('.contact-search-input').keyup(function (event) {
+	$('.contact-search-input').keypress(function (event) {
+		
 		console.log(event);
 		clearTimeout(keyupTimer);
 		if (event.keyCode == 13) {
@@ -5571,7 +5594,7 @@ function AgassitantCallbackFunction(result) {
 				normal('.contact-left-search', 3)
 				$('.contact-search-input').focus();
 			}
-
+			event.preventDefault();
 		}
 		if ($('.contact-search-input').val().replace(/\s*/g, "") && keyupValue != $('.contact-search-input').val()) {
 			keyupTimer = setTimeout(function () {
@@ -5586,7 +5609,7 @@ function AgassitantCallbackFunction(result) {
 			}, 500)
 		}
 
-
+		
 	});
 
 
@@ -5723,7 +5746,7 @@ function AgassitantCallbackFunction(result) {
 	});
 
 
-	$('.contact-frequent-input').keyup(function () {
+	$('.contact-frequent-input').keypress(function () {
 		clearTimeout(keyupTimer);
 		if (event.keyCode == 13) {
 			if (!$('.contact-frequent-input').val().replace(/\s*/g, "")) {
@@ -5734,6 +5757,7 @@ function AgassitantCallbackFunction(result) {
 				contactSearchFn($('.contact-frequent-input').val(), 2, 0);
 				keyupValue = $('.contact-frequent-input').val();
 			}
+			event.preventDefault();
 		}
 		if ($('.contact-frequent-input').val().replace(/\s*/g, "") && keyupValue != $('.contact-frequent-input').val()) {
 			keyupTimer = setTimeout(function () {
@@ -7323,7 +7347,6 @@ function AgassitantCallbackFunction(result) {
 						ModuleID: 2,
 					}, function () {
 						assistantTimeUpdata = true;
-						//、11111111111111111111111111111111111111
 						if ($('.assistant-popup').css('opacity') == '0') {
 							againCountRemindFn();
 						} else {
@@ -8254,7 +8277,14 @@ function AgassitantCallbackFunction(result) {
 							scheduleClock = 'schedule-clock';
 						}
 					} else if (item.ScheduleState == 2) {
+						scheduleClassEdit = 'schedule-edit';
 						scheduleClass5 = 'now-li ' + item.ScheduleID;
+						if (item.ScheduleType != 0 && item.ScheduleType != 10) {
+							scheduleClassDel = 'schedule-del';
+						}
+						if (item.RemindFlag != -1) {
+							scheduleClock = 'schedule-clock';
+						}
 					}
 					item.ScheduleTypeName = htmlEncode(item.ScheduleTypeName);
 					item.ScheduleContentTitle = '"' + item.ScheduleContent + '"';
@@ -9460,8 +9490,7 @@ function AgassitantCallbackFunction(result) {
 			}
 		});
 	};
-
-
+	
 	//通讯录获取联系人信息 参数id为联系人UserID，type为联系人UserType
 	function contactIofoFn(id, type) {
 		$('.assistant-popup-loading').show();
@@ -9493,7 +9522,8 @@ function AgassitantCallbackFunction(result) {
 					$('.contact-message-ul li').eq(1).attr('class', 'contact-message-empty');
 					$('.lgAssistant-main-QQ').hide();
 				} else {
-					$('.lgAssistant-main-QQ').attr('href', 'tencent://message/?uin=' + data.QQ + '&Site=唤起QQ&Menu=yes');
+					$('.lgAssistant-main-QQ').attr('data-QQ', data.QQ);
+					$('.lgAssistant-main-QQ').attr('name', 'QQ');
 					$('.lgAssistant-main-QQ').show();
 				}
 				if (!data.Weixin) {
@@ -9514,6 +9544,7 @@ function AgassitantCallbackFunction(result) {
 					$('.lgAssistant-main-WB').attr('target', '_blank');
 					$('.lgAssistant-main-WB').show();
 				}
+			
 				$('.contact-info-main div>span>span>i').attr('class', sexClass);
 				data.UserID = htmlEncode(data.UserID);
 				data.GroupName = htmlEncode(data.GroupName);
@@ -9535,13 +9566,22 @@ function AgassitantCallbackFunction(result) {
 				$('#contact-copy-text4').text(data.Weibo);
 				$('.contact-info').show();
 				$('.contact-message-ul li a').off().click(function () {
+					var $this =$(this);
 					ajaxN('PsnMgr/Contact/OperateRecentContact', 'post', {
 						"OperateFlag": 1, //  1添加  -2 清空
 						"SecretKey": "55555",
 						"ContactID": $('.contact-info-id').text(), //  所要添加的常用联系人ID
 						"ContactUserType": $('.contact-info-id').attr('data-type'), //  所要添加的常用联系人用户类型   0或6代表管理员  1教师 2学生 3家长
 					}, function (data) {
-
+						if( $this.attr('name')=='QQ'){
+							assistantRemindFn(['是否已安装最新版QQ客户端？','确定','安装'],function(str){
+								if(str){
+									window.open('tencent://message/?uin=' + $this.attr('data-QQ') + '&Site=qq&Menu=yes','_blank');
+								}else if(str=='0'){
+									window.open('https://im.qq.com/pcqq/','_blank');
+								}
+							})
+						}
 					})
 				});
 				$('.contact-info div').eq(1).animate({
