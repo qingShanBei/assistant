@@ -47,12 +47,12 @@
 	transition: all 0s;
 	cursor: pointer;
 	transform-origin: left top 0;
+	opacity: 0.9;
 }
 
 #Assistant_infoCenter>b:nth-child(1):hover {
-	opacity: 0.8;
+	opacity: 1;
 }
-
 #Assistant_infoCenter>i:nth-child(2) {
 	display: block;
 	width: 90px;
@@ -66,13 +66,11 @@
 	transition: all 0s;
 	transform-origin: left top 0;
 }
-
 .Assistant_infoCenter_sprite_i {
 	animation: Assistant_infoCenter_frame_i 1s steps(100) both infinite;
 	animation-direction: alternate;
 	-webkit-animation-direction: alternate;
 	animation-timing-function: ease;
-
 }
 
 .Assistant_infoCenter_sprite_start {
@@ -85,7 +83,6 @@
 	animation-direction: alternate;
 	-webkit-animation-direction: alternate;
 	animation-timing-function: ease;
-
 }
 
 .Assistant_infoCenter_sprite_start16 {
@@ -193,16 +190,15 @@
 	outline: none;
 	resize: none;
 	height: 0;
-	width: 100%;
+	width: 0;
 	position: absolute;
 	z-index: 1080;
-	right: -1px;
-	top: 9px;
 	cursor: default;
 	line-height: 0;
 	transform: scale(0);
 	opacity: 0;
-
+	text-align: left;
+	display: none;
 }
 
 .lgAssistant-infoCenter-main .assistant-box .assistant-popup,
@@ -296,14 +292,14 @@
 
 .lgAssistant-infoCenter-main .assistant-popup {
 	/* display: none; */
-	position: absolute;
+	/* position: absolute;
 	bottom: 16%;
-	right: 53%;
+	right: 53%; */
 	width: 850px;
 	height: 510px;
 	box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.32);
 	z-index: 10;
-	border-radius: 9px 9px 0 0;
+	border-radius: 9px;
 	background: #fff;
 
 }
@@ -380,7 +376,7 @@
 	cursor: pointer;
 	margin: 0;
 	padding: 0;
-	line-height: 25px;
+	line-height: 24px;
 	height: 24px;
 }
 
@@ -732,9 +728,9 @@
 
 .lgAssistant-infoCenter-main .assistant-popup-loading {
 	position: absolute;
-	top: 78px;
+	top: 38px;
 	left: 0;
-	height: 440px;
+	height: 473px;
 	width: 100%;
 	z-index: 1081;
 	/* display: none; */
@@ -762,10 +758,11 @@
 	right: 0px;
 	/* width: 100%; */
 	width: 100%;
-	height: 483px;
+	height: 473px;
 	display: none;
 	background: rgba(0, 0, 0, .3);
 	z-index: 1099;
+	border-radius: 0 0 9px 9px;
 	overflow: hidden;
 }
 
@@ -810,8 +807,8 @@
 
 .lgAssistant-infoCenter-main .setting-popup div:nth-child(2)>div:nth-child(4) {
 	position: absolute;
-	top: 45px;
-	width: 99%;
+	top: 38px;
+	width: 97%;
 	height: 20px;
 	background: rgba(255, 255, 255, .7);
 	z-index: 1081;
@@ -845,7 +842,7 @@
 	margin-left: 250px;
 
 }
-
+.lgAssistant-infoCenter-main .news-box .pager21,
 .lgAssistant-infoCenter-main .message-box .pager3,
 .lgAssistant-infoCenter-main .notice-box .pager2,
 .lgAssistant-infoCenter-main .todo-box .pager1 {
@@ -863,7 +860,7 @@
 	;
 
 }
-
+.lgAssistant-infoCenter-main .lgAssistant-infoCenter-main .news-box .pager21 .pagination,
 .lgAssistant-infoCenter-main .lgAssistant-infoCenter-main .message-box .pager3 .pagination,
 .lgAssistant-infoCenter-main .notice-box .pager2 .pagination,
 .lgAssistant-infoCenter-main .todo-box .pager1 .pagination {
@@ -1274,7 +1271,7 @@
 }
 
 .lgAssistant-infoCenter-main .infoCenter-option-box {
-	height: 386px;
+	height: 378px;
 	width: 100%;
 	/* background: #333333; */
 	overflow-y: scroll;
@@ -1619,10 +1616,13 @@
 
 .lgAssistant-infoCenter-main .message-div span:nth-child(4) {
 	display: inline-block;
-	width: 164px;
-	text-align: center;
-	/* margin-right: 21px; */
-	float: right;
+    width: 164px;
+    text-align: center;
+    /* margin-right: 21px; */
+    float: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .lgAssistant-infoCenter-main .message-div span:nth-child(3) {
@@ -1631,6 +1631,9 @@
 	width: 145px;
 	margin-right: 17px;
 	float: right;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 	/* margin-left: 21px; */
 }
 
@@ -1839,7 +1842,7 @@
 .lgAssistant-infoCenter-main .chat-clear,
 .lgAssistant-infoCenter-main .notice-clear {
 	position: absolute;
-	bottom: -110px;
+	bottom: -102px;
 	height: 11px;
 	width: 810px;
 	box-sizing: content-box;
@@ -1859,6 +1862,7 @@
 	letter-spacing: 0px;
 	color: #0099ff;
 	cursor: pointer;
+	border-radius: 0 0 9px 9px;
 }
 
 .lgAssistant-infoCenter-main .chat-clear b,
@@ -1933,12 +1937,13 @@
 
 .lgAssistant-infoCenter-main .notice-div span:nth-child(5) {
 	position: absolute;
-	top: 0;
+	top: 50%;
 	right: 285px;
 	display: none;
 	background: rgba(229, 243, 255, 0.8);
-	height: 52px;
-	line-height: 52px;
+	height: 48px;
+	line-height: 48px;
+	transform: translate(0px,-50%);
 }
 
 .lgAssistant-infoCenter-main .notice-div span:nth-child(5) i {
@@ -1950,8 +1955,6 @@
 	color: #0099ff;
 	font-style: normal;
 	cursor: pointer;
-
-
 }
 
 .lgAssistant-infoCenter-main .popup-main22 .schedule-choose-week {
@@ -2012,29 +2015,116 @@
 
 .lgAssistant-infoCenter-main .news {
 	background: #fff;
-	height: 370px;
+	height: 407px;
 	overflow: hidden;
 	overflow-y: scroll;
+	/* padding-top: 19px; */
 }
 
+.lgAssistant-infoCenter-main  .news .news-type-span{
+	font-family: MicrosoftYaHei;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    letter-spacing: 0px;
+    color: #999999;
+    margin: 0 6px 0 36px;
+    float: left;
+    display: inline-block;
+    clear: both;
+    width: 40px;
+    height: 20px;
+	/* position: absolute;    */
+	line-height: 1.2;    
+}
+.lgAssistant-infoCenter-main  .news .news-type-ul{
+	box-sizing: content-box;
+    float: left;
+    width: 750px;
+    /* top: 0;
+    left:77px; */
+    /* line-height: 1.3; */
+}
+.lgAssistant-infoCenter-main  .news .news-type{
+	padding-bottom: 10px;
+}
+.lgAssistant-infoCenter-main  .news .news-type-ul li{
+	display: inline-block;
+	margin: 0 25px 10px 0;
+	font-size: 14px;
+	font-weight: normal;
+	letter-spacing: 0px;
+	color: #333333;
+	position: relative;
+	cursor: pointer;
+	line-height: 1.2;
+}
+.lgAssistant-infoCenter-main  .news .news-type-ul li:hover{
+	color: #ff6600;
+}
+.lgAssistant-infoCenter-main  .news .news-type-ul .news-type-choose{
+	color: #ff6600;
+}
+.lgAssistant-infoCenter-main  .news .news-type-ul .news-type-choose b{
+	display: inline-block;
+    width: 88%;
+    top: 20px;
+    height: 2px;
+    background-color: #ff6600;
+    position: absolute;
+    border-radius: 1px;
+    left: 6%;
+}
 .lgAssistant-infoCenter-main .news-div {
 	box-sizing: content-box;
 	padding: 15px 0 15px 24px;
 	cursor: pointer;
+	display: inline-block;
+	width:99%;
 }
 
-.lgAssistant-infoCenter-main .news-div span:nth-child(1) {
+.lgAssistant-infoCenter-main .news-div img:nth-child(1) {
 	display: inline-block;
 	width: 140px;
 	height: 95px;
-	/* background: #131231; */
 	float: left;
 	/* 让背景图基于容器大小伸缩 */
 	/* 		background-position: center;
 	background-size: contain; */
-	background-size: 100% 100%;
+	/* background-size: 100% 100%; */
 }
-
+.lgAssistant-infoCenter-main .news-div-empty{
+	position: absolute;
+    width: 88%;
+    height: 200px;
+    background: #fff;
+    /* z-index: 1080; */
+    top: 212px;
+    left: 8px;
+    cursor: pointer;
+}
+.lgAssistant-infoCenter-main .news-div-empty i{
+	display: inline-block;
+    position: relative;
+    width: 192px;
+    height: 162px;
+    /* top: 50%; */
+    left: 50%;
+    transform: translate(-50%, 0);
+	background-image: url(../images/暂时还没有待办事项哦~.png);
+	
+}
+.lgAssistant-infoCenter-main .news-div-empty p{
+	width: 100%;
+    text-align: center;
+    font-family: MicrosoftYaHei;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 48px;
+    letter-spacing: 0px;
+    color: #9fb1ce;
+}
 .lgAssistant-infoCenter-main .news-div span:nth-child(2) {
 	float: left;
 	display: inline-block;
@@ -2042,39 +2132,59 @@
 	font-family: MicrosoftYaHei-Bold;
 }
 
-.lgAssistant-infoCenter-main .news-div h6 {
+.lgAssistant-infoCenter-main .news-div .ph6 {
 	font-size: 14px;
-	line-height: 14px;
-	color: #333333;
-	margin-top: 9px;
-	margin-left: 12px;
-	width: 350px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+    line-height: 23px;
+    color: #333333;
+    margin-left: 12px;
+    width: 550px;
+    height: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
-
+.lgAssistant-infoCenter-main .news-div .ph6 b{
+	font-family: MicrosoftYaHei;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 14px;
+	letter-spacing: 0px;
+	color: #ff6600;
+	margin-right: 4px;
+}
 .lgAssistant-infoCenter-main .news-div span>p:nth-child(2) {
 	font-size: 14px;
-	line-height: 18px;
-	color: #666666;
-	margin-top: 9px;
-	margin-left: 12px;
-	width: 462px;
-	height: 33px;
+    line-height: 22px;
+    color: #888888;
+    margin-top: 9px;
+    margin-left: 12px;
+    width: 620px;
+    height: 38px;
 }
 
 .lgAssistant-infoCenter-main .news-div span>p:nth-child(3) {
-	font-size: 12px;
 	color: #b8b8b8;
 	margin-top: 9px;
 	margin-left: 12px;
+	font-family: MicrosoftYaHei;
+	font-size: 12px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
 }
-
+.lgAssistant-infoCenter-main .news-div span>p:nth-child(3) b{
+	font-family: MicrosoftYaHei;
+	font-size: 12px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #b8b8b8;
+	margin-right: 21px;
+}
 .lgAssistant-infoCenter-main .news-div:hover {
 	background: #e5f3ff;
 }
-
 .lgAssistant-infoCenter-main .info-unread2 {
 	display: inline-block;
 	width: 6px;
@@ -2139,11 +2249,12 @@
 .lgAssistant-infoCenter-main .infoCenter-empty {
 	position: absolute;
 	width: 100%;
-	height: 433px;
+	height: 423px;
 	background: #fff;
 	z-index: 1080;
 	top: 87px;
 	display: none;
+	border-radius: 9px;
 }
 
 .lgAssistant-infoCenter-main .infoCenter-empty i {

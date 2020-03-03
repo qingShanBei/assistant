@@ -328,4 +328,5 @@
             opts.callback(current_page, containers);
         }
     } // End of $.fn.pagination block
+   
 })(jQuery);

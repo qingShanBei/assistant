@@ -346,10 +346,10 @@
 
 .lgAssistant-main .popup-nav-list .assistant-active {
 	background-image: linear-gradient(0deg,
-		#61dcff 0%,
-		#0871f8 100%),
+			#61dcff 0%,
+			#0871f8 100%),
 		linear-gradient(#e5fffa,
-		#e5fffa);
+			#e5fffa);
 	background-blend-mode: normal,
 		normal;
 }
@@ -397,7 +397,7 @@
 	display: none;
 	position: absolute;
 	top: 50px;
-	left:17px;
+	left: 17px;
 	width: 30px;
 	height: 30px;
 	font-family: MicrosoftYaHei;
@@ -423,33 +423,33 @@
 .lgAssistant-main .assistant-remind-count ul li {
 	font-weight: 700;
 	color: #499e37;
-	letter-spacing:0px;
+	letter-spacing: 0px;
 }
 
 .lgAssistant-main .assistant-remind-count ul {
 	transition: all 1s;
-	letter-spacing:0px;
+	letter-spacing: 0px;
 }
 
 .lgAssistant-main .assistant-info-prompt {
 	display: none;
 	position: absolute;
-    top: -62px;
-    left: -30px;
-    width: 169px;
-    height: 90px;
-    font-family: MicrosoftYaHei;
-    font-size: 14px;
-    font-weight: normal;
-    font-stretch: normal;
-    letter-spacing: 0px;
-    color: #333333;
-    text-align: center;
-    line-height: 73px;
-    background: url(../images/气泡_0.png) no-repeat 0 0;
-    z-index: 1109;
-    background-position: center;
-    background-size: contain;
+	top: -62px;
+	left: -30px;
+	width: 169px;
+	height: 90px;
+	font-family: MicrosoftYaHei;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #333333;
+	text-align: center;
+	line-height: 73px;
+	background: url(../images/气泡_0.png) no-repeat 0 0;
+	z-index: 1109;
+	background-position: center;
+	background-size: contain;
 }
 
 .lgAssistant-main .assistant-info-prompt:hover i {
@@ -486,10 +486,12 @@
 .assistant-remind-ul {
 	position: relative;
 	transition: all 1s ease;
-	letter-spacing:0px;
+	letter-spacing: 0px;
 }
-.assistant-remind-ul li , .assistant-remind-ul li b{
-	letter-spacing:0px;
+
+.assistant-remind-ul li,
+.assistant-remind-ul li b {
+	letter-spacing: 0px;
 }
 
 .assistant-remind-ul li:hover {
@@ -501,7 +503,7 @@
 .assistant-remind-ul li:hover b {
 	color: #FF6600;
 	text-decoration: underline;
-	
+
 }
 
 .lgAssistant-main .assistant-schedule-prompt .schedule-prompt-close {
@@ -771,15 +773,21 @@
 }
 
 .lgAssistant-main .popup-nav-list ul li:nth-child(3) i {
+	background-image: url("../images/模块图标_我的笔记.png");
+}
+.lgAssistant-main .popup-nav-list ul li:nth-child(4) i {
 	background-image: url("../images/模块图标_学情总结.png");
 }
-
-.lgAssistant-main .popup-nav-list ul li:nth-child(4) i {
+.lgAssistant-main .popup-nav-list ul li:nth-child(5) i {
 	background-image: url("../images/模块图标_通讯录.png");
 }
 
-.lgAssistant-main .popup-nav-list ul li:nth-child(5) i {
+.lgAssistant-main .popup-nav-list ul li:nth-child(6) i {
 	background-image: url("../images/模块图标_教务窗口.png");
+}
+
+.lgAssistant-main .popup-nav-list ul .report-img {
+	background-image: url("../images/模块图标_个人报告.png");
 }
 
 .lgAssistant-main .popup-nav-list .assistant-popup-weather .assistant-weather31 {
@@ -1287,6 +1295,7 @@
 }
 
 .lgAssistant-main .contact-li .pager4,
+.lgAssistant-main .news-box .pager21,
 .lgAssistant-main .message-box .pager3,
 .lgAssistant-main .notice-box .pager2,
 .lgAssistant-main .todo-box .pager1 {
@@ -1303,7 +1312,8 @@
 
 } */
 .lgAssistant-main .contact-li .pager4 .pagination,
-.lgAssistant-main  .lgAssistant-main .message-box .pager3 .pagination,
+.lgAssistant-main  .news-box .pager21 .pagination,
+.lgAssistant-main  .message-box .pager3 .pagination,
 .lgAssistant-main .notice-box .pager2 .pagination,
 .lgAssistant-main .todo-box .pager1 .pagination {
 	bottom: 20px;
@@ -1713,13 +1723,15 @@
 	top: 1px;
 	line-height: 12px;
 }
+
 .lgAssistant-main .todo-box .todo-div .orange12 {
 	color: #ff6600;
-	background-color:rgba(255,102, 0, .3);
+	background-color: rgba(255, 102, 0, .3);
 	position: relative;
 	top: 1px;
 	line-height: 12px;
 }
+
 .lgAssistant-main .todo-box .todo-div .pink12 {
 	color: #ff37ce;
 	background-color: #ffd7f5;
@@ -1737,12 +1749,13 @@
 }
 
 .lgAssistant-main .todo-box .todo-div .blue26 {
-		color: #ff6600;
-	background-color:rgba(255,102, 0, .3);
+	color: #ff6600;
+	background-color: rgba(255, 102, 0, .3);
 	position: relative;
 	top: 1px;
 	line-height: 26px;
 }
+
 .lgAssistant-main .todo-box .todo-div .orange26 {
 	color: #374aff;
 	background-color: #D7DBFF;
@@ -1750,6 +1763,7 @@
 	top: 1px;
 	line-height: 26px;
 }
+
 .lgAssistant-main .todo-box .todo-div .pink26 {
 	color: #ff37ce;
 	background-color: #ffd7f5;
@@ -1995,7 +2009,7 @@
 	/* margin-right: 21px; */
 	position: absolute;
 	top: 50%;
-	right: 189px;
+	right: 195px;
 	transform: translate(0px, -50%);
 	color: #999;
 }
@@ -2016,35 +2030,40 @@
 	margin-right: 7px;
 	float: right;
 	color: #999;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
 @keyframes lgAssistantNewsmove {
 	0% {
-		transform: translate(0,0);
+		transform: translate(0, 0);
 	}
 
 
 
 	50% {
-		transform: translate(0,1px);
+		transform: translate(0, 1px);
 	}
 
 
 	100% {
-		transform: translate(0,0);
+		transform: translate(0, 0);
 	}
 }
+
 .lgAssistant-main .message-div .newfont i {
 	display: inline-block;
 	position: relative;
-    width: 30px;
-    height: 10px;
-    background-image: url(../images/infoCenter/NEW.png);
-    background-position: center;
-    background-size: contain;
-    vertical-align: middle;
-    margin-left: 7px;
-    top: -8px;
-    background-repeat: no-repeat;
+	width: 30px;
+	height: 10px;
+	background-image: url(../images/infoCenter/NEW.png);
+	background-position: center;
+	background-size: contain;
+	vertical-align: middle;
+	margin-left: 7px;
+	top: -8px;
+	background-repeat: no-repeat;
 	animation: lgAssistantNewsmove 1s both infinite;
 	animation-direction: alternate;
 	-webkit-animation-direction: alternate;
@@ -2249,9 +2268,11 @@
 	vertical-align: middle;
 	background: url("../images/小图标_删除.png") no-repeat;
 }
-.lgAssistant-main .notice-clear b{
+
+.lgAssistant-main .notice-clear b {
 	margin-top: -2px;
 }
+
 .lgAssistant-main .chat-clear span:hover,
 .lgAssistant-main .notice-clear span:hover {
 	color: #FF6600;
@@ -2394,25 +2415,96 @@
 	overflow: hidden;
 	overflow-y: scroll;
 }
-
+.lgAssistant-main  .news .news-type-span{
+	font-family: MicrosoftYaHei;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #999999;    
+	margin: 0 12px 0  27px;  
+	float: left;         
+}
+.lgAssistant-main  .news .news-type-ul{
+	float: left ;
+	width: 750px;
+}
+.lgAssistant-main  .news .news-type-ul li{
+	display: inline-block;
+	margin: 0 25px 10px 0;
+	font-size: 14px;
+	font-weight: normal;
+	letter-spacing: 0px;
+	color: #333333;
+	position: relative;
+	cursor: pointer;
+}
+.lgAssistant-main  .news .news-type-ul li:hover{
+	color: #ff6600;
+}
+.lgAssistant-main  .news .news-type-ul .news-type-choose{
+	color: #ff6600;
+}
+.lgAssistant-main  .news .news-type-ul .news-type-choose b{
+	display: inline-block;
+    width: 88%;
+    top: 20px;
+    height: 2px;
+    background-color: #ff6600;
+    position: absolute;
+    border-radius: 1px;
+    left: 6%;
+}
 .lgAssistant-main .news-div {
 	box-sizing: content-box;
 	padding: 15px 0 15px 24px;
 	cursor: pointer;
+	display: inline-block;
+	width:99%;
 }
 
-.lgAssistant-main .news-div span:nth-child(1) {
+.lgAssistant-main .news-div img:nth-child(1) {
 	display: inline-block;
 	width: 140px;
 	height: 95px;
-	/* background: #131231; */
 	float: left;
 	/* 让背景图基于容器大小伸缩 */
 	/* 		background-position: center;
 	background-size: contain; */
-	background-size: 100% 100%;
+	/* background-size: 100% 100%; */
 }
-
+.lgAssistant-main .news-div-empty{
+	position: absolute;
+    width: 100%;
+    height: 200px;
+    background: #fff;
+    /* z-index: 1080; */
+    top: 159px;
+	left: -23px;
+	cursor: pointer;
+}
+.lgAssistant-main .news-div-empty i{
+	display: inline-block;
+    position: relative;
+    width: 192px;
+    height: 162px;
+    /* top: 50%; */
+    left: 50%;
+    transform: translate(-50%, 0);
+	background-image: url(../images/暂时还没有待办事项哦~.png);
+	
+}
+.lgAssistant-main .news-div-empty p{
+	width: 100%;
+    text-align: center;
+    font-family: MicrosoftYaHei;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 48px;
+    letter-spacing: 0px;
+    color: #9fb1ce;
+}
 .lgAssistant-main .news-div span:nth-child(2) {
 	float: left;
 	display: inline-block;
@@ -2420,35 +2512,56 @@
 	font-family: MicrosoftYaHei-Bold;
 }
 
-.lgAssistant-main .news-div h6 {
+.lgAssistant-main .news-div .ph6 {
 	font-size: 14px;
-	line-height: 14px;
-	color: #333333;
-	margin-top: 9px;
-	margin-left: 12px;
-	width: 350px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+    line-height: 23px;
+    color: #333333;
+    margin-left: 12px;
+    width: 550px;
+    height: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
-
+.lgAssistant-main .news-div .ph6 b{
+	font-family: MicrosoftYaHei;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 14px;
+	letter-spacing: 0px;
+	color: #ff6600;
+	margin-right: 4px;
+}
 .lgAssistant-main .news-div span>p:nth-child(2) {
 	font-size: 14px;
-	line-height: 18px;
-	color: #666666;
-	margin-top: 9px;
-	margin-left: 12px;
-	width: 462px;
-	height: 33px;
+    line-height: 22px;
+    color: #888888;
+    margin-top: 9px;
+    margin-left: 12px;
+    width: 620px;
+    height: 38px;
 }
 
 .lgAssistant-main .news-div span>p:nth-child(3) {
-	font-size: 12px;
 	color: #b8b8b8;
 	margin-top: 9px;
 	margin-left: 12px;
+	font-family: MicrosoftYaHei;
+	font-size: 12px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
 }
-
+.lgAssistant-main .news-div span>p:nth-child(3) b{
+	font-family: MicrosoftYaHei;
+	font-size: 12px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #b8b8b8;
+	margin-right: 21px;
+}
 .lgAssistant-main .news-div:hover {
 	background: #e5f3ff;
 }
@@ -2456,7 +2569,7 @@
 .lgAssistant-main .info-unread2 {
 	display: inline-block;
 	/* width: 17px; */
-	height: 12px;
+	height: 14px;
 	color: #fff;
 	background-color: #ff0000;
 	border-radius: 10px;
@@ -2490,8 +2603,8 @@
 	font-size: 12px;
 	color: #fff;
 	-webkit-text-fill-color: #fff;
-	height: 12px;
-	line-height: 12px;
+	height: 14px;
+	line-height: 14px;
 	font-weight: 500;
 	transform: scale(0.8);
 }
@@ -2499,7 +2612,7 @@
 .lgAssistant-main .info-unread4 {
 	display: inline-block;
 	/* width: 17px; */
-	height: 12px;
+	height: 14px;
 	color: #fff;
 	background-color: #ff0000;
 	border-radius: 10px;
@@ -3264,7 +3377,7 @@
 
 .lgAssistant-main .popup-main2>div:nth-child(4) ul li>span:nth-child(3) {
 	display: inline-block;
-	width: 270px;
+	width: 274px;
 	line-height: 16px;
 	vertical-align: middle;
 	font-size: 14px;
@@ -3273,11 +3386,23 @@
 
 .lgAssistant-main .popup-main2>div:nth-child(4) ul li>span:nth-child(3) p {
 	display: inline-block;
-	max-width: 240px;
+	max-width: 230px;
 	word-wrap: break-word;
 	box-sizing: content-box;
-	margin: 9px 0 9px 0;
+	margin: 8px 0 11px 0;
 
+}
+
+.lgAssistant-main .popup-main2>div:nth-child(4) ul li>span:nth-child(3) b {
+	position: absolute;
+	display: none;
+	top: 50%;
+	transform: translate(0, -50%);
+	font-family: MicrosoftYaHei;
+	font-size: 14px;
+	font-weight: normal;
+	letter-spacing: 0px;
+	color: #ff0000;
 }
 
 .lgAssistant-main .popup-main2>div:nth-child(4) ul li .schedule-clock {
@@ -3516,9 +3641,11 @@
 	letter-spacing: 0px;
 	color: #9fb1ce;
 }
-.lgAssistant-main .personal-schedule-empty p{
+
+.lgAssistant-main .personal-schedule-empty p {
 	color: #9fb1ce;
 }
+
 .lgAssistant-main .personal-schedule-empty i {
 	display: inline-block;
 	width: 166px;
@@ -3720,20 +3847,20 @@
 	border-style: solid;
 	border-width: 1px;
 	border-image-source: linear-gradient(0deg,
-		#1ad5ff 0%,
-		#14b5f6 45%,
-		#0e94ec 100%);
+			#1ad5ff 0%,
+			#14b5f6 45%,
+			#0e94ec 100%);
 }
 
 .lgAssistant-main .popup-main3 .summary-choose-time .summary-time-active {
 	border-image-source: linear-gradient(0deg,
-		#1ad5ff 0%,
-		#14b5f6 45%,
-		#0e94ec 100%);
+			#1ad5ff 0%,
+			#14b5f6 45%,
+			#0e94ec 100%);
 	background-image: linear-gradient(0deg,
-		#1ad5ff 0%,
-		#14b5f6 45%,
-		#0e94ec 100%);
+			#1ad5ff 0%,
+			#14b5f6 45%,
+			#0e94ec 100%);
 	box-shadow: inset 0px -2px 5px 0px rgba(0, 156, 255, 0.56);
 	color: #fff;
 	border: 1px solid #0e94ec;
@@ -3774,13 +3901,13 @@
 	width: 14px;
 	height: 12px;
 	vertical-align: middle;
-	background: url(../images/summary/详情.png);
+	background: url(../images/summary/详情.png) no-repeat;
 	cursor: pointer;
 }
 
 .lgAssistant-main .popup-main3 td:hover i {
 
-	background: url(../images/summary/详情_51.png);
+	background: url(../images/summary/详情_51.png) no-repeat;
 }
 
 .lgAssistant-main .summary-title span {
@@ -3877,9 +4004,9 @@
 	font-size: 12px;
 	color: #ffffff;
 	cursor: pointer;
-	background-image: linear-gradient(0deg, #008aff 0%, #40cbff 100%), linear-gradient( #0099ff, #0099ff);
-    background-blend-mode: normal, normal;
-    border-radius: 3px;
+	background-image: linear-gradient(0deg, #008aff 0%, #40cbff 100%), linear-gradient(#0099ff, #0099ff);
+	background-blend-mode: normal, normal;
+	border-radius: 3px;
 }
 
 .summary-time-active .summary-input-time span:hover {
@@ -4071,6 +4198,21 @@
 	z-index: 666;
 }
 
+.summary-popup1-AllAttendence {
+	margin-right: 24px;
+	color: #999;
+}
+
+.summary-popup1-LessonAbsence {
+	margin-right: 24px;
+}
+
+.colorblock,
+.summary-popup2-CompleteHomework,
+.summary-popup3-PassPlan {
+	color: #999;
+}
+
 .lgAssistant-main .assistant-box .popup-main3 .red {
 	color: #ff0000;
 }
@@ -4125,8 +4267,23 @@
 	line-height: 1.2;
 	margin: 0 3px 0 0;
 }
-
-.lgAssistant-main .popup-main3 .assistant-select-span {
+.lgAssistant-main  .assistant-select-span {
+	display: inline-block;
+	border: solid 1px #bac7d9;
+	padding-right: 40px;
+	height: 24px;
+	background-color: #ffffff;
+	border-radius: 12px;
+	border: solid 1px #bac7d9;
+	padding-left: 12px;
+	cursor: pointer;
+	color: #333;
+	line-height: 1.5;
+	margin: 14px 3px 14px 19px;
+	position: relative;
+	box-sizing: border-box;
+}
+.lgAssistant-main .popup-main-nav .assistant-select-span {
 	display: inline-block;
 	border: solid 1px #bac7d9;
 	padding-right: 40px;
@@ -4153,8 +4310,18 @@
 	width: 96px;
 	box-sizing: border-box;
 }
-.lgAssistant-main .popup-main3 .assistant-select-span66{
+
+.lgAssistant-main .popup-main3 .assistant-select-span66 {
+	  padding-right: 25px;
 	margin: 8px 3px 10px 19px;
+}
+.lgAssistant-main .popup-main3 .assistant-select-span66 p:nth-child(1){
+	display: inline-block;
+    max-width: 78px;
+    padding-right: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .lgAssistant-main .assistant-empty {
 	width: 256px;
@@ -4179,7 +4346,7 @@
 	margin: 0;
 }
 
-.lgAssistant-main .popup-main3 .assistant-select-span i {
+.lgAssistant-main .popup-main-nav .assistant-select-span i {
 	display: inline-block;
 	background-image: url("../images/小图标_向下.png");
 	width: 10px;
@@ -4191,28 +4358,28 @@
 	transition: all .5s;
 }
 
-.lgAssistant-main .popup-main3 .assistant-select-span:hover {
+.lgAssistant-main .popup-main-nav .assistant-select-span:hover {
 	border: solid 1px #0079d6;
 }
 
-.lgAssistant-main .popup-main3 .assistant-select-span:hover b {
+.lgAssistant-main .popup-main-nav .assistant-select-span:hover b {
 	display: block;
 }
 
-.lgAssistant-main .popup-main3 .assistant-select-span:hover ul {
+.lgAssistant-main .popup-main-nav .assistant-select-span:hover ul {
 	display: block;
 }
 
-.lgAssistant-main .popup-main3 .assistant-select-span:hover i {
+.lgAssistant-main .popup-main-nav .assistant-select-span:hover i {
 	background-image: url("../images/小图标_向下_经过.png");
 	transform: scale(0.8) rotate(180deg);
 }
 
-.lgAssistant-main .popup-main3 .assistant-select-span ul li:hover {
+.lgAssistant-main .popup-main-nav .assistant-select-span ul li:hover {
 	background: #E8EDF5;
 }
 
-.lgAssistant-main .popup-main3 .assistant-select-span b {
+.lgAssistant-main .popup-main-nav .assistant-select-span b {
 	position: absolute;
 	top: 20px;
 	width: 100%;
@@ -4222,7 +4389,7 @@
 	display: none;
 }
 
-.lgAssistant-main .popup-main3 .assistant-select-span ul {
+.lgAssistant-main .popup-main-nav .assistant-select-span ul {
 	display: none;
 	position: absolute;
 	text-decoration: none;
@@ -4231,15 +4398,20 @@
 	z-index: 2;
 	top: 25px;
 	left: -2px;
-	width: 98%;
+	width: 100px;
 	padding: 3px 0 4px 0;
 	box-sizing: border-box;
 	min-width: 84px;
 }
 
-.lgAssistant-main .popup-main3 .assistant-select-span ul li {
-	padding: 0 0 0 12px;
-	box-sizing: border-box;
+.lgAssistant-main .popup-main-nav .assistant-select-span ul li {
+	padding: 0 12px 0 12px;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .lgAssistant-main .summary-subjects {
@@ -4604,10 +4776,10 @@
 }
 
 .lgAssistant-main .contact-left-search input {
-	width: 142px;
+	width: 125px;
 	height: 17px;
 	border: 0;
-	margin: 2px 0 0 4px;
+	margin: 3px 0 0 4px;
 	font-size: 12px;
 	line-height: 20px;
 	letter-spacing: -1px;
@@ -4900,7 +5072,7 @@
 	letter-spacing: 0px;
 	color: #999999;
 	box-sizing: content-box;
-	padding-left: 18px;
+	padding: 0 18px;
 
 }
 
@@ -4965,21 +5137,29 @@
 	position: absolute;
 	top: 82px;
 	right: -150px;
-	max-width: 141px;
+	width: 122px;
 	height: 24px;
 	background: url("../images/infoCenter/您有新的提醒.png");
+	z-index: 1099;
+	padding: 0 5px 2px 10px;
+	background-size: 100% 100%;
+	box-sizing: content-box;
+	overflow: hidden;
+}
+.lgAssistant-main .isassistant-message-reminder .isassistant-div{
+	width: 1000px;
+}
+.lgAssistant-main .isassistant-message-reminder span {
+	display: inline-block;
+	width: 135px;
 	text-decoration: underline;
 	cursor: pointer;
 	color: #0099ff;
 	font-size: 12px;
-	z-index: 1081;
 	line-height: 24px;
-	padding: 0 5px 2px 10px;
-	background-size: 100% 100%;
-	box-sizing: content-box;
 }
 
-.lgAssistant-main .isassistant-message-reminder:hover {
+.lgAssistant-main .isassistant-message-reminder span:hover {
 	color: #FF6600;
 }
 
@@ -5012,7 +5192,7 @@
 	width: 16px;
 	height: 16px;
 	background: url("../images/contact/小图标_新建.png") no-repeat;
-	margin:  0 1px 0 0;
+	margin: 0 1px 0 0;
 }
 
 .lgAssistant-main .contact-right .contact-list2 .contact-type-text:hover i {
@@ -5264,7 +5444,7 @@
 	color: #333333;
 	background: rgba(0, 0, 0, .3);
 	width: 100%;
-	height: 100%;
+	height: 101%;
 	z-index: 1099;
 
 }
@@ -5283,7 +5463,7 @@
 	z-index: 1080;
 	float: right;
 	width: 680px;
-	height: 437px;
+	height: 438px;
 	background-color: #fff;
 	right: -680px;
 
@@ -5343,10 +5523,11 @@
 
 .lgAssistant-main .contact-frequent-search span input {
 	position: relative;
-	width: 280px;
-	height: 30px;
-	border: solid 1px #0099ff;
-	z-index: 11;
+    width: 250px;
+    height: 30px;
+    border: solid 1px #0099ff;
+    z-index: 11;
+    padding-right: 28px;
 }
 
 .lgAssistant-main .contact-frequent-search span i {
@@ -5473,10 +5654,10 @@
 .lgAssistant-main .contact-search-ul .contact-search-button1 button:nth-child(4) {
 	display: inline-block;
 	background-image: linear-gradient(0deg,
-		#008aff 0%,
-		#40cbff 100%),
+			#008aff 0%,
+			#40cbff 100%),
 		linear-gradient(#0099ff,
-		#0099ff);
+			#0099ff);
 	background-blend-mode: normal,
 		normal;
 	color: #ffffff;
@@ -5502,7 +5683,7 @@
 
 .lgAssistant-main .contact-left-popup {
 	position: absolute;
-	width: 320px;
+	min-width: 320px;
 	background-color: #ffffff;
 	box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.16);
 	border-radius: 1px;
@@ -5625,9 +5806,11 @@
 .lgAssistant-main .contact-right-empty p {
 	color: #9fb1ce;
 }
-.lgAssistant-main .contact-right-empty p .contact-empty-text{
+
+.lgAssistant-main .contact-right-empty p .contact-empty-text {
 	color: #9fb1ce;
 }
+
 .lgAssistant-main .popup-main5 {
 	box-sizing: content-box;
 	padding-left: 20px;
@@ -5680,12 +5863,32 @@
 	background-image: url("../images/workSpace/教务窗口_教学班管理.png");
 }
 
+.lgAssistant-main .popup-main5 .assistant-change-class i {
+	background-image: url("../images/report/个人报告_更换.png");
+}
+
+.lgAssistant-main .popup-main5 .assistant-student-leave i {
+	background-image: url("../images/report/个人报告_请假.png");
+}
+
+.lgAssistant-main .popup-main5 .assistant-thought-report i {
+	background-image: url("../images/report/个人报告_思想报告.png");
+}
+
+.lgAssistant-main .popup-main5 .assistant-questionnaire-answer i {
+	background-image: url("../images/report/个人报告_问卷作答.png");
+}
+
+
 .lgAssistant-main .popup-main5 span {
 	display: inline-block;
-	font-family: MicrosoftYaHei;
-	font-size: 16px;
-	color: #333333;
-	line-height: 52px;
+    font-family: MicrosoftYaHei;
+    font-size: 16px;
+    color: #333333;
+    line-height: 24px;
+    margin-top: 10px;
+    /* height: 7px; */
+    width: 90%;
 
 }
 
@@ -6333,7 +6536,7 @@
 	/*  color: #ffffff !important;
     background-color: #2ec7bb !important;
     border-color: #2ec7bb !important;*/
-/* } */ 
+/* } */
 
 
 /*  line 148, ../../../../../sass/component/_pagination.scss */
@@ -6398,7 +6601,7 @@
 /*  line 193, ../../../../../sass/component/_pagination.scss */
 /* .lgAssistant-main .frame_min_pager .pagination .prev:active,
 .lgAssistant-main .frame_min_pager .pagination .next:active { */
-	/*  width: 20px !important;
+/*  width: 20px !important;
     height: 18px;
     line-height: 18px;*/
 /* } */
@@ -6510,7 +6713,7 @@
 
 /*  line 277, ../../../../../sass/component/_pagination.scss */
 /* .lgAssistant-main .pagination .pagination_go_button { */
-	/*  height: 26px;
+/*  height: 26px;
     line-height: 26px;*/
 /* } */
 
@@ -6541,20 +6744,20 @@
 .lgAssistant-main .pagination .prev:hover,
 .lgAssistant-main .pagination a:hover,
 .lgAssistant-main .pagination span:hover { */
-	/*  border-color: #276f85;*/
+/*  border-color: #276f85;*/
 /* } */
 
 
 /*  line 302, ../../../../../sass/component/_pagination.scss */
 /* .lgAssistant-main .pagination a { */
-	/*  background: -webkit-linear-gradient(bottom, #daeff9, #feffff);
+/*  background: -webkit-linear-gradient(bottom, #daeff9, #feffff);
     background: linear-gradient(to top, #daeff9, #feffff);*/
 /* } */
 
 
 /*  line 307, ../../../../../sass/component/_pagination.scss */
 /* .lgAssistant-main .pagination_go_button:hover { */
-	/*  border-color: #97b6c1 !important;*/
+/*  border-color: #97b6c1 !important;*/
 /* } */
 
 
@@ -6602,7 +6805,7 @@
 /*  line 341, ../../../../../sass/component/_pagination.scss */
 /* .lgAssistant-main .pagination .prev:active,
 .lgAssistant-main .pagination .next:active { */
-	/*  border: none;
+/*  border: none;
     width: 28px !important;
     height: 28px;
     color: #f2fcfe !important;
@@ -6615,9 +6818,9 @@
 /*  line 352, ../../../../../sass/component/_pagination.scss */
 /* .lgAssistant-main .pagination .pagination_go_button:active,
 .lgAssistant-main .pagination .pagination_go_button { */
-	/*  color: #3c6a77 !important;*/
-	/*  border-color: #97b6c1 !important;*/
-	/*  background: -webkit-linear-gradient(bottom, #daeff9, #feffff);
+/*  color: #3c6a77 !important;*/
+/*  border-color: #97b6c1 !important;*/
+/*  background: -webkit-linear-gradient(bottom, #daeff9, #feffff);
     background: linear-gradient(to top, #daeff9, #feffff);*/
 /* } */
 
@@ -6678,3 +6881,196 @@
 	margin: 391px auto;
 	margin-bottom: 0;
 }
+/* .lgAssistant-main .popup-main6{
+	display: block !important;
+} */
+.lgAssistant-main .popup-main6 .note-top{
+	width: 850px;
+    height: 50px;
+    background-color: #F5F5F5;
+    box-shadow: 1px 1px 0px 0px #ebebeb;
+    margin-bottom: 4px;
+}
+.lgAssistant-main .popup-main6 .note-time{
+	float: left;
+	margin: 14px 12px 0 20px;
+}
+.lgAssistant-main .popup-main6 .note-time li{
+	float: left;
+	width: 72px;
+	height: 22px;
+	background-color: #ffffff;
+    border-style: solid;
+    border-width: 1px;
+    border-image-slice: 1;
+    font-family: MicrosoftYaHei;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: 0px;
+    color: #0e95ed;
+    text-align: center;
+    cursor: pointer;
+    border-style: solid;
+    border-width: 1px;
+}
+.lgAssistant-main .popup-main6 .note-time li:nth-child(1) {
+    border-radius: 12px 0px 0px 12px;
+    border-image-source: none;
+}
+.lgAssistant-main .popup-main6 .note-time  li:nth-child(2) {
+    border-radius: 0px 12px 12px 0px;
+    border-image-source: none;
+	position: relative;
+	left: -1px;
+}
+.lgAssistant-main .popup-main6 .note-time .noteTime-active{
+	border-image-source: linear-gradient(0deg, #1ad5ff 0%, #14b5f6 45%, #0e94ec 100%);
+    background-image: linear-gradient(0deg, #1ad5ff 0%, #14b5f6 45%, #0e94ec 100%);
+    box-shadow: inset 0px -2px 5px 0px rgba(0, 156, 255, 0.56);
+    color: #fff;
+    border: 1px solid #0e94ec;
+}
+.lgAssistant-main .popup-main6  .note-border{
+	display: inline-block;
+	width: 1px;
+	height: 16px;
+	background-color: #cccccc;
+	margin: 16px 0  0 0;
+	float:left;
+}
+.lgAssistant-main .assistant-note-select{
+
+}
+
+
+
+
+.lgAssistant-main  .note-link{
+	float: right;
+	margin: 17px 20px 0 0;
+	cursor: pointer;
+}
+
+.lgAssistant-main  .note-link i{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin:-2px 0 0 0;
+	background-image: url('../images/小图标_设置.png');
+	vertical-align: middle;
+}
+.lgAssistant-main  .note-link:hover i{
+	background-image: url('../images/小图标_设置_经过.png');
+}
+.lgAssistant-main  .note-link  b{
+	font-family: MicrosoftYaHei;
+	text-decoration: underline;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #0099ff;
+}
+.lgAssistant-main  .note-link:hover  b{
+	color: #ff6600;
+}
+.lgAssistant-main .note-search{
+	margin: 16px 20px;
+
+}
+.lgAssistant-main .note-search span{
+	font-family: MicrosoftYaHei;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #999999;
+}
+.lgAssistant-main .note-search span b{
+	font-family: MicrosoftYaHei;
+	font-size: 14px;
+	font-weight: normal;
+	letter-spacing: 0px;
+	color: #ff0000;
+}
+
+.lgAssistant-main .note-search .note-search-div{
+	display: inline-block;
+	float: right;
+	margin: 12px 0 ;
+    font-family: MicrosoftYaHei;
+    width: 240px;
+    height: 24px;
+    border-radius: 12px;
+    border: 1px solid #bac7d9;
+}
+
+
+.lgAssistant-main .note-search-input{
+	width: 190px;
+    height: 17px;
+    border: 0;
+    margin: 4px 0 0 4px;
+    font-size: 12px;
+    line-height: 20px;
+    /* letter-spacing: -1px; */
+    /* color: #333333; */
+}
+.lgAssistant-main .note-subject{
+	display: inline-block;
+	width: 48px;
+	height: 48px;
+}
+.lgAssistant-main .subject-chinese{
+	background-image: url('../images/note/学科_语文.png');
+}
+.lgAssistant-main .note-div{
+	padding: 10px 20px 6px 24px;
+    position: relative;
+}
+.lgAssistant-main .note-div .note-div-div{
+	position: absolute;
+	right: 20px;
+	display: inline-block;
+	width: 750px;
+	border-bottom: 1px dashed #ccc;
+	
+}
+.lgAssistant-main .note-search-div i {
+    float: right;
+    margin-right: 8px;
+    margin-top: 5px;
+    width: 12px;
+    height: 12px;
+    background: url(../images/contact/搜索图标_初始.png) no-repeat;
+}
+.lgAssistant-main .note-search-div i:hover{
+	background: url(../images/contact/搜索图标_悬停.png) no-repeat;
+}
+.lgAssistant-main .note-search-div .note-search-clear:hover {
+    background: url(../images/搜索清除_悬停.png);
+}
+
+.lgAssistant-main .note-search-div .note-search-clear {
+    position: absolute;
+    top: 13px;
+    left: 151px;
+    background: url(../images/搜索清除_初始.png);
+    display: none;
+}
+
+
+
+
+
+/* 显示小助手页面 */
+
+/* .lgAssistant-main  .assistant-popup{
+	transition: all 0.25s ease-in-out 0s;
+    bottom: 53%;
+    right: 50%;
+    transform: scale(1);
+    opacity: 1;
+} */

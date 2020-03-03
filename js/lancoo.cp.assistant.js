@@ -1,3 +1,5 @@
+//更新时间：2020-3-2-001
+
 var PsnMgrToken = ''; //token
 var PsnMgrMainServerAddr = ''; //基础平台地址
 var PsnMgrLgAssistantAddr = ''; //小助手平台地址
@@ -24,7 +26,6 @@ function Agassitant() {
 		alert('无sessionStorage数据~');
 		return;
 	}
-
 	//生生产环境的token获取
 
 	PsnMgrToken = sessionStorage.getItem('PsnMgrToken');
@@ -33,8 +34,7 @@ function Agassitant() {
 	// PsnMgrLgAssistantAddr = 'http://192.168.129.75:1111/'; //开发环境
 	//缓存动画图片
 	$('body').append(
-		'<div class="assistant-photo-loading"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>'
-	);
+		'<div class="lgAssistant-main"><div class="assistant-box"><div id="assistant-box"><canvas id="assistant-box-canvas"width="225"height="150"></canvas></div><div class="assistant-prompt"><p>金老师</p><p>您好~</p></div><div class="assistant-remind-count"><canvas class="assistant-remind-count "style="position:absolute;left: 0;z-index: -1;margin: -50px 0 0 0; "></canvas><ul><li>0</li></ul></div><div class="assistant-info-prompt"><i></i><div class="assistant-remind-div"><ul class="assistant-remind-ul"></ul></div></div><div class="assistant-schedule-prompt"><span class="schedule-prompt-text">上午，10:30教学主楼606“学科教研会”</span><p class="schedule-prompt-close">我知道了</p></div><canvas class="assistant-hover-box"></canvas><div class="assistant-popup"><div class="assistant-popup-nav"><div class="assistant-popup-logo"><ul><li><i></i></li><li>教学小助手</li><li><i class="assistant-popup-close "></i></li></ul><div class="lgAssistant-clear"></div></div><div class="popup-nav-list"><ul class="popup-nav-ul"><li class="assistant-active"name="1"><i></i><b></b><p>消息中心</p></li><li name="2"><i></i><p>日程与课表</p></li><li name="3"><i></i><p>学情总结</p></li><li name="4"><i></i><p>通讯录</p></li><li name="5"><i></i><p>教务窗口</p></li></ul><div class="assistant-popup-weather"><i class="assistant-weather3"></i><div><p class="assistant-weather1">晴转多云</p><p class="assistant-weather2">26°~34°</p></div></div></div></div><div class="popup-main"><p class="popup-main-shadow"></p><p class=" popup-main-shade"></p><div class="assistant-small-success"><span><i></i><b class="assistant-small-text">操作成功！</b></span></div><div class="assistant-tips"><span><i></i><b class="assistant-tips-text">未找到相关联系人！</b></span></div><div class="assistant-big-success"><span><i></i><b class="assistant-big-text">操作成功~</b></span></div><div class="assistant-remind"><span class="assistant-remind-span"><i class="assistant-remind-close"></i><p><i></i><span class="assistant-remind-text">操作询操作询问操作询问问</span></p><span class="assistant-remind-true">确定删除</span><span class="assistant-remind-false">再想想</span></span></div><div class="assistant-outline"><span><p><i></i><span class="assistant-outline-text">您已经掉线，请重新登录！</span></p><span class="assistant-outline-true">重新登录</span></span></div><div class="popup-main-nav popup-main1"><ul><li class="info-active"name="1"><p class="info-active">待办事项<i><span><b></b></span></i></p></li><li name="2"><p>通知<i><span><b></b></span></i></p></li><li name="4"><p>系统消息<i><span><b></b></span></i></p></li><li name="5"><p>新闻资讯<i><span><b></b></span></i></p></li></ul><div class="infoCenter-setting"><i></i><span>设置</span></div><div class="infoCenter-empty"><i></i><p>暂时还没有<span class="infoCenter-empty-text">待办事项</span>哦~</p></div><div class="lgAssistant-clear"></div><div class="setting-popup"><div></div><div><div class="setting-close"><i></i><span>设置</span><i class="lgAssistant-close"></i></div><ul><li class="setting-active"name="setting-option1"><p class="setting-active">系统消息接收设置</p></li></ul><div class="lgAssistant-clear"></div><div></div><div class="setting-option setting-option1"></div><div class="setting-option setting-option2"></div><div class="setting-option setting-option3"></div></div><div></div></div><div class="infoCenter-option todo"><span class="todo-type-span"data-name="0">全部内容(共<strong>0</strong>项)<i></i><p></p><ul class="todo-type-ul"></ul></span><span>期限</span><div class="infoCenter-option-box todo-box"></div></div><div class="infoCenter-option message"><span>标题(有<strong>0</strong>个未读通知)</span><span>发布人</span><span>发布时间</span><div class="infoCenter-option-box message-box"></div></div><div class="infoCenter-option chat"><span>共有<strong>0</strong>条新消息</span><div class="infoCenter-option-box chat-box"><div class="chat-clear"><span><b></b>清除交流信息</span></div></div></div><div class="infoCenter-option notice"><span>消息内容(有<strong>0</strong>条新消息)</span><span>来源</span><span>时间</span><div class="infoCenter-option-box notice-box"><div class="notice-clear"><span><b></b>清空系统信息</span></div></div></div><div class="infoCenter-option news"><div class="news-type"><span class="news-type-span">类别:</span> <ul class="news-type-ul"></ul>  </div> <div class="news-box"></div></div></div><div class="popup-main-nav popup-main2"><div class="schedule-setting-popup"><div></div><div class="schedule-setting-main"><p><i></i><b class="schedule-change-type">新建日程</b><i class="schedule-setting-close"></i></p><div><ul><li class="schedule-type"><span>类型:</span><i name="1"></i><b>备课</b><i name="2"></i><b>会议</b><i name="3"class="schedule-type-true"></i><b>重要活动</b><i name="4"></i><b class="schedule-edit-name">自定义</b><input type="text"class="schedule-type-name"placeholder="班级活动"maxlength="4"></li><li><span>日期:</span><div class="schedule-setting-date"><input type="text"autocomplete="off"id="lgAssistant-next3"><i></i></div></li><li><span>时间:</span><input type="text"id="schedule-test1"><span><i></i><i></i></span><span>到</span><input type="text"id="schedule-test2"><span><i></i><i></i></span></li><li><span>内容:</span><textarea class="schedule-topic"maxlength="50"></textarea><b class="schedule-topic-length">0/50</b></li></ul><div class="schedule-setting-clock"><p>提醒设置:<span><i class="schedule-clocks-setting"name="true"></i>开启提醒</span></p><p class="schedule-clocks-setting1"><i name="1"></i>按开始时间提醒</p><p class="schedule-clocks-setting1"><i class="schedule-input-clocks"name="2"></i>提前提醒<span>计划开始前</span><input class="schedule-clocks-time"type="number"value="30"max="999"min="1"/><span>分钟提醒</span></p></div></div><div><span class="schedule-setting-true">确定</span><span class="schedule-setting-false">取消</span></div><div class="schedule-edit-popup"></div></div></div><div class="popup-main22"><span class="new-schedule"><i></i>新建日程</span><span class="assistant-mySchedule"><i></i>查看全部课表</span></div><div class="popup-main22"><span class="schedule-choose-day"><i name="1">今天</i><i name="2">明天</i><i name="3">后天</i></span><span><b class="schedule-choose-date">2019-08-21</b><b class="schedule-choose-week">(第11周星期三)</b></span><div class="chooose-schedule-date"><i id="lgAssistant-next2"></i></div></div><div class="personal-schedule-box popup-main22"><ul class="personal-schedule-ul1"></ul><ul class="personal-schedule-ul2"></ul><ul class="personal-schedule-ul3"></ul></div><div class="personal-schedule-empty popup-main22"><i></i><p>暂时还没有日程安排哦~</p></div></div><div class="popup-main-nav popup-main3"><div class="summary-main"><div class="summary-title"><p class="summary-title1"><i></i>考勤及学习情况</p></div><div><ul class="summary-choose-time clearfix"><li class="summary-time-active"name="1">近一周</li><li name="2">近一月</li><li name="3">本学期</li><li name="4">指定时间<div class="summary-input-time"><input type="text"class="layui-input"autocomplete="off"id="lgAssistant-next4"placeholder="开始时间"><b>-</b><input type="text"class="layui-input"autocomplete="off"id="lgAssistant-next5"placeholder="结束时间"><span>确定</span></div></li></ul><div class="assistant-empty assistant-empty1"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table "><tr class="summary-table-header"><th width="176"></th><th width="180">上课/考试出勤率</th><th width="180">作业完成率</th><th width="180">自学计划完成率</th><th width="90">详情</th></tr></table><div class="summary-title"><p><i></i>成绩总览<span>成绩管理<i></i></span></p></div><div class="assistant-empty assistant-empty2"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><div class="summary-grade-main"></div></div><p class=" popup-main3-padding"></p></div><div class="summary-popup summary-popup0"name="1"><div class="summary-popup-shade"name="1"></div><div class="summary-popup-main summary-popup0-main"><p><span class="summary-popup0-class">一年级一班</span>的考勤及学习情况<i class="summary-popup-close"name="1"></i></p><p>总体上课考试出勤率<span class="summary-popup0-class1">0%</span>总体作业完成率<span class="summary-popup0-class2">0%</span>总体自学计划完成率:<span class="summary-popup0-class3">0%</span></p><div class="assistant-empty assistant-empty3"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table1"><thead><tr><th width="75">序号</th><th width="80">姓名</th><th width="120">学号</th><th width="191">上课/考试出勤率</th><th width="154">作业完成率</th><th width="189">自学计划完成率</th></tr></thead><tbody></tbody></table></div></div><div class="summary-popup summary-popup1"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup1-main"><p><span class="summary-popup1-name"></span>的上课/考试考勤情况<i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span1"name="1"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="1">全部</li><li name="0">缺勤</li></ul></div><span class="summary-popup1-border"></span><span class="colorblock">总体上课/考试出勤率:</span><i class="summary-popup1-AllRate">0%</i><span class="summary-popup1-AllAttendence">(0/0次)</span> <span class="colorblock">课堂考勤:</span><i class="summary-popup1-LessonAttendence green">出勤0</i>/<span class="summary-popup1-LessonAbsence red">缺勤0</span> <span class="colorblock">考试出勤:</span><i class=" summary-popup1-ExamAttendence green">出考0</i>/<span class=" summary-popup1-ExamAbsence red">缺考0</span><br/><div class="assistant-empty assistant-empty4"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table2"><thead><tr><th width="75">序号</th><th width="191">时间<i></i></th><th width="180">学科</th><th width="310">内容</th><th width="80">状态</th><th width="66"></th></tr></thead><tbody></tbody></table></div></div><div class="summary-popup summary-popup2"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup2-main"><p><span class="summary-popup2-name"></span>作业完成情况<i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span21"name="0"><p>全部作业</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部作业</li><li name="1">预习作业</li><li name="2">课后作业</li></ul></div><div class="assistant-select-span assistant-select-span22"name="0"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部</li><li name="1">未完成</li><li name="2">已完成</li></ul></div><span class="summary-popup1-border"></span><span class="colorblock">总体作业完成率:</span><i class="summary-popup2-HomeworkCompleteRate">0%</i><span class="summary-popup2-CompleteHomework">(0/0次)</span><br/><div class="assistant-empty assistant-empty5"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table3"><thead><tr><th width="75">序号</th><th width="223">标题</th><th width="99">学科</th><th width="80">发布老师</th><th width="187">完成时间</th><th width="53">成绩</th><th width="100">详情</th></tr></thead><tbody></tbody></table></div></div><div class=" summary-popup summary-popup3"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup3-main"><p><span class="summary-popup3-name"></span>的自学计划完成情况<i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span3"name="0"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部</li><li name="1">未完成</li></ul></div><span class="summary-popup1-border"></span><span class="colorblock">总体自学计划完成率:</span><i class="summary-popup3-PassRate">0%</i><span class="summary-popup3-PassPlan">(0/0次)</span><div class="assistant-empty assistant-empty6"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table4"><thead><tr><th width="75">序号</th><th width="200">计划名称<i></i></th><th width="70">学科</th><th width="285">计划时间</th><th width="90">完成情况</th><th width="70">详情</th><th width="23"></th></tr></thead><tbody></tbody></table></div></div></div><div class="popup-main-nav popup-main4"><div class="contact-left"><div class="contact-left-search"><input class="contact-search-input"type="text"placeholder="请输入姓名/用户编号搜索"/><i class="contact-search-choose"></i><i class="contact-search-clear"></i></div><ul><li class="contact-list-choose"name="最近联系人"><i class="i-middle"></i><span>最近联系人</span><i class="contact-tab"></i></li><li name="常用联系人"><i class="i-middle"></i><span>常用联系人</span><i class="contact-tab"></i></li><li name="我的班级"><i class="i-middle"></i><span>我的班级</span><i class="contact-tab"></i></li><li name="我的教师组"><i class="i-middle"></i><span>我的教师组</span><i class="contact-tab"></i></li><li name="全校师生"><i class="i-middle"></i><span>全校师生</span><i class="contact-tab"></i></li></ul></div><div class="contact-right "><div class="contact-list1"><ul class="contact-type"><li><p class="contact-type-p"data-class="contact-Initialization">最近联系人</p><span>></span></li></ul><span class="contact-type-text"name="1"><i></i>清空</span><ul class="contact-li"></ul><div class="contact-right-empty"><i></i><p>暂时还没有<span class="contact-empty-text">最近联系人</span>信息哦~</p></div></div></div><div class="contact-frequent"><div></div><div><p class="contact-frequent-top"><i></i><span>添加常用联系人</span><i class="contact-frequent-close"></i></p><div class="contact-frequent-search"><span><input type="text"autocomplete="off"class="contact-frequent-input"placeholder="请输入姓名/用户编号搜索"/><i class="contact-frequent-clear"></i></span><button type="button"class="contact-frequent-commit">查找</button></div><p class="contact-search-p">共找到<b class="contact-search-number">0</b>个联系人</p><ul class="contact-search-ul"></ul><div class="frame_pager_center pager5 clearfix"></div></div></div><div class="contact-info"><div></div><div class="contact-info-main"><div><i class="contact-info-close"></i><i class="contact-info-image"></i><span><span><b>张佳乐的家长</b><i></i></span><b class="contact-info-id">1200430501</b><i></i><b class="contact-info-class">一年级1班</b></span><span class="contact-info-sign"><i></i>含泪播种的人泪播种的人一一定能含笑收获~</span></div><ul class="contact-message-ul"><li><span>电话</span><span><b id="contact-copy-text1">13126011111</b><b name="1"class="contact-info-copy">复制</b></span></li><li><span>QQ</span><span><b id="contact-copy-text2">623226323</b><b name="2"class="contact-info-copy">复制</b></span><a class="lgAssistant-main-QQ"></a></li><li><span>微信</span><span><b id="contact-copy-text3">YT13143sdae</b><b name="3"class="contact-info-copy">复制</b></span><a href="https://wx.qq.com/"class="lgAssistant-main-WX"></a></li><li><span>微博</span><span><b id="contact-copy-text4">合格王企鹅</b><b name="4"class="contact-info-copy">复制</b></span><a href="https://weibo.com/login.php"class="lgAssistant-main-WB"></a></li></ul></div></div><ul class="contact-left-popup"></ul></div><div class="popup-main-nav popup-main5"><ul><li class="assistant-deliver-notice"><i></i><span>发布通知</span></li><li class="assistant-deliver-questionnaire"><i></i><span>发布问卷调查</span></li><li class="assistant-student-admin"><i></i><span>学生档案管理</span></li><li class="assistant-teaClass-admin"><i></i><span>我的教学班管理</span></li><li class="assistant-change-class"><i></i><span>更换选学课程/上课老师</span></li><li class="assistant-student-leave"><i></i><span>请假</span></li><li class="assistant-thought-report"><i></i><span>思想报告</span></li><li class="assistant-questionnaire-answer"><i></i><span>问卷作答</span></li></ul></div><div class="assistant-popup-loading"><div class="frame_point_loading_container"><div class="point_container"><span class="point1 point"></span><span class="point2 point"></span><span class="point3 point"></span><span class="point4 point"></span></div></div></div></div></div></div></div>');
 
 	var imgUrl1 = PsnMgrLgAssistantAddr + "/PsnMgr/LgAssistant/images/assistant/入场.png";
 	var imgUrl2 = PsnMgrLgAssistantAddr + "/PsnMgr/LgAssistant/images/assistant/打招呼.png";
@@ -66,8 +66,6 @@ function Agassitant() {
 
 
 	// 生产环境的基础平台地址url
-
-
 
 
 
@@ -111,17 +109,19 @@ function Agassitant() {
 
 function AgassitantCallbackFunction(result) {
 	var assistantData = result.data;
-	if (!assistantData.UserID) {
-		alert('用户信息错误,请重新登录！');
-		return;
-	}
+	// if (!assistantData.UserID) {
+	// 	alert('用户信息错误,请重新登录！');
+	// 	return;
+	// }
 	var UserID = assistantData.UserID; //用户ID
 	var UserType = assistantData.UserType; //用户类型
 	var SchoolID = assistantData.SchoolID; //用户学校ID
 	var UserClass = assistantData.UserClass; //用户教师类型的判定（班主任、教师、主任等）
 	var UserName = decodeURIComponent(assistantData.UserName); //用户名称
-	var SubjectIDArr = decodeURIComponent(assistantData.SubjectIDs).split(','); //用户名称
-	var SubjectNameArr = decodeURIComponent(assistantData.SubjectNames).split(','); //用户名称
+	var SubjectIDArr = decodeURIComponent(assistantData.SubjectIDs).split(','); //用户科目Id数组
+	var SubjectNameArr = decodeURIComponent(assistantData.SubjectNames).split(','); //用户科目名称数组
+	var GradeID = assistantData.GradeID;
+	var GradeName = decodeURIComponent(assistantData.GradeName); //用户名称
 	var termEndDate = ''; //学期日程选择结束时间
 	var termStartDate = ''; //学期日程选择开始时间
 	var termName = ''; //学期名
@@ -130,13 +130,13 @@ function AgassitantCallbackFunction(result) {
 	var serverTime = '';
 	var summaryStartTime = ''; //学情总结开始时间
 	var summaryEndTime = ''; //学情总结结束时间
+	var websockeyArr = [];
+	var websockeyTimer = null;
+	var isAddEvent = false;
 	if (SubjectNameArr[0] == "") {
-		SubjectNameArr = ['语文', '数学'];
+		SubjectNameArr = ['语文'];
 	}
 	var SubjectID = SubjectIDArr[0];
-	
-
-
 
 	// 通知模块平台地址
 	var messageURL = '';
@@ -159,6 +159,9 @@ function AgassitantCallbackFunction(result) {
 	var NewsRemindCount = 0; //新闻资讯提醒总数
 	var onlyRemindType = 1; //只有一种类型提醒消息判断参数 1为是， 0为不是
 	var assistantTimeUpdata = true; //提醒消息的数据是否已更新
+	getSysIP('400', function (data) {
+		messageURL = data;
+	});
 	//获取学期信息和服务器时间
 	ajaxN('PsnMgr/Schedule/GetTermInformation', 'get', {}, function (data) {
 		if (data.StatusCode == 200 && data.ErrCode == 0) {
@@ -170,8 +173,9 @@ function AgassitantCallbackFunction(result) {
 			$('.schedule-choose-week').text(dataChangeTerm(termStartDate, serverTime.slice(0, 10)));
 			$('.assistant-remind-count').attr('name', '-1');
 			// 初始化获取未读消息和日程提醒
+
 			ajaxN('PsnMgr/Schedule/GetScheduleRemindList', 'get', {
-				ScheduleDate: serverTime.slice(0, 10)
+				ScheduleDate: serverTime.slice(0, 10),
 			}, function (data) {
 				if (data.StatusCode == 200 && data.ErrCode == 0) {
 					if (data.Data.length > 0) {
@@ -241,8 +245,8 @@ function AgassitantCallbackFunction(result) {
 
 							}
 							if (data.Data.TotalCount == TodoRemindCount || data.Data.TotalCount == NoticeRemindCount ||
-								data.Data.TotalCount == ChatRemindCount || data.Data.TotalCount == MessageRemindCount-scheduleRemindCount || data.Data
-								.TotalCount == NewsRemindCount|| data.Data
+								data.Data.TotalCount == ChatRemindCount || data.Data.TotalCount == MessageRemindCount - scheduleRemindCount || data.Data
+								.TotalCount == NewsRemindCount || data.Data
 								.TotalCount == scheduleRemindCount) {
 								onlyRemindType = 1;
 							} else {
@@ -258,7 +262,7 @@ function AgassitantCallbackFunction(result) {
 					if (allRemindCount == 0) {
 						return;
 					}
-					var allRemindCount1 = allRemindCount
+					var allRemindCount1 = allRemindCount;
 					if (allRemindCount > 99) {
 						allRemindCount1 = '...';
 					}
@@ -286,19 +290,79 @@ function AgassitantCallbackFunction(result) {
 	function initializationFn(name) {
 		initialization = true;
 		//初始化消息中心
-		todoFn(0);
 		getSysIP('400', function (data) {
 			messageURL = data;
-			console.log(name);
-			if (name == 'message') {
+			if (name == 'noticeFn') {
 				noticeFn(0);
 			}
+
 		});
+
+		if (!name) {
+			todoFn(0);
+		}
+		if (name == 'messageFn') {
+			messageFn(0);
+		}
+		if (name == 'chatFn') {
+			chatFn(0);
+		}
+		if (name == 'newsFn') {
+			newsFn(0);
+		}
+		//获取所有的系统Web地址。
+		$.ajax({
+			url: PsnMgrMainServerAddr + 'Base/WS/Service_Basic.asmx/WS_G_GetSubSystemServerInfoForAllSubject', //地址
+			// dataType: 'json', //数据类型
+
+			type: 'get', //类型
+			timeout: 8000, //超时
+			data: {
+				sysID: '200,300,400,510,622,630,844,810,821,843,851,855,S10'
+			},
+			//请求成功
+			success: function (data, status) {
+				// //DOM解析器
+				// var parser = new DOMParser();
+				// //读取返回字符串
+				// var _xml = parser.parseFromString(data, "text/xml");
+				// //获取节点内容
+				// URL = _xml.getElementsByTagName("string")[3].innerHTML;
+				// console.log(URL);
+				// successFunction(data.Data);
+				// console.log(data);
+				// console.log(data.documentElement.getElementsByTagName('SysID')[0].childNodes[0].nodeValue);
+				for (var i = 0; i < data.documentElement.getElementsByTagName('SysID').length; i++) {
+
+					if (!data.documentElement.getElementsByTagName('SubjectID')[i].childNodes[0]) {
+						sysWebArr[data.documentElement.getElementsByTagName('SysID')[i].childNodes[0].nodeValue] = data.documentElement.getElementsByTagName('WebSvrAddr')[i].childNodes[0].nodeValue;
+					}
+				}
+				// console.log(sysWebArr);
+
+			},
+			//失败/超时
+			error: function (XMLHttpRequest, textStatus, errorThrown) {
+				if (textStatus === 'timeout') {
+					// alert('請求超時');
+					setTimeout(function () {
+						// alert('重新请求');
+					}, 8000);
+				} else {
+					$('.infoCenter-empty').show();
+					$('.assistant-popup-loading').hide();
+
+					return;
+				}
+			}
+		})
 		getSysIP('810', function (data) {
 			gradeManageURL = data;
 			// gradeManageURL = 'http://172.16.41.111:10103/WS_CJZP/';
 			summaryStartTime = dateChangeFn(serverTime.slice(0, 10), -6) + ' 00:00:00'; // 学情总结开始时间
-			summaryEndTime = serverTime.slice(0, 10) + ' 00:00:00'; //学情总结结束时间
+			summaryEndTime = serverTime.slice(0, 10) + ' 23:59:59'; //学情总结结束时间
+			// summaryEndTime =termEndDate +' 23:59:59';
+
 			getSysIP('844', function (data) {
 				summaryURL = data;
 				summaryTableFn();
@@ -334,6 +398,12 @@ function AgassitantCallbackFunction(result) {
 							// console.log(value); //得到日期生成的值，如：2017-08-18
 							// console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
 							// console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+						},
+						change: function (value, date) {
+							if (value != $('#lgAssistant-next3').val() && $('.layui-this').attr('class') === 'layui-this') {
+								$('.layui-this').attr('class', '');
+							}
+
 						}
 					});
 				});
@@ -401,6 +471,12 @@ function AgassitantCallbackFunction(result) {
 							// console.log(value); //得到日期生成的值，如：2017-08-18
 							// console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
 							// console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+						},
+						change: function (value, date) {
+							if (value != $('#lgAssistant-next2').text() && $('.layui-this').attr('class') === 'layui-this') {
+								$('.layui-this').attr('class', '');
+							}
+
 						}
 					});
 					$('#layui-laydate' + $('#lgAssistant-next2').attr('lay-key') +
@@ -437,6 +513,12 @@ function AgassitantCallbackFunction(result) {
 							// console.log(value); //得到日期生成的值，如：2017-08-18
 							// console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
 							// console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+						},
+						change: function (value, date) {
+							if (value != $('#lgAssistant-next3').val() && $('.layui-this').attr('class') === 'layui-this') {
+								$('.layui-this').attr('class', '');
+							}
+
 						}
 					});
 				});
@@ -493,6 +575,12 @@ function AgassitantCallbackFunction(result) {
 							// console.log(value); //得到日期生成的值，如：2017-08-18
 							// console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
 							// console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+						},
+						change: function (value, date) {
+							if (value != $('#lgAssistant-next2').text() && $('.layui-this').attr('class') === 'layui-this') {
+								$('.layui-this').attr('class', '');
+							}
+
 						}
 					});
 
@@ -518,7 +606,6 @@ function AgassitantCallbackFunction(result) {
 				laydate.render({
 					elem: '#lgAssistant-next4', //指定元素
 					format: 'yyyy-MM-dd',
-					min: termStartDate,
 					max: serverTime.slice(0, 10),
 					btns: ['now'],
 					position: 'fixed',
@@ -544,6 +631,12 @@ function AgassitantCallbackFunction(result) {
 						// console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
 
 
+					},
+					change: function (value, date) {
+						if (value != $('#lgAssistant-next4').val() && $('.layui-this').attr('class') === 'layui-this') {
+							$('.layui-this').attr('class', '');
+						}
+
 					}
 				});
 
@@ -553,7 +646,6 @@ function AgassitantCallbackFunction(result) {
 				laydate.render({
 					elem: '#lgAssistant-next5', //指定元素
 					format: 'yyyy-MM-dd',
-					min: termStartDate,
 					max: serverTime.slice(0, 10),
 					btns: ['now'],
 					position: 'fixed',
@@ -574,6 +666,12 @@ function AgassitantCallbackFunction(result) {
 						// 	minutes: 0,
 						// 	seconds: 0
 						// }
+					},
+					change: function (value, date) {
+						if (value != $('#lgAssistant-next5').val() && $('.layui-this').attr('class') === 'layui-this') {
+							$('.layui-this').attr('class', '');
+						}
+
 					}
 				});
 
@@ -633,7 +731,7 @@ function AgassitantCallbackFunction(result) {
 									'</b>分<i></i></li><li class="summary-marks-li">优秀分: <b class="green" >' + keepTwoDecimal(it.GoodScore) +
 									'</b>分<i></i></li><li class="summary-marks-li">最低分: <b class="red" >' + keepTwoDecimal(it.MinScore) +
 									'</b>分<i></i></li><li class="summary-marks-li">最高分: <b class="green" >' + keepTwoDecimal(it.MaxScore) +
-									'</b>分<i></i></li></ul></li>'))
+									'</b>分<i></i></li></ul></li>'));
 							})
 
 
@@ -648,17 +746,17 @@ function AgassitantCallbackFunction(result) {
 						SchoolID: SchoolID,
 						Term: termName,
 					}, function (data) {
-						if (data.data && summaryBoxCount == 0) {
+						if (!data.data && summaryBoxCount == 0) {
 							$('.assistant-empty2').show();
 							$('.summary-grade-main').hide();
-							$('.summary-title p span').hide();
+							// $('.summary-title p span').hide();
 							return;
 						}
 						if (data.data) {
 							if (data.data.length == 0 && summaryBoxCount == 0) {
 								$('.assistant-empty2').show();
 								$('.summary-grade-main').hide();
-								$('.summary-title p span').hide();
+								// $('.summary-title p span').hide();
 								return;
 							}
 
@@ -704,7 +802,7 @@ function AgassitantCallbackFunction(result) {
 										'</b>分<i></i></li><li class="summary-marks-li">优秀分: <b class="green" >' + keepTwoDecimal(it.GoodScore) +
 										'</b>分<i></i></li><li class="summary-marks-li">最低分: <b class="red" >' + keepTwoDecimal(it.MinScore) +
 										'</b>分<i></i></li><li class="summary-marks-li">最高分: <b class="green" >' + keepTwoDecimal(it.MaxScore) +
-										'</b>分<i></i></li></ul></li>'))
+										'</b>分<i></i></li></ul></li>'));
 								})
 
 							})
@@ -721,95 +819,13 @@ function AgassitantCallbackFunction(result) {
 							if (summaryBoxCount == 0) {
 								$('.assistant-empty2').show();
 								$('.summary-grade-main').hide();
-								$('.summary-title p span').hide();
+								// $('.summary-title p span').hide();
 								return;
 							}
 						}
 
 					}, function () {
-						var data = [{
-								"GradeID": null,
-								"GradeName": null,
-								"CourseNO": "27DA94C1-02A0-4B28-BDD3-0D201BB9F93F",
-								"CourseName": "高中一年级英语",
-								"AvgScore": 61.05375,
-								"GoodScore": 81.72833333333333333333333333,
-								"MaxScore": 90.58,
-								"MinScore": 29.18,
-								"ClassList": [{
-										"ClassID": "3E1369B6-ABE3-4121-8BE3-082D355B2A28",
-										"ClassName": "英语高一总评1班",
-										"AvgScore": 63.968,
-										"GoodScore": 84.57166666666666666666666667,
-										"MaxScore": 89.96,
-										"MinScore": 32.00,
-										"ChangeScore": -0.0125,
-										"PCurl": "/Student/Index#/PreviewSubject",
-										"Androidurl": "/Student/Index#/PreviewSubject",
-										"IOSurl": "/Student/Index#/PreviewSubject"
-									},
-									{
-										"ClassID": "3E1369B6-ABE3-4121-8BE3-082D355B2A28",
-										"ClassName": "英语高一总评2班",
-										"AvgScore": 63.968,
-										"GoodScore": 84.57166666666666666666666667,
-										"MaxScore": 89.96,
-										"MinScore": 32.85,
-										"ChangeScore": +0.0125,
-										"PCurl": "/Student/Index#/PreviewSubject",
-										"Androidurl": "/Student/Index#/PreviewSubject",
-										"IOSurl": "/Student/Index#/PreviewSubject"
-									},
-									{
-										"ClassID": "533D34D2-F159-4047-AE46-2F5A217F33EE",
-										"ClassName": "英语高一总评3班",
-										"AvgScore": 58.1395,
-										"GoodScore": 78.885,
-										"MaxScore": 90.58,
-										"MinScore": 29.18,
-										"ChangeScore": -0.005,
-										"PCurl": "/Student/Index#/PreviewSubject",
-										"Androidurl": "/Student/Index#/PreviewSubject",
-										"IOSurl": "/Student/Index#/PreviewSubject"
-									}
-								]
-							},
-							{
-								"GradeID": null,
-								"GradeName": null,
-								"CourseNO": "89DYH1-02A0-4B28-BDD3-0D201BB9F93F",
-								"CourseName": "高中二年级英语",
-								"AvgScore": 61.05375,
-								"GoodScore": 81.72833333333333333333333333,
-								"MaxScore": 90.58,
-								"MinScore": 29.18,
-								"ClassList": [{
-										"ClassID": "3E1369B6-ABE3-4121-8BE3-082D355B2A28",
-										"ClassName": "英语高二总评2班",
-										"AvgScore": 63.968,
-										"GoodScore": 84.57166666666666666666666667,
-										"MaxScore": 89.96,
-										"MinScore": 32.85,
-										"ChangeScore": -0.0125,
-										"PCurl": "/Student/Index#/PreviewSubject",
-										"Androidurl": "/Student/Index#/PreviewSubject",
-										"IOSurl": "/Student/Index#/PreviewSubject"
-									},
-									{
-										"ClassID": "533D34D2-F159-4047-AE46-2F5A217F33EE",
-										"ClassName": "英语高二总评1班",
-										"AvgScore": 58.1395,
-										"GoodScore": 78.885,
-										"MaxScore": 90.58,
-										"MinScore": 29.18,
-										"ChangeScore": +0.0105,
-										"PCurl": "/Student/Index#/PreviewSubject",
-										"Androidurl": "/Student/Index#/PreviewSubject",
-										"IOSurl": "/Student/Index#/PreviewSubject"
-									}
-								]
-							}
-						];
+						var data = [];
 						data.map(function (item, idx) {
 							var nowClass = 'summary-grade-classes' + idx;
 							var nowClass1 = '.' + nowClass;
@@ -852,7 +868,7 @@ function AgassitantCallbackFunction(result) {
 									'</b>分<i></i></li><li class="summary-marks-li">优秀分: <b class="green" >' + keepTwoDecimal(it.GoodScore) +
 									'</b>分<i></i></li><li class="summary-marks-li">最低分: <b class="red" >' + keepTwoDecimal(it.MinScore) +
 									'</b>分<i></i></li><li class="summary-marks-li">最高分: <b class="green" >' + keepTwoDecimal(it.MaxScore) +
-									'</b>分<i></i></li></ul></li>'))
+									'</b>分<i></i></li></ul></li>'));
 							})
 
 						})
@@ -879,7 +895,7 @@ function AgassitantCallbackFunction(result) {
 				}, function () {
 					$('.assistant-empty2').show();
 					$('.summary-grade-main').hide();
-					$('.summary-title p span').hide();
+					// $('.summary-title p span').hide();
 				})
 			} else {
 				ajaxM('api/CJZPPushOut/GetTeacherData', 'get', {
@@ -891,7 +907,7 @@ function AgassitantCallbackFunction(result) {
 					if (data.data.length == 0) {
 						$('.assistant-empty2').show();
 						$('.summary-grade-main').hide();
-						$('.summary-title p span').hide();
+						// $('.summary-title p span').hide();
 						return;
 					}
 					data.data.map(function (item, idx) {
@@ -936,7 +952,7 @@ function AgassitantCallbackFunction(result) {
 								'</b>分<i></i></li><li class="summary-marks-li">优秀分: <b class="green" >' + keepTwoDecimal(it.GoodScore) +
 								'</b>分<i></i></li><li class="summary-marks-li">最低分: <b class="red" >' + keepTwoDecimal(it.MinScore) +
 								'</b>分<i></i></li><li class="summary-marks-li">最高分: <b class="green" >' + keepTwoDecimal(it.MaxScore) +
-								'</b>分<i></i></li></ul></li>'))
+								'</b>分<i></i></li></ul></li>'));
 						})
 
 					})
@@ -953,139 +969,12 @@ function AgassitantCallbackFunction(result) {
 				}, function () {
 					$('.assistant-empty2').show();
 					$('.summary-grade-main').hide();
-					$('.summary-title p span').hide();
+					// $('.summary-title p span').hide();
 					return;
-					var data = [{
-							"GradeID": null,
-							"GradeName": null,
-							"CourseNO": "27DA94C1-02A0-4B28-BDD3-0D201BB9F93F",
-							"CourseName": "高中一年级英语",
-							"AvgScore": 61.05375,
-							"GoodScore": 81.72833333333333333333333333,
-							"MaxScore": 90.58,
-							"MinScore": 29.18,
-							"ClassList": [{
-									"ClassID": "3E1369B6-ABE3-4121-8BE3-082D355B2A28",
-									"ClassName": "英语高一总评1班",
-									"AvgScore": 63.968,
-									"GoodScore": 84.57166666666666666666666667,
-									"MaxScore": 89.96,
-									"MinScore": 32.00,
-									"ChangeScore": -0.0125,
-									"PCurl": "/Student/Index#/PreviewSubject",
-									"Androidurl": "/Student/Index#/PreviewSubject",
-									"IOSurl": "/Student/Index#/PreviewSubject"
-								},
-								{
-									"ClassID": "3E1369B6-ABE3-4121-8BE3-082D355B2A28",
-									"ClassName": "英语高一总评2班",
-									"AvgScore": 63.968,
-									"GoodScore": 84.57166666666666666666666667,
-									"MaxScore": 89.96,
-									"MinScore": 32.85,
-									"ChangeScore": +0.0125,
-									"PCurl": "/Student/Index#/PreviewSubject",
-									"Androidurl": "/Student/Index#/PreviewSubject",
-									"IOSurl": "/Student/Index#/PreviewSubject"
-								},
-								{
-									"ClassID": "533D34D2-F159-4047-AE46-2F5A217F33EE",
-									"ClassName": "英语高一总评3班",
-									"AvgScore": 58.1395,
-									"GoodScore": 78.885,
-									"MaxScore": 90.58,
-									"MinScore": 29.18,
-									"ChangeScore": -0.005,
-									"PCurl": "/Student/Index#/PreviewSubject",
-									"Androidurl": "/Student/Index#/PreviewSubject",
-									"IOSurl": "/Student/Index#/PreviewSubject"
-								}
-							]
-						},
-						{
-							"GradeID": null,
-							"GradeName": null,
-							"CourseNO": "89DYH1-02A0-4B28-BDD3-0D201BB9F93F",
-							"CourseName": "高中二年级英语",
-							"AvgScore": 61.05375,
-							"GoodScore": 81.72833333333333333333333333,
-							"MaxScore": 90.58,
-							"MinScore": 29.18,
-							"ClassList": [{
-									"ClassID": "3E1369B6-ABE3-4121-8BE3-082D355B2A28",
-									"ClassName": "英语高二总评2班",
-									"AvgScore": 63.968,
-									"GoodScore": 84.57166666666666666666666667,
-									"MaxScore": 89.96,
-									"MinScore": 32.85,
-									"ChangeScore": -0.0125,
-									"PCurl": "/Student/Index#/PreviewSubject",
-									"Androidurl": "/Student/Index#/PreviewSubject",
-									"IOSurl": "/Student/Index#/PreviewSubject"
-								},
-								{
-									"ClassID": "533D34D2-F159-4047-AE46-2F5A217F33EE",
-									"ClassName": "英语高二总评1班",
-									"AvgScore": 58.1395,
-									"GoodScore": 78.885,
-									"MaxScore": 90.58,
-									"MinScore": 29.18,
-									"ChangeScore": +0.0105,
-									"PCurl": "/Student/Index#/PreviewSubject",
-									"Androidurl": "/Student/Index#/PreviewSubject",
-									"IOSurl": "/Student/Index#/PreviewSubject"
-								}
-							]
-						}
-					];
+
 					// 	data ={"data":[{"GradeID":null,"GradeName":null,"CourseNO":"5CD6D9EE-8B72-4C07-B6BE-7B816BEEF991","CourseName":"视听说B","AvgScore":0.3869565217391304347826086957,"GoodScore":1.2881578947368421052631578947,"MaxScore":21.95,"MinScore":0.00,"ClassList":[{"ClassID":"4048C45E-2C12-46D6-AE3E-87B21A852098","ClassName":"认知视听说B一3班","AvgScore":0.025,"GoodScore":0.0833,"MaxScore":0.75,"MinScore":0.00,"ChangeScore":0.025,"PCurl":"/Views/Teacher/teacher.html#/?CourseClassID=4048C45E-2C12-46D6-AE3E-87B21A852098&CourseClassName=认知视听说B一3班&SubjectName=英语","Androidurl":null,"IOSurl":null},{"ClassID":"7A4209FD-1EBA-443D-BF61-0994C577A879","ClassName":"认知视听说B一1班","AvgScore":0.0066666666666666666666666667,"GoodScore":0.0222222222222222222222222222,"MaxScore":0.10,"MinScore":0.00,"ChangeScore":0.0066666666666666666666666667,"PCurl":"/Views/Teacher/teacher.html#/?CourseClassID=7A4209FD-1EBA-443D-BF61-0994C577A879&CourseClassName=认知视听说B一1班&SubjectName=英语","Androidurl":null,"IOSurl":null},{"ClassID":"865856BF-22BE-498D-83E1-43AFEF45365E","ClassName":"认知视听说B一2班","AvgScore":1.0753333333333333333333333333,"GoodScore":3.5844444444444444444444444444,"MaxScore":21.95,"MinScore":0.00,"ChangeScore":1.0753333333333333333333333333,"PCurl":"/Views/Teacher/teacher.html#/?CourseClassID=865856BF-22BE-498D-83E1-43AFEF45365E&CourseClassName=认知视听说B一2班&SubjectName=英语","Androidurl":null,"IOSurl":null}]}],"success":true,"message":null};
 					// 
-					data.map(function (item, idx) {
-						var nowClass = 'summary-grade-classes' + idx;
-						var nowClass1 = '.' + nowClass;
-						var class1 = ' summary-grade-classes clearfix ' + nowClass;
-						item.CourseName = item.CourseName + '成绩数据';
-						var CourseNameAll = '""';
-						if (item.CourseName.length > 15) {
-							CourseNameAll = '"' + item.CourseName + '"';
-							item.CourseName = item.CourseName.slice(0, 13) + '..';
-						}
-						$('.summary-grade-main').append($(
-							'<div class="summary-grade-box clearfix" ><ul class="summary-grade-classes clearfix"></ul><span class="summary-grade-all"><p title =' +
-							CourseNameAll + '>' + item.CourseName +
-							'</p><ul class="summary-marks-ul"><li class="summary-marks-li">平均分: <b class="orange" >' +
-							keepTwoDecimal(item.AvgScore) +
-							'</b>分<i></i></li><li class="summary-marks-li">优秀分: <b class="green" >' + keepTwoDecimal(item.GoodScore) +
-							'</b>分<i></i></li><li class="summary-marks-li">最低分: <b class="red" >' + keepTwoDecimal(item.MinScore) +
-							'</b>分<i></i></li><li class="summary-marks-li">最高分: <b class="green" >' + keepTwoDecimal(item.MaxScore) +
-							'</b>分<i></i></li></ul></span></div>'));
-						item.ClassList.map(function (it) {
-							if (keepTwoDecimal(it.ChangeScore) < 0) {
-								var text = '-';
-								it.ChangeScore = -it.ChangeScore;
-							} else if (keepTwoDecimal(it.ChangeScore) == 0) {
-								var text = '';
-							} else {
-								var text = '+';
-							}
-							var ClassNameAll = '""';
-							if (it.ClassName.length > 8) {
-								ClassNameAll = '"' + it.ClassName + '"';
-								it.ClassName = it.ClassName.slice(0, 6) + '..';
-							}
-							$('.summary-grade-box').eq(idx).children('.summary-grade-classes').append($(
-								'<li class="summary-grade-class" data-url=' + it.PCurl +
-								' ><span class="summary-class-name" title=' + ClassNameAll + ' >' +
-								it.ClassName + '</span><span class="summary-class-marks">' + text + '<b>' + keepTwoDecimal(it.ChangeScore) +
-								'</b>分</span><span class="summary-class-change">较上月变化</span><ul class="summary-marks-ul"><li class="summary-marks-li">平均分: <b class="orange" >' +
-								keepTwoDecimal(it.AvgScore) +
-								'</b>分<i></i></li><li class="summary-marks-li">优秀分: <b class="green" >' + keepTwoDecimal(it.GoodScore) +
-								'</b>分<i></i></li><li class="summary-marks-li">最低分: <b class="red" >' + keepTwoDecimal(it.MinScore) +
-								'</b>分<i></i></li><li class="summary-marks-li">最高分: <b class="green" >' + keepTwoDecimal(it.MaxScore) +
-								'</b>分<i></i></li></ul></li>'))
-						})
 
-					})
 					for (var i = 0; i < $('.summary-grade-class').length; i++) {
 						if (i % 4 == 1) {
 							$('.summary-grade-class').eq(i).attr('class', 'summary-grade-class summary-grade-class1');
@@ -1101,10 +990,10 @@ function AgassitantCallbackFunction(result) {
 
 		});
 		// 获取天气
-		ajaxN('PsnMgr/Schedule/GetWeatherInformation', 'get', {}, function (data) {
-			if (data.StatusCode == 200) {
+		ajaxN('PsnMgr/Schedule/GetWeatherInformation', 'get', {}, function (data1) {
+			if (data1.StatusCode == 200) {
 				$('.assistant-popup-weather').show();
-				var data = data.Data;
+				var data = data1.Data;
 				$('.assistant-weather1').text(data.Weather);
 				$('.assistant-weather1').attr('title', data.Weather);
 				$('.assistant-weather2').text(data.Temperature + '°C');
@@ -1150,7 +1039,7 @@ function AgassitantCallbackFunction(result) {
 
 			} else {
 				$('.assistant-popup-weather').hide();
-				assistantTipsFn('天气接口请求异常~');
+				// assistantTipsFn('天气接口请求异常~');
 			}
 		});
 		// 获取教务窗口
@@ -1160,10 +1049,10 @@ function AgassitantCallbackFunction(result) {
 	//获取系统iP ，sysid为系统id，successFunction为成功的回调，参数为系统iP；
 	function getSysIP(sysid, successFunction) {
 		if (!sysIPArr[sysid]) {
-			var SubjectIDs = SubjectID;
-			if (sysid == 400) {
-				SubjectIDs = '';
-			}
+			// var SubjectIDs = SubjectID;
+			// if (sysid == 400) {
+			// 	SubjectIDs = '';
+			// }
 			$.ajax({
 				url: PsnMgrLgAssistantAddr + 'PsnMgr/InfoCentre/GetSystemWS', //地址
 				// dataType: 'json', //数据类型
@@ -1175,7 +1064,7 @@ function AgassitantCallbackFunction(result) {
 				data: {
 					SchoolID: SchoolID,
 					SysID: sysid,
-					SubjectID: SubjectIDs,
+					SubjectID: '',
 					Token: PsnMgrToken,
 					SecretKey: '',
 					BackUpOne: '',
@@ -1221,10 +1110,10 @@ function AgassitantCallbackFunction(result) {
 
 	function getSysWeb(sysid, successFunction) {
 		if (!sysWebArr[sysid]) {
-			var SubjectIDs = SubjectID;
-			if (sysid == 400) {
-				SubjectIDs = '';
-			}
+			// var SubjectIDs = SubjectID;
+			// if (sysid == 400) {
+			// 	SubjectIDs = '';
+			// }
 			$.ajax({
 				url: PsnMgrLgAssistantAddr + 'PsnMgr/InfoCentre/GetSystemWeb', //地址
 				// dataType: 'json', //数据类型
@@ -1236,7 +1125,7 @@ function AgassitantCallbackFunction(result) {
 				data: {
 					SchoolID: SchoolID,
 					SysID: sysid,
-					SubjectID: SubjectIDs,
+					SubjectID: '',
 					Token: PsnMgrToken,
 					SecretKey: '',
 					BackUpOne: '',
@@ -1347,7 +1236,10 @@ function AgassitantCallbackFunction(result) {
 			error: function (data) {
 				// assistantTipsFn('请求错误~');
 				$('.assistant-popup-loading').hide();
-				assistantTipsFn(url);
+				if (url != 'PsnMgr/Schedule/GetWeatherInformation') {
+					assistantTipsFn(url);
+				}
+
 				// if ($('.assistant-active').attr('name') == 1) {
 				// 	$('.infoCenter-empty').show();
 				// 	$('.infoCenter-empty-text').text($('.info-active').eq(1).text());
@@ -1364,9 +1256,15 @@ function AgassitantCallbackFunction(result) {
 				if (status == 'timeout') {
 					XMLHttpRequest.abort(); // 超时后中断请求
 					$('.assistant-popup-loading').hide();
-					assistantRemindFn(['网络超时，请刷新'], function () {
-						ajaxN(url, submitType, param, successFunction);
-					})
+					if (url != 'PsnMgr/Schedule/GetWeatherInformation') {
+						assistantRemindFn([url + '网络超时，请刷新'], function (data) {
+							if (data) {
+								ajaxN(url, submitType, param, successFunction);
+							}
+
+						})
+					}
+
 
 				}
 			}
@@ -1430,8 +1328,10 @@ function AgassitantCallbackFunction(result) {
 				if (status == 'timeout') {
 					XMLHttpRequest.abort(); // 超时后中断请求
 					$('.assistant-popup-loading').hide();
-					assistantRemindFn(['网络超时，请刷新'], function () {
-						ajaxM(url, submitType, param, successFunction, errorFunction);
+					assistantRemindFn(['网络超时，请刷新'], function (data) {
+						if (data) {
+							ajaxM(url, submitType, param, successFunction, errorFunction);
+						}
 					})
 
 				}
@@ -1566,7 +1466,7 @@ function AgassitantCallbackFunction(result) {
 			assistantTipsFn('传递参数错误，请检查~');
 			return false;
 		}
-		result = Math.round(num * 100) / 100;
+		result = Math.round(num * 10) / 10;
 		return result;
 	}
 	//四舍五入保留2位小数（不够位数，则用0替补）
@@ -1576,7 +1476,7 @@ function AgassitantCallbackFunction(result) {
 			assistantTipsFn('传递参数错误，请检查~');
 			return false;
 		}
-		result = Math.round(num * 100) / 100;
+		result = Math.round(num * 10) / 10;
 		var s_x = result.toString();
 		var pos_decimal = s_x.indexOf('.');
 		if (pos_decimal < 0) {
@@ -1817,7 +1717,7 @@ function AgassitantCallbackFunction(result) {
 
 	};
 	//接口返回值转码输出
-	function htmlEncode(s) {
+	function htmlLableExe(s) {
 		if (s.length == 0) return "";
 		s = s.replace(/&/g, "&amp;");
 		s = s.replace(/</g, "&lt;");
@@ -1830,7 +1730,28 @@ function AgassitantCallbackFunction(result) {
 		return s;
 	};
 
-	// 获取url?后面的参数的值  name为参数的名称 返回值为参数的值
+	function htmlLableExe(resultvalue) {
+		var regExp = new RegExp(/[<>&]+/g);
+		var newValue = "";
+		if (regExp.test(resultvalue)) {
+			for (var i = 0; i < resultvalue.length; i++) {
+				var strValue = resultvalue.charAt(i);
+				if (strValue == "<") {
+					newValue += strValue.replace(/[<]+/g, "<");
+				} else if (strValue == ">") {
+					newValue += strValue.replace(/[>]+/g, ">")
+				} else if (strValue == "&") {
+					newValue += strValue.replace(/[&]+/g, "&");
+				} else {
+					newValue += strValue;
+				}
+			}
+			return newValue;
+		} else {
+			return resultvalue;
+		}
+	}
+
 	function getQueryString(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 		var r = window.location.search.substr(1).match(reg);
@@ -2123,20 +2044,30 @@ function AgassitantCallbackFunction(result) {
 	};
 
 	//小助手动态生成
-	$('body').append($(
-		'<div class="lgAssistant-main"><div class="assistant-box"><div id="assistant-box"><canvas id="assistant-box-canvas" width="225" height="150"></canvas></div><div class="assistant-prompt"><p>金老师</p><p>您好~</p></div><div class="assistant-remind-count"><canvas class="assistant-remind-count " style="position:absolute;left: 0;z-index: -1;margin: -50px 0 0 0; "></canvas><ul><li>0</li></ul></div><div class="assistant-info-prompt"><i></i><div class="assistant-remind-div"><ul class="assistant-remind-ul"></ul></div></div><div class="assistant-schedule-prompt"><span class="schedule-prompt-text">上午，10:30 教学主楼606 “学科教研会”</span><p class="schedule-prompt-close">我知道了</p></div><canvas class="assistant-hover-box"></canvas><div class="assistant-popup"><div class="assistant-popup-nav"><div class="assistant-popup-logo"><ul><li><i></i></li><li>教学小助手</li><li><i class="assistant-popup-close "></i></li></ul><div class="lgAssistant-clear"></div></div><div class="popup-nav-list"><ul class="popup-nav-ul"><li class="assistant-active" name="1"><i></i><b></b><p>消息中心</p></li><li name="2"><i></i><p>日程与课表</p></li><li name="3"><i></i><p>学情总结</p></li><li name="4"><i></i><p>通讯录</p></li><li name="5"><i></i><p>教务窗口</p></li></ul><div class="assistant-popup-weather"><i class="assistant-weather3"></i><div><p class="assistant-weather1">晴转多云</p><p class="assistant-weather2">26°~34°</p></div></div></div></div><div class="popup-main"><p class="popup-main-shadow"></p><p class=" popup-main-shade"></p><div class="assistant-small-success"><span><i></i><b class="assistant-small-text">操作成功！</b></span></div><div class="assistant-tips"><span><i></i><b class="assistant-tips-text">未找到相关联系人！</b></span></div><div class="assistant-big-success"><span><i></i><b class="assistant-big-text">操作成功~</b></span></div><div class="assistant-remind"><span class="assistant-remind-span"  ><i class="assistant-remind-close"></i><p><i></i><span class="assistant-remind-text">操作询操作询问操作询问问</span></p><span class="assistant-remind-true">确定删除</span><span class="assistant-remind-false">再想想</span></span></div><div class="assistant-outline"><span><p><i></i><span class="assistant-outline-text">您已经掉线，请重新登录！</span></p><span class="assistant-outline-true">重新登录</span></span></div><div class="popup-main-nav popup-main1"><ul><li class="info-active" name="1"><p class="info-active">待办事项<i><span><b></b></span></i></p></li><li name="2"><p>通知<i><span><b></b></span></i></p></li><li name="4"><p>系统消息<i><span><b></b></span></i></p></li></ul><div class="infoCenter-setting"><i></i><span>设置</span></div><div class="infoCenter-empty"><i></i><p>暂时还没有<span class="infoCenter-empty-text">待办事项</span>哦~</p></div><div class="lgAssistant-clear"></div><div class="setting-popup"><div></div><div><div class="setting-close"><i></i><span>设置</span><i class="lgAssistant-close"></i></div><ul><li class="setting-active" name="setting-option1"><p class="setting-active">系统消息接收设置</p></li></ul><div class="lgAssistant-clear"></div><div></div><div class="setting-option setting-option1"></div><div class="setting-option setting-option2"></div><div class="setting-option setting-option3"></div></div><div></div></div><div class="infoCenter-option todo"><span class="todo-type-span" data-name="0"> 全部内容(共<strong>0</strong>项)<i></i><p></p><ul class="todo-type-ul"></ul></span><span> 期限 </span><div class="infoCenter-option-box todo-box"></div></div><div class="infoCenter-option message"><span> 标题(有<strong>0</strong>个未读通知)</span><span> 发布人 </span><span> 发布时间 </span><div class="infoCenter-option-box message-box"></div></div><div class="infoCenter-option chat"><span> 共有<strong>0</strong>条新消息</span><div class="infoCenter-option-box chat-box"><div class="chat-clear"><span><b></b>清除交流信息</span></div></div></div><div class="infoCenter-option notice"><span> 消息内容(有<strong>0</strong>条新消息)</span><span> 来源 </span><span> 时间 </span><div class="infoCenter-option-box notice-box"><div class="notice-clear"><span><b></b>清空系统信息</span></div></div></div><div class="infoCenter-option news"><div class="news-box"></div></div></div><div class="popup-main-nav popup-main2"><div class="schedule-setting-popup"><div></div><div class="schedule-setting-main"><p><i></i><b class="schedule-change-type">新建日程</b><i class="schedule-setting-close"></i></p><div><ul><li class="schedule-type"><span>类型:</span><i name="1"></i><b>备课</b><i name="2"></i><b>会议</b><i name="3" class="schedule-type-true"></i><b>重要活动</b><i name="4"></i><b class="schedule-edit-name">自定义</b><input type="text" class="schedule-type-name" placeholder="班级活动" maxlength="4"></li><li><span>日期:</span><div class="schedule-setting-date"><input type="text" autocomplete="off" id="lgAssistant-next3"><i></i></li><li><span>时间:</span><input type="text" id="schedule-test1"><span><i></i><i></i></span><span>到</span><input type="text" id="schedule-test2"><span><i></i><i></i></span></li><li><span>内容:</span><textarea class="schedule-topic" maxlength="50"></textarea><b class="schedule-topic-length">0/50</b></li></ul><div class="schedule-setting-clock"><p>提醒设置:<span><i class="schedule-clocks-setting" name="true"></i>开启提醒</span></p><p class="schedule-clocks-setting1"><i name="1"></i>按开始时间提醒</p><p class="schedule-clocks-setting1"><i class="schedule-input-clocks" name="2"></i>提前提醒<span>计划开始前</span><input class="schedule-clocks-time" type="number" value="30" max="999"  min="1"/><span>分钟提醒</span></p></div></div><div><span class="schedule-setting-true">确定</span><span class="schedule-setting-false">取消</span></div><div class="schedule-edit-popup"></div></div></div><div class="popup-main22"><span class="new-schedule"><i></i>新建日程</span><span class="assistant-mySchedule"><i></i>查看全部课表</span></div><div class="popup-main22"><span class="schedule-choose-day"><i name="1">今天</i><i name="2">明天</i><i name="3">后天</i></span><span><b class="schedule-choose-date">2019-08-21</b><b class="schedule-choose-week">(第11周 星期三)</b></span><div class="chooose-schedule-date"><i id="lgAssistant-next2"></i></div></div><div class="personal-schedule-box popup-main22"><ul class="personal-schedule-ul1"></ul><ul class="personal-schedule-ul2"></ul><ul class="personal-schedule-ul3"></ul></div><div class="personal-schedule-empty popup-main22"><i></i><p>暂时还没有日程安排哦~</p></div></div><div class="popup-main-nav popup-main3"><div class="summary-main"><div class="summary-title"><p class="summary-title1"><i></i>考勤及学习情况</p></div><div><ul class="summary-choose-time clearfix"><li class="summary-time-active" name="1">近一周</li><li name="2">近一月</li><li name="3">本学期</li><li name="4">指定时间 <div class="summary-input-time"><input type="text" class="layui-input" autocomplete="off" id="lgAssistant-next4" placeholder="开始时间"><b> - </b><input type="text" class="layui-input" autocomplete="off" id="lgAssistant-next5" placeholder="结束时间"><span>确定</span></div></li></ul><div class="assistant-empty assistant-empty1"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table "><tr class="summary-table-header"><th width="176"></th><th width="180">上课/考试出勤率</th><th width="180">作业完成率</th><th width="180">自学计划完成率</th><th width="90">详情</th></tr></table><div class="summary-title"><p><i></i>成绩总览 <span>成绩管理<i></i></span></p></div><div class="assistant-empty assistant-empty2"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><div class="summary-grade-main"></div></div><p class=" popup-main3-padding"></p></div><div class="summary-popup summary-popup0" name="1"><div class="summary-popup-shade" name="1" ></div><div class="summary-popup-main summary-popup0-main"><p><span class="summary-popup0-class">一年级一班</span>的考勤及学习情况 <i class="summary-popup-close" name ="1" ></i></p><p>总体上课考试出勤率<span class="summary-popup0-class1"> 0% </span> 总体作业完成率<span class="summary-popup0-class2"> 0%</span> 总体自学计划完成率: <span class="summary-popup0-class3">0%</span></p><div class="assistant-empty assistant-empty3"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table1"><thead><tr><th width="75">序号</th><th width="80">姓名</th><th width="120">学号</th><th width="191">上课/考试出勤率</th><th width="154">作业完成率</th><th width="189">自学计划完成率</th></tr></thead><tbody></tbody></table></div></div><div class="summary-popup summary-popup1"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup1-main"><p><span class="summary-popup1-name"></span>的上课/考试考勤情况 <i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span1" name="1"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="1">全部<li><li name="0">缺勤<li></ul></div><span class="summary-popup1-border"></span>总体上课/考试出勤率:<i class="summary-popup1-AllRate"> 0% </i><span class="summary-popup1-AllAttendence">(0/0次)</span> 课堂考勤:<i class="summary-popup1-LessonAttendence green">出勤0</i>/<span class="summary-popup1-LessonAbsence red">缺勤0</span> 考试出勤:<i class=" summary-popup1-ExamAttendence green">出考0</i>/<span class=" summary-popup1-ExamAbsence red">缺考0</span><br/><div class="assistant-empty assistant-empty4"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table2"><thead><tr><th width="75">序号</th><th width="191">时间<i></i></th><th width="180">学科</th><th width="310">内容</th><th width="80">状态</th><th width="66"></th></tr></thead><tbody></tbody></table></div></div><div class="summary-popup summary-popup2"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup2-main"><p><span class="summary-popup2-name"></span>作业完成情况 <i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span21" name="0"><p>全部作业</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部作业<li><li name="1">预习作业<li><li name="2">课业作业<li></ul></div><div class="assistant-select-span assistant-select-span22" name="0"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部<li><li name="1">未完成<li><li name="2">已完成<li></ul></div><span class="summary-popup1-border"></span>总体作业完成率: <i class="summary-popup2-HomeworkCompleteRate">0%</i><span class="summary-popup2-CompleteHomework">(0/0次) </span><br/><div class="assistant-empty assistant-empty5"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table3"><thead><tr><th width="75">序号</th><th width="223">标题</th><th width="99">学科</th><th width="80">发布老师</th><th width="187">完成时间</th><th width="53">成绩</th><th width="100">详情</th></tr></thead><tbody></tbody></table></div></div><div class=" summary-popup summary-popup3"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup3-main"><p><span class="summary-popup3-name"></span>的自学计划完成情况 <i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span3" name="0"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部<li><li name="1">未完成<li></ul></div><span class="summary-popup1-border"></span>总体自学计划完成率: <i class="summary-popup3-PassRate">0%</i><span class="summary-popup3-PassPlan"> (0/0次) </span><div class="assistant-empty assistant-empty6"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table4"><thead><tr><th width="75">序号</th><th width="200">计划名称<i></i></th><th width="70">学科</th><th width="285">计划时间</th><th width="90">完成情况</th><th width="70">详情</th><th width="23"></th></tr></thead><tbody></tbody></table></div></div></div><div class="popup-main-nav popup-main4"><div class="contact-left"><div class="contact-left-search"><input class="contact-search-input"  type="text" placeholder="请输入姓名/用户编号搜索"/><i class="contact-search-choose"></i><i class="contact-search-clear"></i></div><ul><li class="contact-list-choose" name="最近联系人"><i class="i-middle"></i><span>最近联系人</span><i class="contact-tab"></i></li><li name="常用联系人"><i class="i-middle"></i><span>常用联系人</span><i class="contact-tab"></i></li><li name="我的班级"><i class="i-middle"></i><span>我的班级</span><i class="contact-tab"></i></li><li name="我的教师组"><i class="i-middle"></i><span>我的教师组</span><i class="contact-tab"></i></li><li name="全校师生"><i class="i-middle"></i><span>全校师生</span><i class="contact-tab"></i></li></ul></div><div class="contact-right "><div class="contact-list1"><ul class="contact-type"><li><p class="contact-type-p" data-class="contact-Initialization">最近联系人</p><span>></span></li></ul><span class="contact-type-text" name="1"><i></i>清空</span><ul class="contact-li"></ul><div class="contact-right-empty"><i></i><p>暂时还没有<span class="contact-empty-text">最近联系人</span>信息哦~</p></div></div></div><div class="contact-frequent"><div></div><div><p class="contact-frequent-top"><i></i><span>添加常用联系人</span><i class="contact-frequent-close"></i></p><div class="contact-frequent-search"><span><input type="text" autocomplete="off" class="contact-frequent-input" placeholder="请输入姓名/用户编号搜索"/><i class="contact-frequent-clear"></i></span><button type="button" class="contact-frequent-commit">查找</button></div><p class="contact-search-p">共找到<b class="contact-search-number">0</b>个联系人 </p><ul class="contact-search-ul"></ul><div class="frame_pager_center pager5 clearfix"></div></div></div><div class="contact-info"><div></div><div class="contact-info-main"><div><i class="contact-info-close"></i><i class="contact-info-image"></i><span><span><b>张佳乐的家长</b><i></i></span><b class="contact-info-id">1200430501</b><i></i><b class="contact-info-class">一年级1班</b></span><span class="contact-info-sign"><i></i>含泪播种的人泪播种的人一一定能含笑收获~</span></div><ul class="contact-message-ul"><li><span>电话</span><span><b id="contact-copy-text1">13126011111</b><b name="1" class="contact-info-copy">复制</b></span></li><li><span>QQ</span><span><b id="contact-copy-text2">623226323</b><b name="2" class="contact-info-copy">复制</b></span><a class="lgAssistant-main-QQ"></a></li><li><span>微信</span><span><b id="contact-copy-text3">YT13143sdae</b><b name="3" class="contact-info-copy">复制</b></span><a href="https://wx.qq.com/"  class="lgAssistant-main-WX"></a></li><li><span>微博</span><span><b id="contact-copy-text4">合格王企鹅</b><b name="4" class="contact-info-copy">复制</b></span><a  href="https://weibo.com/login.php"  class="lgAssistant-main-WB"></a></li></ul></div></div><ul class="contact-left-popup"></ul></div><div class="popup-main-nav popup-main5"><ul><li class="assistant-deliver-notice"><i></i><span>发布通知</span></li><li class="assistant-deliver-questionnaire"><i></i><span>发布问卷调查</span></li><li class="assistant-student-admin"><i></i><span>学生档案管理</span></li><li class="assistant-teaClass-admin"><i></i><span>教学班管理</span></li></ul></div><div class="assistant-popup-loading"><div class="frame_point_loading_container"><div class="point_container"><span class="point1 point"></span><span class="point2 point"></span><span class="point3 point"></span><span class="point4 point"></span></div></div></div></div></div></div></div'
-	));
+	// $('body').append($(
+	// 	'<div class="lgAssistant-main"><div class="assistant-box"><div id="assistant-box"><canvas id="assistant-box-canvas" width="225" height="150"></canvas></div><div class="assistant-prompt"><p>金老师</p><p>您好~</p></div><div class="assistant-remind-count"><canvas class="assistant-remind-count " style="position:absolute;left: 0;z-index: -1;margin: -50px 0 0 0; "></canvas><ul><li>0</li></ul></div><div class="assistant-info-prompt"><i></i><div class="assistant-remind-div"><ul class="assistant-remind-ul"></ul></div></div><div class="assistant-schedule-prompt"><span class="schedule-prompt-text">上午，10:30 教学主楼606 “学科教研会”</span><p class="schedule-prompt-close">我知道了</p></div><canvas class="assistant-hover-box"></canvas><div class="assistant-popup"><div class="assistant-popup-nav"><div class="assistant-popup-logo"><ul><li><i></i></li><li>教学小助手</li><li><i class="assistant-popup-close "></i></li></ul><div class="lgAssistant-clear"></div></div><div class="popup-nav-list"><ul class="popup-nav-ul"><li class="assistant-active" name="1"><i></i><b></b><p>消息中心</p></li><li name="2"><i></i><p>日程与课表</p></li><li name="3"><i></i><p>学情总结</p></li><li name="4"><i></i><p>通讯录</p></li><li name="5"><i></i><p>教务窗口</p></li></ul><div class="assistant-popup-weather"><i class="assistant-weather3"></i><div><p class="assistant-weather1">晴转多云</p><p class="assistant-weather2">26°~34°</p></div></div></div></div><div class="popup-main"><p class="popup-main-shadow"></p><p class=" popup-main-shade"></p><div class="assistant-small-success"><span><i></i><b class="assistant-small-text">操作成功！</b></span></div><div class="assistant-tips"><span><i></i><b class="assistant-tips-text">未找到相关联系人！</b></span></div><div class="assistant-big-success"><span><i></i><b class="assistant-big-text">操作成功~</b></span></div><div class="assistant-remind"><span class="assistant-remind-span"  ><i class="assistant-remind-close"></i><p><i></i><span class="assistant-remind-text">操作询操作询问操作询问问</span></p><span class="assistant-remind-true">确定删除</span><span class="assistant-remind-false">再想想</span></span></div><div class="assistant-outline"><span><p><i></i><span class="assistant-outline-text">您已经掉线，请重新登录！</span></p><span class="assistant-outline-true">重新登录</span></span></div><div class="popup-main-nav popup-main1"><ul><li class="info-active" name="1"><p class="info-active">待办事项<i><span><b></b></span></i></p></li><li name="2"><p>通知<i><span><b></b></span></i></p></li><li name="4"><p>系统消息<i><span><b></b></span></i></p></li></ul><div class="infoCenter-setting"><i></i><span>设置</span></div><div class="infoCenter-empty"><i></i><p>暂时还没有<span class="infoCenter-empty-text">待办事项</span>哦~</p></div><div class="lgAssistant-clear"></div><div class="setting-popup"><div></div><div><div class="setting-close"><i></i><span>设置</span><i class="lgAssistant-close"></i></div><ul><li class="setting-active" name="setting-option1"><p class="setting-active">系统消息接收设置</p></li></ul><div class="lgAssistant-clear"></div><div></div><div class="setting-option setting-option1"></div><div class="setting-option setting-option2"></div><div class="setting-option setting-option3"></div></div><div></div></div><div class="infoCenter-option todo"><span class="todo-type-span" data-name="0"> 全部内容(共<strong>0</strong>项)<i></i><p></p><ul class="todo-type-ul"></ul></span><span> 期限 </span><div class="infoCenter-option-box todo-box"></div></div><div class="infoCenter-option message"><span> 标题(有<strong>0</strong>个未读通知)</span><span> 发布人 </span><span> 发布时间 </span><div class="infoCenter-option-box message-box"></div></div><div class="infoCenter-option chat"><span> 共有<strong>0</strong>条新消息</span><div class="infoCenter-option-box chat-box"><div class="chat-clear"><span><b></b>清除交流信息</span></div></div></div><div class="infoCenter-option notice"><span> 消息内容(有<strong>0</strong>条新消息)</span><span> 来源 </span><span> 时间 </span><div class="infoCenter-option-box notice-box"><div class="notice-clear"><span><b></b>清空系统信息</span></div></div></div><div class="infoCenter-option news"><div class="news-box"></div></div></div><div class="popup-main-nav popup-main2"><div class="schedule-setting-popup"><div></div><div class="schedule-setting-main"><p><i></i><b class="schedule-change-type">新建日程</b><i class="schedule-setting-close"></i></p><div><ul><li class="schedule-type"><span>类型:</span><i name="1"></i><b>备课</b><i name="2"></i><b>会议</b><i name="3" class="schedule-type-true"></i><b>重要活动</b><i name="4"></i><b class="schedule-edit-name">自定义</b><input type="text" class="schedule-type-name" placeholder="班级活动" maxlength="4"></li><li><span>日期:</span><div class="schedule-setting-date"><input type="text" autocomplete="off" id="lgAssistant-next3"><i></i></li><li><span>时间:</span><input type="text" id="schedule-test1"><span><i></i><i></i></span><span>到</span><input type="text" id="schedule-test2"><span><i></i><i></i></span></li><li><span>内容:</span><textarea class="schedule-topic" maxlength="50"></textarea><b class="schedule-topic-length">0/50</b></li></ul><div class="schedule-setting-clock"><p>提醒设置:<span><i class="schedule-clocks-setting" name="true"></i>开启提醒</span></p><p class="schedule-clocks-setting1"><i name="1"></i>按开始时间提醒</p><p class="schedule-clocks-setting1"><i class="schedule-input-clocks" name="2"></i>提前提醒<span>计划开始前</span><input class="schedule-clocks-time" type="number" value="30" max="999"  min="1"/><span>分钟提醒</span></p></div></div><div><span class="schedule-setting-true">确定</span><span class="schedule-setting-false">取消</span></div><div class="schedule-edit-popup"></div></div></div><div class="popup-main22"><span class="new-schedule"><i></i>新建日程</span><span class="assistant-mySchedule"><i></i>查看全部课表</span></div><div class="popup-main22"><span class="schedule-choose-day"><i name="1">今天</i><i name="2">明天</i><i name="3">后天</i></span><span><b class="schedule-choose-date">2019-08-21</b><b class="schedule-choose-week">(第11周 星期三)</b></span><div class="chooose-schedule-date"><i id="lgAssistant-next2"></i></div></div><div class="personal-schedule-box popup-main22"><ul class="personal-schedule-ul1"></ul><ul class="personal-schedule-ul2"></ul><ul class="personal-schedule-ul3"></ul></div><div class="personal-schedule-empty popup-main22"><i></i><p>暂时还没有日程安排哦~</p></div></div><div class="popup-main-nav popup-main3"><div class="summary-main"><div class="summary-title"><p class="summary-title1"><i></i>考勤及学习情况</p></div><div><ul class="summary-choose-time clearfix"><li class="summary-time-active" name="1">近一周</li><li name="2">近一月</li><li name="3">本学期</li><li name="4">指定时间 <div class="summary-input-time"><input type="text" class="layui-input" autocomplete="off" id="lgAssistant-next4" placeholder="开始时间"><b> - </b><input type="text" class="layui-input" autocomplete="off" id="lgAssistant-next5" placeholder="结束时间"><span>确定</span></div></li></ul><div class="assistant-empty assistant-empty1"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table "><tr class="summary-table-header"><th width="176"></th><th width="180">上课/考试出勤率</th><th width="180">作业完成率</th><th width="180">自学计划完成率</th><th width="90">详情</th></tr></table><div class="summary-title"><p><i></i>成绩总览 <span>成绩管理<i></i></span></p></div><div class="assistant-empty assistant-empty2"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><div class="summary-grade-main"></div></div><p class=" popup-main3-padding"></p></div><div class="summary-popup summary-popup0" name="1"><div class="summary-popup-shade" name="1" ></div><div class="summary-popup-main summary-popup0-main"><p><span class="summary-popup0-class">一年级一班</span>的考勤及学习情况 <i class="summary-popup-close" name ="1" ></i></p><p>总体上课考试出勤率<span class="summary-popup0-class1"> 0% </span> 总体作业完成率<span class="summary-popup0-class2"> 0%</span> 总体自学计划完成率: <span class="summary-popup0-class3">0%</span></p><div class="assistant-empty assistant-empty3"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table1"><thead><tr><th width="75">序号</th><th width="80">姓名</th><th width="120">学号</th><th width="191">上课/考试出勤率</th><th width="154">作业完成率</th><th width="189">自学计划完成率</th></tr></thead><tbody></tbody></table></div></div><div class="summary-popup summary-popup1"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup1-main"><p><span class="summary-popup1-name"></span>的上课/考试考勤情况 <i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span1" name="1"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="1">全部<li><li name="0">缺勤<li></ul></div><span class="summary-popup1-border"></span>总体上课/考试出勤率:<i class="summary-popup1-AllRate"> 0% </i><span class="summary-popup1-AllAttendence">(0/0次)</span> 课堂考勤:<i class="summary-popup1-LessonAttendence green">出勤0</i>/<span class="summary-popup1-LessonAbsence red">缺勤0</span> 考试出勤:<i class=" summary-popup1-ExamAttendence green">出考0</i>/<span class=" summary-popup1-ExamAbsence red">缺考0</span><br/><div class="assistant-empty assistant-empty4"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table2"><thead><tr><th width="75">序号</th><th width="191">时间<i></i></th><th width="180">学科</th><th width="310">内容</th><th width="80">状态</th><th width="66"></th></tr></thead><tbody></tbody></table></div></div><div class="summary-popup summary-popup2"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup2-main"><p><span class="summary-popup2-name"></span>作业完成情况 <i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span21" name="0"><p>全部作业</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部作业<li><li name="1">预习作业<li><li name="2">课后作业<li></ul></div><div class="assistant-select-span assistant-select-span22" name="0"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部<li><li name="1">未完成<li><li name="2">已完成<li></ul></div><span class="summary-popup1-border"></span>总体作业完成率: <i class="summary-popup2-HomeworkCompleteRate">0%</i><span class="summary-popup2-CompleteHomework">(0/0次) </span><br/><div class="assistant-empty assistant-empty5"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table3"><thead><tr><th width="75">序号</th><th width="223">标题</th><th width="99">学科</th><th width="80">发布老师</th><th width="187">完成时间</th><th width="53">成绩</th><th width="100">详情</th></tr></thead><tbody></tbody></table></div></div><div class=" summary-popup summary-popup3"><div class="summary-popup-shade"></div><div class="summary-popup-main summary-popup3-main"><p><span class="summary-popup3-name"></span>的自学计划完成情况 <i class="summary-popup-close"></i></p><div class="assistant-select-span assistant-select-span3" name="0"><p>全部</p><i></i><b></b><ul class="assistant-select-ul"><li name="0">全部<li><li name="1">未完成<li></ul></div><span class="summary-popup1-border"></span>总体自学计划完成率: <i class="summary-popup3-PassRate">0%</i><span class="summary-popup3-PassPlan"> (0/0次) </span><div class="assistant-empty assistant-empty6"><i></i><p>空空如也，暂时没有可查看的数据~</p></div><table class="summary-table4"><thead><tr><th width="75">序号</th><th width="200">计划名称<i></i></th><th width="70">学科</th><th width="285">计划时间</th><th width="90">完成情况</th><th width="70">详情</th><th width="23"></th></tr></thead><tbody></tbody></table></div></div></div><div class="popup-main-nav popup-main4"><div class="contact-left"><div class="contact-left-search"><input class="contact-search-input"  type="text" placeholder="请输入姓名/用户编号搜索"/><i class="contact-search-choose"></i><i class="contact-search-clear"></i></div><ul><li class="contact-list-choose" name="最近联系人"><i class="i-middle"></i><span>最近联系人</span><i class="contact-tab"></i></li><li name="常用联系人"><i class="i-middle"></i><span>常用联系人</span><i class="contact-tab"></i></li><li name="我的班级"><i class="i-middle"></i><span>我的班级</span><i class="contact-tab"></i></li><li name="我的教师组"><i class="i-middle"></i><span>我的教师组</span><i class="contact-tab"></i></li><li name="全校师生"><i class="i-middle"></i><span>全校师生</span><i class="contact-tab"></i></li></ul></div><div class="contact-right "><div class="contact-list1"><ul class="contact-type"><li><p class="contact-type-p" data-class="contact-Initialization">最近联系人</p><span>></span></li></ul><span class="contact-type-text" name="1"><i></i>清空</span><ul class="contact-li"></ul><div class="contact-right-empty"><i></i><p>暂时还没有<span class="contact-empty-text">最近联系人</span>信息哦~</p></div></div></div><div class="contact-frequent"><div></div><div><p class="contact-frequent-top"><i></i><span>添加常用联系人</span><i class="contact-frequent-close"></i></p><div class="contact-frequent-search"><span><input type="text" autocomplete="off" class="contact-frequent-input" placeholder="请输入姓名/用户编号搜索"/><i class="contact-frequent-clear"></i></span><button type="button" class="contact-frequent-commit">查找</button></div><p class="contact-search-p">共找到<b class="contact-search-number">0</b>个联系人 </p><ul class="contact-search-ul"></ul><div class="frame_pager_center pager5 clearfix"></div></div></div><div class="contact-info"><div></div><div class="contact-info-main"><div><i class="contact-info-close"></i><i class="contact-info-image"></i><span><span><b>张佳乐的家长</b><i></i></span><b class="contact-info-id">1200430501</b><i></i><b class="contact-info-class">一年级1班</b></span><span class="contact-info-sign"><i></i>含泪播种的人泪播种的人一一定能含笑收获~</span></div><ul class="contact-message-ul"><li><span>电话</span><span><b id="contact-copy-text1">13126011111</b><b name="1" class="contact-info-copy">复制</b></span></li><li><span>QQ</span><span><b id="contact-copy-text2">623226323</b><b name="2" class="contact-info-copy">复制</b></span><a class="lgAssistant-main-QQ"></a></li><li><span>微信</span><span><b id="contact-copy-text3">YT13143sdae</b><b name="3" class="contact-info-copy">复制</b></span><a href="https://wx.qq.com/"  class="lgAssistant-main-WX"></a></li><li><span>微博</span><span><b id="contact-copy-text4">合格王企鹅</b><b name="4" class="contact-info-copy">复制</b></span><a  href="https://weibo.com/login.php"  class="lgAssistant-main-WB"></a></li></ul></div></div><ul class="contact-left-popup"></ul></div><div class="popup-main-nav popup-main5"><ul><li class="assistant-deliver-notice"><i></i><span>发布通知</span></li><li class="assistant-deliver-questionnaire"><i></i><span>发布问卷调查</span></li><li class="assistant-student-admin"><i></i><span>学生档案管理</span></li><li class="assistant-teaClass-admin"><i></i><span>教学班管理</span></li></ul></div><div class="assistant-popup-loading"><div class="frame_point_loading_container"><div class="point_container"><span class="point1 point"></span><span class="point2 point"></span><span class="point3 point"></span><span class="point4 point"></span></div></div></div></div></div></div></div'
+	// ));
+
+	// 角色切换
+	if (UserType == 2) {
+		$('.schedule-type').eq(0).children('b').eq(0).text('做作业');
+		$('.schedule-type').eq(0).children('b').eq(1).text('自学');
+		$('.contact-left ul li').eq(3).hide();
+		$('.assistant-popup-logo ul li').eq(1).text('学习小管家');
+		$('.popup-nav-ul li').eq(4).children('p').text('个人报告');
+		$('.popup-nav-ul li').eq(4).children('i').attr('class', 'report-img');
+
+	}
 	if (SubjectIDArr.length > 1) {
-		var summary ='<div class="assistant-select-span assistant-select-span66 " name='+SubjectIDArr[0]+'><p>'+SubjectNameArr[0]+'</p><i></i><b></b><ul class="assistant-select-ul" >';
-		
-		 SubjectNameArr.map(function (item, idx) {
-			summary += '<li name=' + SubjectIDArr[idx] + '>' + item + '</li>'
+		var summary = '<div class="assistant-select-span assistant-select-span66 " name=' + SubjectIDArr[0] + '><p title=' + SubjectNameArr[0] + '>' + SubjectNameArr[0] + '</p><i></i><b></b><ul class="assistant-select-ul" >';
+		SubjectNameArr.map(function (item, idx) {
+			summary += '<li name=' + SubjectIDArr[idx] + ' title=' + item + '>' + item + '</li>'
 		})
 		$('.summary-title1').append($(
 			summary + '</ul></div>'
 		))
 	} else {
-	
+
 	}
 	// $('.abcd').hide();
 	// $('#assistant-box-canvas1').click(function(){
@@ -2150,6 +2081,7 @@ function AgassitantCallbackFunction(result) {
 	// })
 	//小助手动画参数
 	var assistantInitialize = false; //初始化是否完成7777777777777777777777777777777 false 为生产环境  true为开发环境
+	// var assistantInitialize = true; //初始化是否完成7777777777777777777777777777777 false 为生产环境  true为开发环境
 	var assistantTimer = null; //动画定时器
 	var assistantStandby = false; //待机状态
 	var assistantStandbyCount = 0; //待机时间计数
@@ -2266,7 +2198,11 @@ function AgassitantCallbackFunction(result) {
 	var canvasX = 0;
 	var canvasY = 0;
 
-	function canvasFn(imgName) {
+	function canvasFn(imgName, state) {
+		// console.log(imgName,state);
+		if (imgName == '摇铃') {
+			imgName = '台历'
+		}
 		cancelAnimationFrame(stop); //暂停动画
 		var animatinSpeedCount = 120; //动画速度计算
 		var speed = 60; //动画速度 animatinSpeedCount%speed必须为0;
@@ -2337,12 +2273,21 @@ function AgassitantCallbackFunction(result) {
 			} else if (imgName == '喇叭') {
 				assistantStandby = false;
 				imgLength = 60;
+				if (state == 'Reversal') {
+					imgLengthCount = 10;
+				}
 			} else if (imgName == '台历') {
 				assistantStandby = false;
-				imgLength = 14;
+				imgLength = 24;
+				if (state == 'Reversal') {
+					imgLengthCount = 24;
+				}
 			} else if (imgName == '摇铃') {
 				assistantStandby = false;
 				imgLength = 72;
+				if (state == 'Reversal') {
+					imgLengthCount = 18;
+				}
 			} else if (imgName == '待机动作二') {
 				imgLength = 80;
 			} else if (imgName == '待机动作三') {
@@ -2363,7 +2308,12 @@ function AgassitantCallbackFunction(result) {
 			if (animatinSpeedCount <= 0) {
 				animatinSpeedCount = 120;
 				context.clearRect(0, 0, width, height);
-				imgLengthCount++;
+				if (state != 'Reversal') {
+					imgLengthCount++;
+				} else {
+					imgLengthCount--;
+					assistantStandby = false;
+				}
 				context.drawImage(img, imgLengthCount * width, 0, width, height, canvasX, canvasY, width, height);
 				if (imgName == '入场' && imgLengthCount == 84) {
 					$('.assistant-box').css('transition', 'all .6s');
@@ -2386,7 +2336,7 @@ function AgassitantCallbackFunction(result) {
 					canvasFn('待机动作四');
 					return;
 				}
-				if (imgLengthCount >= imgLength) {
+				if (imgLengthCount >= imgLength || (state == 'Reversal' && imgLengthCount == 0)) {
 					if (imgName == '打招呼' && wakeupState == 0) {
 						// canvas.css('width','150px');
 						// canvas.css('height','100px');
@@ -2402,8 +2352,7 @@ function AgassitantCallbackFunction(result) {
 
 					//入场打招呼
 					if (imgName == '入场') {
-						canvasFn('打招呼');
-
+						canvasFn('打招呼')
 						sleepState = 0;
 						//获取当前时间小时
 						var data = new Date();
@@ -2518,10 +2467,25 @@ function AgassitantCallbackFunction(result) {
 					if (standbyAll.indexOf(imgName) != -1) {
 						canvasFn('待机动作四');
 					} else if (standbyAll1.indexOf(imgName) != -1) {
-						assistantStandby = false;
-						setTimeout(function () {
-							canvasFn('待机动作四');
-						}, 400)
+						if (!state) {
+							assistantStandby = false;
+							if (imgName == '台历') {
+								setTimeout(function () {
+									canvasFn(imgName, 'Reversal');
+								}, 1500)
+							} else {
+								setTimeout(function () {
+									canvasFn(imgName, 'Reversal');
+								}, 400)
+							}
+
+						} else {
+							assistantStandby = false;
+							setTimeout(function () {
+								canvasFn('待机动作四');
+							}, 400)
+						}
+
 					}
 				} else {
 					stop = window.requestAnimFrame(drawImg);
@@ -2584,7 +2548,7 @@ function AgassitantCallbackFunction(result) {
 	// 					messageFn(0);
 	// 				}
 	// 				if ($('.info-active').eq(0).attr('name') == 5) {
-	// 					newsFn();
+	// 					newsFn(0);
 	// 				}
 	// 		
 	// 			}
@@ -2633,7 +2597,7 @@ function AgassitantCallbackFunction(result) {
 	// 					messageFn(0);
 	// 				}
 	// 				if ($('.info-active').eq(0).attr('name') == 5) {
-	// 					newsFn();
+	// 					newsFn(0);
 	// 				}
 	// 		
 	// 			}
@@ -2672,10 +2636,16 @@ function AgassitantCallbackFunction(result) {
 		//待机7*8=56秒，随机做一个动作
 		assistantStandbyassistantTimer = setInterval(function () {
 			if (assistantInitialize == true) {
+
 				if (assistantRemindArr && assistantRemindArr.length > 0) {
 					assistantStandby = false;
+					count = 0;
 				} else {
 					assistantStandby = true;
+					if (assistantLastName == '摇铃' || assistantLastName == '台历' || assistantLastName == '喇叭') {
+						assistantStandby = false;
+						count = 0;
+					}
 				}
 				if (assistantStandby) {
 					count += 2;
@@ -2685,7 +2655,7 @@ function AgassitantCallbackFunction(result) {
 							return;
 						}
 						//待机3*8=24秒，小助手进入睡觉状态
-						if (count == 20 && $('.assistant-popup').css('opacity') != '1') {
+						if (count % 20 == 0 && $('.assistant-popup').css('opacity') != '1' && $('.assistant-info-prompt').css('display') == 'none' && $('.assistant-remind-count').css('display') == 'none') {
 							sleepState = 1;
 							cancelAnimationFrame(stop);
 							canvasFn('睡觉');
@@ -2733,7 +2703,7 @@ function AgassitantCallbackFunction(result) {
 	var isassistantOnClick = false;
 	//小助手点击事件
 	$('.assistant-hover-box').click(function (event) {
-
+		$('.assistant-info-prompt').hide();
 		event.stopPropagation();
 		if ($('.assistant-remind').css('display') != 'none') {
 			normal('.assistant-remind-span');
@@ -2746,6 +2716,8 @@ function AgassitantCallbackFunction(result) {
 		}
 		assistantStandby = false;
 		$('.isassistant-message-reminder').remove();
+		$('.isassistant-message-reminder').css('right', '-150px');
+		$('.isassistant-div').css('transform', 'translate(0px, 0px)');
 		if (assistantInitialize && !isassistantOnClick) {
 			if (!initialization) {
 				initializationFn();
@@ -2767,7 +2739,7 @@ function AgassitantCallbackFunction(result) {
 					messageFn(0);
 				}
 				if ($('.info-active').eq(0).attr('name') == 5) {
-					newsFn();
+					newsFn(0);
 				}
 
 			}
@@ -2786,7 +2758,6 @@ function AgassitantCallbackFunction(result) {
 				$('.assistant-popup').css('opacity', '1');
 				assistantPopupActive = !assistantPopupActive;
 				$('.assistant-remind-count').hide();
-				$('.assistant-info-prompt').hide();
 			} else {
 				$('.assistant-popup').css('transition', 'all 0.3s');
 				$('.assistant-popup').css('bottom', '-134%');
@@ -2816,7 +2787,7 @@ function AgassitantCallbackFunction(result) {
 					messageFn(0);
 				}
 				if ($('.info-active').eq(0).attr('name') == 5) {
-					newsFn();
+					newsFn(0);
 				}
 
 			}
@@ -2889,6 +2860,8 @@ function AgassitantCallbackFunction(result) {
 		assistantStandby = false;
 		count = 0;
 		$('.isassistant-message-reminder').remove();
+		$('.isassistant-message-reminder').css('right', '-150px');
+		$('.isassistant-div').css('transform', 'translate(0px, 0px)');
 		againCountRemindFn();
 	});
 	//消息中心模块下的选项卡第一个
@@ -2900,13 +2873,26 @@ function AgassitantCallbackFunction(result) {
 	//点击小气泡跳转事件
 
 	$('.assistant-remind-count').click(function () {
+		// console.log(initialization);
+		var isInitialization = false;
 		if (!initialization) {
-			if ($(this).attr(name) == 1) {
-				initializationFn('message');
-			} else {
+			isInitialization = true;
+			if ($(this).attr('name') == 1) {
+				initializationFn('noticeFn');
+			}
+			if ($(this).attr('name') == 2 || $(this).attr('name') == 5) {
+				initializationFn('messageFn');
+			}
+			if ($(this).attr('name') == 3) {
+				initializationFn('chatFn');
+			}
+			if ($(this).attr('name') == 4) {
+				initializationFn('newsFn');
+			}
+			if ($(this).attr('name') == 0) {
 				initializationFn();
 			}
-
+			//111111111111111111111111111111111
 		}
 		assistantPopupActive = !assistantPopupActive;
 		assistantRemindArr = [];
@@ -2927,7 +2913,11 @@ function AgassitantCallbackFunction(result) {
 		if ($(this).attr('name') == 0) {
 			$('.isassistant-message-reminder').remove();
 			$('.isassistant-message-reminder').css('right', '-150px');
-			todoFn(0);
+			$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+			if (!isInitialization) {
+				todoFn(0);
+			}
+
 			infoCenterOption = 1;
 			$('.popup-main1>ul li').attr('class', '');
 			$('.infoCenter-option').hide();
@@ -2939,19 +2929,24 @@ function AgassitantCallbackFunction(result) {
 		if ($(this).attr('name') == 1) {
 			$('.isassistant-message-reminder').remove();
 			$('.isassistant-message-reminder').css('right', '-150px');
-			noticeFn(0);
+			$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+			if (!isInitialization) {
+				noticeFn(0);
+			}
 			infoCenterOption = 2;
 			$('.popup-main1>ul li').attr('class', '');
 			$('.infoCenter-option').hide();
 			$('.popup-main1>ul li').eq(1).attr('class', 'info-active');
 			$('.popup-main1>ul li p').attr('class', '');
 			$('.popup-main1>ul li').eq(1).children('p').attr('class', 'info-active');
-			$('.popup-main1>ul li').eq(1).children('p').children().attr('class', '');
+			// $('.popup-main1>ul li').eq(1).children('p').children().attr('class', '');
 		};
 		if ($(this).attr('name') == 3) {
 			$('.isassistant-message-reminder').remove();
 			$('.isassistant-message-reminder').css('right', '-150px');
-			chatFn();
+			if (!isInitialization) {
+				chatFn();
+			}
 			infoCenterOption = 3;
 			$('.popup-main1>ul li').attr('class', '');
 			$('.infoCenter-option').hide();
@@ -2964,7 +2959,10 @@ function AgassitantCallbackFunction(result) {
 		if ($(this).attr('name') == 2 || $(this).attr('name') == 5) {
 			$('.isassistant-message-reminder').remove();
 			$('.isassistant-message-reminder').css('right', '-150px');
-			messageFn(0);
+			$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+			if (!isInitialization) {
+				messageFn(0);
+			}
 			infoCenterOption = 4;
 			$('.popup-main1>ul li').attr('class', '');
 			$('.infoCenter-option').hide();
@@ -2977,7 +2975,10 @@ function AgassitantCallbackFunction(result) {
 		if ($(this).attr('name') == 4) {
 			$('.isassistant-message-reminder').remove();
 			$('.isassistant-message-reminder').css('right', '-150px');
-			newsFn();
+			$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+			if (!isInitialization) {
+				newsFn(0);
+			}
 			infoCenterOption = 5;
 			$('.popup-main1>ul li').attr('class', '');
 			$('.infoCenter-option').hide();
@@ -2996,8 +2997,11 @@ function AgassitantCallbackFunction(result) {
 	$('.popup-nav-list ul li').click(function () {
 		if (popupNavChoose == $(this).attr('name')) {
 			return;
-		} else {
+		}
+		if ($(this).attr('name') == 1) {
 			$('.isassistant-message-reminder').remove();
+			$('.isassistant-message-reminder').css('right', '-150px');
+			$('.isassistant-div').css('transform', 'translate(0px, 0px)');
 		}
 		if (popupNavChoose == 2) {
 			$('.schedule-message').attr('class', '');
@@ -3088,39 +3092,53 @@ function AgassitantCallbackFunction(result) {
 			} else if ($('.info-active').eq(0).attr('name') == 4) {
 				messageFn(0);
 			} else if ($('.info-active').eq(0).attr('name') == 5) {
-				newsFn();
+				newsFn(0);
 			}
-
 		}
+
 		// else if ($('.popup-main-nav').eq($(this).attr('name') == 1)) {
 		// 	// personalScheduleFn(getDate('03'));
 		// }
 
-
-
 	});
 	//消息中心子模块 新消息提醒点击刷新页面
-	$('.popup-main').on('click', '.isassistant-message-reminder', function () {
+	$('.popup-main').on('click', '.isassistant-message-reminder span', function () {
+		infoCenterOption = -1;
+		clearInterval(websockeyTimer);
+		clearTimeout(websockeyTimer1);
+		websockeyArr = [];
+		$('.popup-nav-list ul li').attr('class', '');
+		$('.popup-nav-list ul li').eq(0).attr('class', 'assistant-active');
+		$('.popup-main-nav').hide();
+		$('.popup-main-nav').eq(0).show();
+		$('.assistant-popup-loading').hide();
 		if ($(this).attr('name') == 1) {
-			todoFn(0);
+			// todoFn(0);
+			$('.popup-main1 ul li').eq(0).children().children().children().text('');
 			$('.popup-main1 ul li').eq(0).children().children().attr('class', '');
+			$('.popup-main1>ul li').eq(0).click();
 		} else if ($(this).attr('name') == 2) {
-			noticeFn(0);
-			$('.popup-main1 ul li').eq(1).children().children().attr('class', '');
+			$('.popup-main1>ul li').eq(1).click();
+			// noticeFn(0);
+			// $('.popup-main1 ul li').eq(1).children().children().attr('class', '');
 		} else if ($(this).attr('name') == 3) {
-			chatFn();
+			$('.popup-main1 ul li').eq(3).children().children().children().text('');
 			$('.popup-main1 ul li').eq(3).children().children().attr('class', '');
+			chatFn();
 		} else if ($(this).attr('name') == 4) {
-			messageFn(0);
+			$('.popup-main1 ul li').eq(2).children().children().children().text('');
 			$('.popup-main1 ul li').eq(2).children().children().attr('class', '');
+			$('.popup-main1>ul li').eq(2).click();
 		} else if ($(this).attr('name') == 5) {
-			newsFn();
+			$('.popup-main1 ul li').eq(4).children().children().children().text('');
+			newsFn(0);
 			$('.popup-main1 ul li').eq(4).children().children().attr('class', '');
 		}
 		$('.isassistant-message-reminder').remove();
+		$('.isassistant-message-reminder').css('right', '-150px');
+		$('.isassistant-div').css('transform', 'translate(0px, 0px)');
 	})
 
-	var lastRemindNum = '';
 	//消息中心子模块的选择
 	$('.popup-main1>ul li').click(function () {
 		$('.assistant-tips').hide();
@@ -3130,19 +3148,16 @@ function AgassitantCallbackFunction(result) {
 		} else {
 			return;
 		}
-
-		if (infoCenterOption == 2 && lastRemindNum) {
-			$('.popup-main1>ul li').eq(1).children().children().children().children().text(lastRemindNum);
-		}
-		if ($(this).attr('name') == 2) {
-			lastRemindNum = $(this).children().children().children().children().text();
-		} else {
+		$('.isassistant-message-reminder').remove();
+		$('.isassistant-message-reminder').css('right', '-150px');
+		$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+		if ($(this).attr('name') != 2) {
 			$(this).children().children().children().children().text('');
 		}
-
 		if ($(this).attr('name') == '1' && infoCenterOption != '1') {
-			$('.isassistant-message-reminder').remove();
-			$('.isassistant-message-reminder').css('right', '-150px');
+			// $('.isassistant-message-reminder').remove();
+			// $('.isassistant-message-reminder').css('right', '-150px');
+			$(this).children('p').children().attr('class', '');
 			todoFn(0);
 			infoCenterOption = 1;
 			$('.popup-main1>ul li').attr('class', '');
@@ -3150,11 +3165,11 @@ function AgassitantCallbackFunction(result) {
 			$(this).attr('class', 'info-active');
 			$('.popup-main1>ul li p').attr('class', '');
 			$(this).children('p').attr('class', 'info-active');
-			$(this).children('p').children().attr('class', '');
+
 		};
 		if ($(this).attr('name') == '2' && infoCenterOption != '2') {
-			$('.isassistant-message-reminder').remove();
-			$('.isassistant-message-reminder').css('right', '-150px');
+			// $('.isassistant-message-reminder').remove();
+			// $('.isassistant-message-reminder').css('right', '-150px');
 			noticeFn(0);
 			infoCenterOption = 2;
 			$('.popup-main1>ul li').attr('class', '');
@@ -3166,21 +3181,23 @@ function AgassitantCallbackFunction(result) {
 
 		};
 		if ($(this).attr('name') == '3' && infoCenterOption != '3') {
-			$('.isassistant-message-reminder').remove();
-			$('.isassistant-message-reminder').css('right', '-150px');
-			chatFn();
+			// $('.isassistant-message-reminder').remove();
+			// $('.isassistant-message-reminder').css('right', '-150px');
+			$(this).children('p').children().attr('class', '');
+
 			infoCenterOption = 3;
 			$('.popup-main1>ul li').attr('class', '');
 			$('.infoCenter-option').hide();
 			$(this).attr('class', 'info-active');
 			$('.popup-main1>ul li p').attr('class', '');
 			$(this).children('p').attr('class', 'info-active');
-			$(this).children('p').children().attr('class', '');
+			chatFn();
 
 		};
 		if ($(this).attr('name') == '4' && infoCenterOption != '4') {
-			$('.isassistant-message-reminder').remove();
-			$('.isassistant-message-reminder').css('right', '-150px');
+			// $('.isassistant-message-reminder').remove();
+			// $('.isassistant-message-reminder').css('right', '-150px');
+			$(this).children('p').children().attr('class', '');
 			messageFn(0);
 			infoCenterOption = 4;
 			$('.popup-main1>ul li').attr('class', '');
@@ -3188,20 +3205,19 @@ function AgassitantCallbackFunction(result) {
 			$(this).attr('class', 'info-active');
 			$('.popup-main1>ul li p').attr('class', '');
 			$(this).children('p').attr('class', 'info-active');
-			$(this).children('p').children().attr('class', '');
-
 		};
 		if ($(this).attr('name') == '5' && infoCenterOption != '5') {
-			$('.isassistant-message-reminder').remove();
-			$('.isassistant-message-reminder').css('right', '-150px');
-			newsFn();
+			// $('.').remove();
+			// $('.isassistant-message-reminder').css('right', '-150px');
+			$(this).children('p').children().attr('class', '');
 			infoCenterOption = 5;
 			$('.popup-main1>ul li').attr('class', '');
 			$('.infoCenter-option').hide();
 			$(this).attr('class', 'info-active');
 			$('.popup-main1>ul li p').attr('class', '');
 			$(this).children('p').attr('class', 'info-active');
-			$(this).children('p').children().attr('class', '');
+			newsFn(0, 1);
+
 		};
 	});
 
@@ -3281,10 +3297,22 @@ function AgassitantCallbackFunction(result) {
 	});
 	//小助手消息提醒点击跳转
 	$('.assistant-box').on('click', '.assistant-remind-ul li', function () {
+		var isInitialization = false;
 		if (!initialization) {
+			isInitialization = true;
 			if ($(this).children().attr('name') == 1) {
-				initializationFn('message');
-			} else {
+				initializationFn('noticeFn');
+			}
+			if ($(this).children().attr('name') == 2 || $(this).children().attr('name') == 5) {
+				initializationFn('messageFn');
+			}
+			if ($(this).children().attr('name') == 3) {
+				initializationFn('chatFn');
+			}
+			if ($(this).children().attr('name') == 4) {
+				initializationFn('newsFn');
+			}
+			if ($(this).children().attr('name') == 0) {
 				initializationFn();
 			}
 		}
@@ -3305,7 +3333,9 @@ function AgassitantCallbackFunction(result) {
 		if ($(this).children().attr('name') == 0) {
 			$('.isassistant-message-reminder').remove();
 			$('.isassistant-message-reminder').css('right', '-150px');
-			todoFn(0);
+			if (!isInitialization) {
+				todoFn(0);
+			}
 			infoCenterOption = 1;
 			$('.popup-main1>ul li').attr('class', '');
 			$('.infoCenter-option').hide();
@@ -3318,17 +3348,24 @@ function AgassitantCallbackFunction(result) {
 			$('.isassistant-message-reminder').remove();
 			$('.isassistant-message-reminder').css('right', '-150px');
 			infoCenterOption = 2;
+			if (!isInitialization) {
+				noticeFn(0)
+			}
 			$('.popup-main1>ul li').attr('class', '');
 			$('.infoCenter-option').hide();
 			$('.popup-main1>ul li').eq(1).attr('class', 'info-active');
 			$('.popup-main1>ul li p').attr('class', '');
 			$('.popup-main1>ul li').eq(1).children('p').attr('class', 'info-active');
-			$('.popup-main1>ul li').eq(1).children('p').children().attr('class', '');
+			// $('.popup-main1>ul li').eq(1).children('p').children().attr('class', '');
 		};
 		if ($(this).children().attr('name') == 3) {
 			$('.isassistant-message-reminder').remove();
 			$('.isassistant-message-reminder').css('right', '-150px');
-			chatFn();
+
+			if (!isInitialization) {
+				chatFn();
+
+			}
 			infoCenterOption = 3;
 			$('.popup-main1>ul li').attr('class', '');
 			$('.infoCenter-option').hide();
@@ -3338,10 +3375,12 @@ function AgassitantCallbackFunction(result) {
 			$('.popup-main1>ul li').eq(3).children('p').children().attr('class', '');
 
 		};
-		if ($(this).children().attr('name') == 2) {
+		if ($(this).children().attr('name') == 2 || $(this).children().attr('name') == 5) {
 			$('.isassistant-message-reminder').remove();
 			$('.isassistant-message-reminder').css('right', '-150px');
-			messageFn(0);
+			if (!isInitialization) {
+				messageFn(0);
+			}
 			infoCenterOption = 4;
 			$('.popup-main1>ul li').attr('class', '');
 			$('.infoCenter-option').hide();
@@ -3354,7 +3393,9 @@ function AgassitantCallbackFunction(result) {
 		if ($(this).children().attr('name') == 4) {
 			$('.isassistant-message-reminder').remove();
 			$('.isassistant-message-reminder').css('right', '-150px');
-			newsFn();
+			if (!isInitialization) {
+				newsFn(0);
+			}
 			infoCenterOption = 5;
 			$('.popup-main1>ul li').attr('class', '');
 			$('.infoCenter-option').hide();
@@ -3478,8 +3519,8 @@ function AgassitantCallbackFunction(result) {
 					$('.popup-nav-ul li').eq(0).children('b').attr('class', 'info-unread');
 					if (data.Data.TodoListCount > 0) {
 						$('.popup-main1 ul li').eq(0).children().children().attr('class', 'info-unread2');
-						if(data.Data.TodoListCount>99){
-							data.Data.TodoListCount='...';
+						if (data.Data.TodoListCount > 99) {
+							data.Data.TodoListCount = '...';
 						}
 						$('.popup-main1 ul li').eq(0).children().children().children().children().text(data.Data.TodoListCount);
 					} else {
@@ -3488,8 +3529,8 @@ function AgassitantCallbackFunction(result) {
 					}
 					if (data.Data.NoticeCount > 0) {
 						$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
-						if(data.Data.NoticeCount>99){
-							data.Data.NoticeCount='...';
+						if (data.Data.NoticeCount > 99) {
+							data.Data.NoticeCount = '...';
 						}
 						$('.popup-main1 ul li').eq(1).children().children().children().children().text(data.Data.NoticeCount);
 
@@ -3499,8 +3540,8 @@ function AgassitantCallbackFunction(result) {
 					}
 					if (data.Data.ChatCount > 0) {
 						$('.popup-main1 ul li').eq(3).children().children().attr('class', 'info-unread4');
-						if(data.Data.ChatCount>99){
-							data.Data.ChatCount='...';
+						if (data.Data.ChatCount > 99) {
+							data.Data.ChatCount = '...';
 						}
 						$('.popup-main1 ul li').eq(3).children().children().children().children().text(data.Data.ChatCount);
 					} else {
@@ -3509,8 +3550,8 @@ function AgassitantCallbackFunction(result) {
 					}
 					if (data.Data.MessageCount > 0) {
 						$('.popup-main1 ul li').eq(2).children().children().attr('class', 'info-unread4');
-						if(data.Data.MessageCount>99){
-							data.Data.MessageCount='...';
+						if (data.Data.MessageCount > 99) {
+							data.Data.MessageCount = '...';
 						}
 						$('.popup-main1 ul li').eq(2).children().children().children().children().text(data.Data.MessageCount);
 					} else {
@@ -3519,8 +3560,8 @@ function AgassitantCallbackFunction(result) {
 					}
 					if (data.Data.NewsCount > 0) {
 						$('.popup-main1 ul li').eq(4).children().children().attr('class', 'info-unread4');
-						if(data.Data.NewsCount>99){
-							data.Data.NewsCount='...';
+						if (data.Data.NewsCount > 99) {
+							data.Data.NewsCount = '...';
 						}
 						$('.popup-main1 ul li').eq(4).children().children().children().children().text(data.Data.NewsCount);
 
@@ -3832,7 +3873,23 @@ function AgassitantCallbackFunction(result) {
 	})
 
 
+	// $(document).on('click', '.laydate-prev-m', function () {
+	// 	setTimeout(function(){
+	// 		var key =$('#lgAssistant-next2').text();
+	// 		var keyYear = key.slice(0,4);
+	// 		var keyMonth = key.slice(5,7);
+	// 		// var nowkey =$(this).parent().parent().parent().attr('id').slice(13,$(this).parent().parent().parent().attr('id').length);
+	// 		var DateYear =$(this).parent().children('.laydate-set-ym').children().eq(0).text().slice(0,-1);
+	// 		var DateMonth =$(this).parent().children('.laydate-set-ym').children().eq(1).text().slice(0,-1);
+	// 		if(DateMonth.length<10){
+	// 			DateMonth='0'+DateMonth;
+	// 		}
+	// 		if(keyMonth!=DateMonth||keyYear!=DateYear){
+	// 			$('.layui-this').attr('class','');
+	// 		}
+	// 	},1)
 
+	// })
 	var text1LayKey = '';
 
 	$('#schedule-test1').click(function () {
@@ -4011,10 +4068,21 @@ function AgassitantCallbackFunction(result) {
 		date1 = nowHours + '时' + nowinutes + '分';
 		$('#schedule-test1').val(date1);
 		$('#schedule-test2').val('');
-		if (Date.parse($('.schedule-choose-date').text()) - Date.parse(getDate('03')) < 0) {
-			$('#lgAssistant-next3').val(serverTime.slice(0, 10));
+		if (Date.parse($('.schedule-choose-date').text()) - Date.parse(serverTime.slice(0, 10)) < 0) {
+			if (Date.parse(serverTime.slice(0, 10)) >= Date.parse(termEndDate)) {
+				$('#lgAssistant-next3').val(termEndDate.slice(0, 10));
+			} else {
+				$('#lgAssistant-next3').val(serverTime.slice(0, 10));
+			}
+
+
 		} else {
-			$('#lgAssistant-next3').val($('.schedule-choose-date').text());
+			if (Date.parse($('.schedule-choose-date').text()) >= Date.parse(termEndDate)) {
+				$('#lgAssistant-next3').val(termEndDate.slice(0, 10));
+			} else {
+				$('#lgAssistant-next3').val($('.schedule-choose-date').text());
+			}
+
 		}
 
 		$('.schedule-topic').val('请输入日程内容...');
@@ -4156,11 +4224,18 @@ function AgassitantCallbackFunction(result) {
 		$('.schedule-topic-length').text(num + '/50');
 		$('.schedule-topic').css('color', '#333');
 	})
+	var dom1 = document.getElementsByClassName('schedule-topic')[0];
+	dom1.oninput = function () {
+		var num = $('.schedule-topic').val().length;
+		$('.schedule-topic-length').text(num + '/50');
+		$('.schedule-topic').css('color', '#333');
+	}
+
+
 	$('.schedule-topic').blur(function () {
 		if (!$(this).val()) {
 			$(this).val('请输入日程内容...');
 			$(this).css('color', '#999');
-
 		} else {
 			$('.schedule-topic').css('color', '#333');
 		}
@@ -4175,10 +4250,10 @@ function AgassitantCallbackFunction(result) {
 			$('.schedule-clocks-time').val(999);
 		}
 	});
-	$('.schedule-clocks-time').keypress(function () {
-		if ($('.schedule-clocks-time').val() < 1) {
-			$('.schedule-clocks-time').val(1);
-		}
+	$('.schedule-clocks-time').keydown(function () {
+		// if ($('.schedule-clocks-time').val() < 1) {
+		// 	$('.schedule-clocks-time').val(1);
+		// }
 		if ($('.schedule-clocks-time').val() > 999) {
 			$('.schedule-clocks-time').val(999);
 		}
@@ -4264,10 +4339,12 @@ function AgassitantCallbackFunction(result) {
 		$(this).attr('class', 'summary-time-active');
 		if ($(this).attr('name') == 1) {
 			summaryStartTime = dateChangeFn(serverTime.slice(0, 10), -6); //近一周
+			summaryEndTime = serverTime.slice(0, 10);
 			summaryTableFn();
 		}
 		if ($(this).attr('name') == 2) {
 			summaryStartTime = dateChangeFn(serverTime.slice(0, 10), -29); //近一个月
+			summaryEndTime = serverTime.slice(0, 10);
 			summaryTableFn();
 		}
 		if ($(this).attr('name') == 3) {
@@ -4295,13 +4372,12 @@ function AgassitantCallbackFunction(result) {
 			normal('#lgAssistant-next4', 3);
 		}
 	});
-
 	//学情总结第一层弹窗班级学情
 	$('.summary-table').on('click',
 		'.summary-more',
 		function () {
 			summaryTable0info = $(this);
-			summaryTable0Fn(summaryTable0info, 0,1);
+			summaryTable0Fn(summaryTable0info, 0, 1);
 			summaryCacheData.push(1);
 		}
 	);
@@ -4315,7 +4391,7 @@ function AgassitantCallbackFunction(result) {
 			if ($this.attr('name') == 1) {
 				summaryTableFn();
 			} else {
-				summaryTable0Fn(summaryTable0info,$('.summary-popup0-class').attr('data-page')*1);
+				summaryTable0Fn(summaryTable0info, $('.summary-popup0-class').attr('data-page') * 1);
 			}
 			$this.parent().parent().parent().hide();
 		});
@@ -4330,7 +4406,7 @@ function AgassitantCallbackFunction(result) {
 			if ($this.attr('name') == 1) {
 				summaryTableFn();
 			} else {
-				summaryTable0Fn(summaryTable0info, $('.summary-popup0-class').attr('data-page')*1);
+				summaryTable0Fn(summaryTable0info, $('.summary-popup0-class').attr('data-page') * 1);
 			}
 			$this.parent().hide();
 		});
@@ -4493,12 +4569,13 @@ function AgassitantCallbackFunction(result) {
 	$('.assistant-select-span66 .assistant-select-ul li').click(function () {
 		if ($(this).attr('name') != $('.assistant-select-span66').attr('name')) {
 			$('.assistant-select-span66 p').text($(this).text());
+			$('.assistant-select-span66 p').attr('title', $(this).text());
 			$('.assistant-select-span66').attr('name', $(this).attr('name'));
-			summaryTableFn( $(this).attr('name'));
+			summaryTableFn($(this).attr('name'));
 		}
 		$('.assistant-select-ul').hide();
 	})
-	
+
 	$('.summary-title p  span').click(function () {
 		getSysWeb('810', function (data) {
 			window.open(data + '/cjzp/index', "_blank");
@@ -4507,12 +4584,14 @@ function AgassitantCallbackFunction(result) {
 	})
 	//学情总结所有班级表动态生成
 	function summaryTableFn(SubjectID1) {
-		if(!SubjectID1){
-			SubjectID1=SubjectID;
+		if (!SubjectID1) {
+			SubjectID1 = SubjectID;
+		} else {
+			SubjectID = SubjectID1;
 		}
 		summaryStartTime = summaryStartTime.slice(0, 10) + ' 00:00:00';
-		summaryEndTime = summaryEndTime.slice(0, 10) + ' 00:00:00';
-		$('.assistant-empty1').hide();
+		summaryEndTime = summaryEndTime.slice(0, 10) + ' 23:59:59';
+
 		ajaxM('api/Share/GetRateByTime_Teacher_XGJ', 'get', {
 			URL: summaryURL,
 			TeacherGH: UserID,
@@ -4522,6 +4601,7 @@ function AgassitantCallbackFunction(result) {
 			EndTime: summaryEndTime,
 		}, function (data) {
 			if (data.InfoList.ClassList) {
+				$('.assistant-empty1').hide();
 			} else {
 				$('.assistant-empty1').show();
 				$('.summary-table').hide();
@@ -4581,13 +4661,13 @@ function AgassitantCallbackFunction(result) {
 	}
 	var table1TotalCount = 0;
 	//学情总结每个班级表动态生成
-	function summaryTable0Fn($this, page,state) {
-		if(page!=$('.summary-popup0-class').attr('data-page')){
-			$('.summary-popup0-class').attr('data-page',page);
+	function summaryTable0Fn($this, page, state) {
+		if (page != $('.summary-popup0-class').attr('data-page')) {
+			$('.summary-popup0-class').attr('data-page', page);
 			$('.summary-table1 tbody').scrollTop(0);
 		}
 		summaryStartTime = summaryStartTime.slice(0, 10) + ' 00:00:00';
-		summaryEndTime = summaryEndTime.slice(0, 10) + ' 00:00:00';
+		summaryEndTime = summaryEndTime.slice(0, 10) + ' 23:59:59';
 		$('.assistant-empty3').hide();
 		ajaxM('api/Share/GetRateByTime_ClassAllStudent_XGJ', 'get', {
 			URL: summaryURL,
@@ -4708,7 +4788,7 @@ function AgassitantCallbackFunction(result) {
 			$('.summary-popup2').hide();
 			$('.summary-popup3').hide();
 			$('.summary-popup0').show();
-			if(state==1){
+			if (state == 1) {
 				$('.summary-table1 tbody').scrollTop(0);
 			}
 			$('.summary-popup0-main').animate({
@@ -4727,234 +4807,6 @@ function AgassitantCallbackFunction(result) {
 			}, 'slow', function () {});
 			return;
 
-			// 			$('.summary-pager1').remove();
-			// 			var InfoList = {
-			// 				"ClassID": "7CFCA0DC-5D2A-4879-9AFF-3A89F1FBD07F",
-			// 				"ClassType": "N",
-			// 				"ClassName": "高二一班",
-			// 				"LessonAndExamRate": 0.99,
-			// 				"HomeworkCompleteRate": 0.56,
-			// 				"SelfPlanRate": 0.7,
-			// 				"PageIndex": 1,
-			// 				"PageSize": 10,
-			// 				"List": [{
-			// 						"XH": "tcstu789",
-			// 						"Name": "王小朋",
-			// 						"LessonAndExamAttendence": 50,
-			// 						"LessonAndExamTotal": 50,
-			// 						"LessonAndExamRate": 1,
-			// 						"HomeworkComplete": 15,
-			// 						"HomeworkTotal": 15,
-			// 						"HomeworkRate": 1,
-			// 						"SelfPlanComplete": 9,
-			// 						"SelfPlanTotal": 10,
-			// 						"SelfPlanRate": 0.9
-			// 					},
-			// 					{
-			// 						"XH": "tcstu790",
-			// 						"Name": "罗小斌",
-			// 						"LessonAndExamAttendence": 40,
-			// 						"LessonAndExamTotal": 50,
-			// 						"LessonAndExamRate": 0.8,
-			// 						"HomeworkComplete": 12,
-			// 						"HomeworkTotal": 15,
-			// 						"HomeworkRate": 0.8,
-			// 						"SelfPlanComplete": 9,
-			// 						"SelfPlanTotal": 10,
-			// 						"SelfPlanRate": 0.9
-			// 					}, {
-			// 						"XH": "tcstu789",
-			// 						"Name": "王小朋",
-			// 						"LessonAndExamAttendence": 50,
-			// 						"LessonAndExamTotal": 50,
-			// 						"LessonAndExamRate": 1,
-			// 						"HomeworkComplete": 15,
-			// 						"HomeworkTotal": 15,
-			// 						"HomeworkRate": 1,
-			// 						"SelfPlanComplete": 9,
-			// 						"SelfPlanTotal": 10,
-			// 						"SelfPlanRate": 0.0
-			// 					},
-			// 					{
-			// 						"XH": "tcstu790",
-			// 						"Name": "罗小斌",
-			// 						"LessonAndExamAttendence": 40,
-			// 						"LessonAndExamTotal": 50,
-			// 						"LessonAndExamRate": 0.8,
-			// 						"HomeworkComplete": 12,
-			// 						"HomeworkTotal": 15,
-			// 						"HomeworkRate": 0.8,
-			// 						"SelfPlanComplete": 9,
-			// 						"SelfPlanTotal": 10,
-			// 						"SelfPlanRate": 0.9
-			// 					},
-			// 
-			// 					{
-			// 						"XH": "tcstu790",
-			// 						"Name": "罗小斌",
-			// 						"LessonAndExamAttendence": 40,
-			// 						"LessonAndExamTotal": 50,
-			// 						"LessonAndExamRate": 0.8,
-			// 						"HomeworkComplete": 12,
-			// 						"HomeworkTotal": 15,
-			// 						"HomeworkRate": 0.8,
-			// 						"SelfPlanComplete": 9,
-			// 						"SelfPlanTotal": 10,
-			// 						"SelfPlanRate": 0.9
-			// 					}, {
-			// 						"XH": "tcstu789",
-			// 						"Name": "王小朋",
-			// 						"LessonAndExamAttendence": 50,
-			// 						"LessonAndExamTotal": 50,
-			// 						"LessonAndExamRate": 1,
-			// 						"HomeworkComplete": 15,
-			// 						"HomeworkTotal": 15,
-			// 						"HomeworkRate": 1,
-			// 						"SelfPlanComplete": 9,
-			// 						"SelfPlanTotal": 10,
-			// 						"SelfPlanRate": 0.0
-			// 					},
-			// 					{
-			// 						"XH": "tcstu789",
-			// 						"Name": "王小朋",
-			// 						"LessonAndExamAttendence": 50,
-			// 						"LessonAndExamTotal": 50,
-			// 						"LessonAndExamRate": 1,
-			// 						"HomeworkComplete": 15,
-			// 						"HomeworkTotal": 15,
-			// 						"HomeworkRate": 1,
-			// 						"SelfPlanComplete": 9,
-			// 						"SelfPlanTotal": 10,
-			// 						"SelfPlanRate": 0.0
-			// 					},
-			// 					{
-			// 						"XH": "tcstu789",
-			// 						"Name": "王小朋",
-			// 						"LessonAndExamAttendence": 50,
-			// 						"LessonAndExamTotal": 50,
-			// 						"LessonAndExamRate": 1,
-			// 						"HomeworkComplete": 15,
-			// 						"HomeworkTotal": 15,
-			// 						"HomeworkRate": 1,
-			// 						"SelfPlanComplete": 9,
-			// 						"SelfPlanTotal": 10,
-			// 						"SelfPlanRate": 0.0
-			// 					},
-			// 					{
-			// 						"XH": "tcstu789",
-			// 						"Name": "王小朋",
-			// 						"LessonAndExamAttendence": 50,
-			// 						"LessonAndExamTotal": 50,
-			// 						"LessonAndExamRate": 1,
-			// 						"HomeworkComplete": 15,
-			// 						"HomeworkTotal": 15,
-			// 						"HomeworkRate": 1,
-			// 						"SelfPlanComplete": 9,
-			// 						"SelfPlanTotal": 10,
-			// 						"SelfPlanRate": 0.0
-			// 					}
-			// 				]
-			// 			}
-			// 			$('.summary-popup0-class').text(InfoList.ClassName);
-			// 			var ClassID = InfoList.ClassID;
-			// 			var ClassType = InfoList.ClassType;
-			// 			if (InfoList.LessonAndExamRate >= 0.9) {
-			// 				$('.summary-popup0-class1').attr('class', 'summary-popup0-class1 green');
-			// 			} else if (InfoList.LessonAndExamRate >= 0.6) {
-			// 				$('.summary-popup0-class1').attr('class', 'summary-popup0-class1 orange');
-			// 			} else {
-			// 				$('.summary-popup0-class1').attr('class', 'summary-popup0-class1 red');
-			// 			}
-			// 			if (InfoList.HomeworkCompleteRate >= 0.9) {
-			// 				$('.summary-popup0-class2').attr('class', 'summary-popup0-class2 green');
-			// 			} else if (InfoList.HomeworkCompleteRate >= 0.6) {
-			// 				$('.summary-popup0-class2').attr('class', 'summary-popup0-class2 orange');
-			// 			} else {
-			// 				$('.summary-popup0-class2').attr('class', 'summary-popup0-class2 red');
-			// 			}
-			// 			if (InfoList.SelfPlanRate >= 0.9) {
-			// 				$('.summary-popup0-class3').attr('class', 'summary-popup0-class3 green');
-			// 			} else if (InfoList.SelfPlanRate >= 0.6) {
-			// 				$('.summary-popup0-class3').attr('class', 'summary-popup0-class3 orange');
-			// 			} else {
-			// 				$('.summary-popup0-class3').attr('class', 'summary-popup0-class3 red');
-			// 			}
-			// 			$('.summary-popup0-class1').text(' ' + parseInt(InfoList.LessonAndExamRate * 100) + '%');
-			// 			$('.summary-popup0-class2').text(' ' + parseInt(InfoList.HomeworkCompleteRate * 100) + '%');
-			// 			$('.summary-popup0-class3').text(' ' + parseInt(InfoList.SelfPlanRate * 100) + '% ');
-			// 			$('.summary-table1-append').remove();
-			// 			var Table1list = InfoList.List;
-			// 			Table1list.map(function(item, idx) {
-			// 				if (idx >= page * 8 && idx < (page + 1) * 8) {
-			// 					if (item.LessonAndExamRate >= 0.9) {
-			// 						var class1 = 'green';
-			// 					} else if (item.LessonAndExamRate >= 0.6) {
-			// 						var class1 = 'orange';
-			// 					} else {
-			// 						var class1 = 'red';
-			// 					}
-			// 					if (item.HomeworkRate >= 0.9) {
-			// 						var class2 = 'green';
-			// 					} else if (item.HomeworkRate >= 0.6) {
-			// 						var class2 = 'orange';
-			// 					} else {
-			// 						var class2 = 'red';
-			// 					}
-			// 					if (item.SelfPlanRate >= 0.9) {
-			// 						var class3 = 'green';
-			// 					} else if (item.SelfPlanRate >= 0.6) {
-			// 						var class3 = 'orange';
-			// 					} else {
-			// 						var class3 = 'red';
-			// 					}
-			// 					if (page > 0) {
-			// 						idx = conver(idx * 1 + 1 + (page - 1) * 8);
-			// 					} else {
-			// 						idx = conver(idx * 1 + 1 + page * 8);
-			// 					}
-			// 					$('.summary-table1 tbody').append($('<tr class="summary-table1-append"><td>' + idx + '</td><td>' + item.Name +
-			// 						'</td><td>' + item.XH +
-			// 						'</td><td  class="summary-open-table1" data-Name=' + item.Name + ' data-ClassID=' + ClassID +
-			// 						' data-ClassType=' + ClassType +
-			// 						' data-XH=' + item.XH + '  ><span class=' + class1 + '>' + parseInt(item.LessonAndExamRate * 100) +
-			// 						'% </span>(' + item.LessonAndExamAttendence +
-			// 						'/' + item.LessonAndExamTotal + '次) <i></i> </td><td class="summary-open-table2" data-Name=' + item.Name +
-			// 						' data-ClassID=' + ClassID +
-			// 						' data-ClassType=' + ClassType +
-			// 						' data-XH=' + item.XH + '  ><span class=' + class2 +
-			// 						'>' + parseInt(item.HomeworkRate * 100) + '% </span>(' + item.HomeworkComplete + '/' + item.HomeworkTotal +
-			// 						'次)  <i ></i> </td><td  class="summary-open-table3" data-Name=' + item.Name + ' data-ClassID=' + ClassID +
-			// 						' data-ClassType=' + ClassType +
-			// 						' data-XH=' + item.XH + '  ><span class=' + class3 + '>' + parseInt(item.SelfPlanRate *
-			// 							100) + '% </span>(' + item.SelfPlanComplete + '/' + item.SelfPlanTotal +
-			// 						'次)  <i></i> </td></tr>'))
-			// 				}
-			// 			})
-			// 			if ($('.summary-table1-append') && ($('.summary-table1-append').length > 6 || ($('.summary-table1-append').length >
-			// 					5 && page > 0))) {
-			// 				$('.summary-table1 tbody').css('overflow-y', 'scroll');
-			// 				if (navigator.userAgent.toLowerCase().indexOf("chrome") != -1) {
-			// 					$('.summary-table1 thead').css('width', 'calc(100% - 8px)');
-			// 				} else {
-			// 					$('.summary-table1 thead').css('width', 'calc(100% - 1em)');
-			// 				}
-			// 				console.log(navigator.userAgent.toLowerCase());
-			// 			} else {
-			// 				$('.summary-table1 tbody').css('overflow-y', 'hidden');
-			// 				$('.summary-table1 thead').css('width', '100%');
-			// 			}
-			// 			if (Table1list && Table1list.length > 10) {
-			// 				$('.summary-table1 tbody').append($('<div class="frame_pager_center summary-pager1"></div>'));
-			// 				setTable1Pager(Table1list.length, page);
-			// 			}
-			// 			$('.summary-popup1').hide();
-			// 			$('.summary-popup2').hide();
-			// 			$('.summary-popup3').hide();
-			// 			$('.summary-popup0').show();
-			// 			$('.summary-popup0-main').animate({
-			// 				left: '42px'
-			// 			}, 'slow', function() {});
-			// 			$('.summary-popup-main tbody').scrollTop(0);
 		})
 	}
 	// 分页函数调用
@@ -5016,7 +4868,7 @@ function AgassitantCallbackFunction(result) {
 	function summaryTable1Fn($this, page) {
 		$('.summary-popup1-main tbody').scrollTop(0);
 		summaryStartTime = summaryStartTime.slice(0, 10) + ' 00:00:00';
-		summaryEndTime = summaryEndTime.slice(0, 10) + ' 00:00:00';
+		summaryEndTime = summaryEndTime.slice(0, 10) + ' 23:59:59';
 		$('.assistant-empty4').hide();
 		ajaxM('api/Share/GetLessonAndExamDetails_XH_XGJ', 'get', {
 			URL: summaryURL,
@@ -5048,7 +4900,7 @@ function AgassitantCallbackFunction(result) {
 				$('.assistant-empty4').show();
 				$('.summary-table2').hide();
 				$('.summary-popup1-AllRate').text(((InfoList.AllRate * 100).toFixed(2)) * 1 + '%');
-				$('.summary-popup1-AllAttendence').text('(' + InfoList.AllAttendence + '/' + InfoList.AllTimes + ')');
+				$('.summary-popup1-AllAttendence').text('(' + InfoList.AllAttendence + '/' + InfoList.AllTimes + '次)');
 				$('.summary-popup1-LessonAttendence').text('出勤' + InfoList.LessonAttendence);
 				$('.summary-popup1-LessonAbsence').text('缺勤' + InfoList.LessonAbsence);
 				$('.summary-popup1-ExamAttendence').text('出考' + InfoList.ExamAttendence);
@@ -5084,6 +4936,7 @@ function AgassitantCallbackFunction(result) {
 					'</td><td>' + item.SubjectName + '</td><td>' + item.Name + ' </td><td class=' + class1 + ' > ' + text +
 					'</td><td></td></tr>'));
 			})
+			$('.summary-table2 tbody').scrollTop(0);
 			if ($('.summary-table2-append') && ($('.summary-table2-append').length > 6 || ($('.summary-table2-append').length >
 					5 && page > 0))) {
 				$('.summary-table2 tbody').css('overflow-y', 'scroll');
@@ -5101,7 +4954,7 @@ function AgassitantCallbackFunction(result) {
 				setTable2Pager(table2TotalCount, page);
 			}
 			$('.summary-popup1-AllRate').text(((InfoList.AllRate * 100).toFixed(2)) * 1 + '%');
-			$('.summary-popup1-AllAttendence').text('(' + InfoList.AllAttendence + '/' + InfoList.AllTimes + ')');
+			$('.summary-popup1-AllAttendence').text('(' + InfoList.AllAttendence + '/' + InfoList.AllTimes + '次)');
 			$('.summary-popup1-LessonAttendence').text('出勤' + InfoList.LessonAttendence);
 			$('.summary-popup1-LessonAbsence').text('缺勤' + InfoList.LessonAbsence);
 			$('.summary-popup1-ExamAttendence').text('出考' + InfoList.ExamAttendence);
@@ -5114,7 +4967,7 @@ function AgassitantCallbackFunction(result) {
 			assistantTipsFn('数据连接失败,请重试~');
 			$('.assistant-empty4').show();
 			$('.summary-popup1-AllRate').text('0%');
-			$('.summary-popup1-AllAttendence').text('(0/0)');
+			$('.summary-popup1-AllAttendence').text('(0/0次)');
 			$('.summary-popup1-LessonAttendence').text('出勤0');
 			$('.summary-popup1-LessonAbsence').text('缺勤0');
 			$('.summary-popup1-ExamAttendence').text('出考0');
@@ -5191,7 +5044,7 @@ function AgassitantCallbackFunction(result) {
 	function summaryTable2Fn($this, page) {
 		$('.summary-popup2-main tbody').scrollTop(0);
 		summaryStartTime = summaryStartTime.slice(0, 10) + ' 00:00:00';
-		summaryEndTime = summaryEndTime.slice(0, 10) + ' 00:00:00';
+		summaryEndTime = summaryEndTime.slice(0, 10) + ' 23:59:59';
 		$('.assistant-empty5').hide();
 		ajaxM('api/Share/GetHomeworkDetails_XH_XGJ', 'get', {
 				URL: summaryURL,
@@ -5224,7 +5077,7 @@ function AgassitantCallbackFunction(result) {
 					$('.assistant-empty5').show();
 					$('.summary-table3').hide();
 					$('.summary-popup2-HomeworkCompleteRate').text(((InfoList.HomeworkCompleteRate * 100).toFixed(2)) * 1 + '%');
-					$('.summary-popup2-CompleteHomework').text('(' + InfoList.CompleteHomework + '/' + InfoList.AllHomework + ')');
+					$('.summary-popup2-CompleteHomework').text('(' + InfoList.CompleteHomework + '/' + InfoList.AllHomework + '次)');
 					$('.summary-popup2').show();
 					$('.summary-popup2-main').animate({
 						left: '62px'
@@ -5245,10 +5098,13 @@ function AgassitantCallbackFunction(result) {
 					}
 					$('.summary-table3').append($('<tr class="summary-table3-append" ><td>' + idx + '</td><td>' + item.HomeworkName +
 						'</td><td>' + item.SubjectName + '</td><td>' + item.TeacherName + ' </td><td>' + item.CompleteTime +
-						'</td><td class=' + class1 + '>' + item.Score + ' </td><td class="summary-table3-go" data-type=' + item.PCLinkType +
+						'</td><td class=' + class1 + '>' + item.Score + ' </td><td class="summary-table3-go" data-SysID=' + item.SysID + ' data-type=' + item.PCLinkType +
 						' data-url=' + item.PCLink +
+						' data-stuID=' + InfoList.XH +
+						' data-studentName' +
 						' ><i></i></td></tr>'));
 				})
+				$('.summary-table3 tbody').scrollTop(0);
 				if ($('.summary-table3-append') && ($('.summary-table3-append').length > 6 || ($('.summary-table3-append').length >
 						5 && page > 0))) {
 					$('.summary-table3 tbody').css('overflow-y', 'scroll');
@@ -5267,14 +5123,24 @@ function AgassitantCallbackFunction(result) {
 					setTable3Pager(table3TotalCount, page);
 				}
 				$('.summary-table3-go').off().click(function () {
+					var $this = $(this);
 					if ($(this).attr('data-type') == 1) {
-						window.open(summaryURL.slice(0, -1) + (this).attr('data-url'), '_blank');
+						getSysWeb($this.attr('data-sysid'), function (data) {
+							if ($this.attr('data-sysid') == 630) {
+								window.open(data + $this.attr('data-url') + '&studentId=' + $this.attr('data-stuID') + '&studentName=' + $('.summary-popup2-name').text(), '_blank');
+							} else if ($this.attr('data-sysid') == 510) {
+								window.open(data + $this.attr('data-url') + '&selectID=' + $this.attr('data-stuID'), '_blank');
+							} else {
+								window.open(data + $this.attr('data-url'), '_blank');
+							}
+
+						})
 					} else {
 
 					}
 				})
 				$('.summary-popup2-HomeworkCompleteRate').text(((InfoList.HomeworkCompleteRate * 100).toFixed(2)) * 1 + '%');
-				$('.summary-popup2-CompleteHomework').text('(' + InfoList.CompleteHomework + '/' + InfoList.AllHomework + ')');
+				$('.summary-popup2-CompleteHomework').text('(' + InfoList.CompleteHomework + '/' + InfoList.AllHomework + '次)');
 				$('.summary-popup2').show();
 				$('.summary-popup2-main').animate({
 					left: '62px'
@@ -5286,7 +5152,7 @@ function AgassitantCallbackFunction(result) {
 				$('.assistant-empty5').show();
 				$('.summary-table3').hide();
 				$('.summary-popup2-HomeworkCompleteRate').text('0%');
-				$('.summary-popup2-CompleteHomework').text('(0/0)');
+				$('.summary-popup2-CompleteHomework').text('(0/0次)');
 				$('.summary-popup2').show();
 				$('.summary-popup2-main').animate({
 					left: '62px'
@@ -5357,7 +5223,7 @@ function AgassitantCallbackFunction(result) {
 	function summaryTable3Fn($this, page) {
 		$('.summary-popup3-main tbody').scrollTop(0);
 		summaryStartTime = summaryStartTime.slice(0, 10) + ' 00:00:00';
-		summaryEndTime = summaryEndTime.slice(0, 10) + ' 00:00:00';
+		summaryEndTime = summaryEndTime.slice(0, 10) + ' 23:59:59';
 		$('.assistant-empty6').hide();
 		ajaxM('api/Share/GetSelfPlanDetails_XH_XGJ', 'get', {
 				URL: summaryURL,
@@ -5390,7 +5256,7 @@ function AgassitantCallbackFunction(result) {
 					$('.assistant-empty6').show();
 					$('.summary-table4').hide();
 					$('.summary-popup3-PassRate').text(((InfoList.PassRate * 100).toFixed(2)) * 1 + '%');
-					$('.summary-popup3-PassPlan').text('(' + InfoList.PassPlan + '/' + InfoList.AllPlan + ')');
+					$('.summary-popup3-PassPlan').text('(' + InfoList.PassPlan + '/' + InfoList.AllPlan + '次)');
 					$('.summary-popup3').show();
 					$('.summary-popup3-main').animate({
 						left: '62px'
@@ -5419,17 +5285,20 @@ function AgassitantCallbackFunction(result) {
 					}
 					$('.summary-table4').append($(' <tr class="summary-table4-append" ><td > ' + idx + ' </td> <td> ' + item.PlanName +
 						' </td> <td > ' + item.SubjectName + ' </td> <td> ' + time + ' </td> <td class = ' + class1 + ' > ' + text +
-						' </td> <td class = "summary-table4-go" data-type=' + item.PCLinkType + ' data-url=' + item.Link +
+						' </td> <td class = "summary-table4-go" data-type=' + item.PCLinkType + '  data-SysID=' + item.SysID + ' data-url=' + item.Link +
 						' > <i> </i></td><td></td></tr>'))
-
 				});
 				$('.summary-table4-go').click(function () {
+					var $this = $(this);
 					if ($(this).attr('data-type') == 1) {
-						window.open(summaryURL.slice(0, -1) + $(this).attr('data-url'), '_blank');
+						getSysWeb($this.attr('data-sysid'), function (data) {
+							window.open(data + $this.attr('data-url'), '_blank');
+						})
 					} else {
 
 					}
 				})
+				$('.summary-table4 tbody').scrollTop(0);
 				if ($('.summary-table4-append') && ($('.summary-table4-append').length > 6 || ($('.summary-table4-append').length >
 						5 && page > 0))) {
 					$('.summary-table4 tbody').css('overflow-y', 'scroll');
@@ -5448,7 +5317,7 @@ function AgassitantCallbackFunction(result) {
 					setTable4Pager(table4TotalCount, page);
 				}
 				$('.summary-popup3-PassRate').text(((InfoList.PassRate * 100).toFixed(2)) * 1 + '%');
-				$('.summary-popup3-PassPlan').text('(' + InfoList.PassPlan + '/' + InfoList.AllPlan + ')');
+				$('.summary-popup3-PassPlan').text('(' + InfoList.PassPlan + '/' + InfoList.AllPlan + '次)');
 				$('.summary-popup3').show();
 				$('.summary-popup3-main').animate({
 					left: '62px'
@@ -5460,7 +5329,7 @@ function AgassitantCallbackFunction(result) {
 				$('.assistant-empty6').show();
 				$('.summary-table4').hide();
 				$('.summary-popup3-PassRate').text('0%');
-				$('.summary-popup3-PassPlan').text('(0/0)');
+				$('.summary-popup3-PassPlan').text('(0/0次)');
 				$('.summary-popup3').show();
 				$('.summary-popup3-main').animate({
 					left: '62px'
@@ -5558,13 +5427,15 @@ function AgassitantCallbackFunction(result) {
 	});
 
 	//左边搜索框清除搜索内容
-	$('.contact-search-input').keypress(function () {
+	var dom2 = document.getElementsByClassName('contact-search-input')[0];
+	dom2.oninput = function () {
 		if ($(this).val()) {
 			$('.contact-search-clear').show();
 		} else {
 			$('.contact-search-clear').hide();
 		}
-	});
+	}
+
 
 	$('.contact-search-input').blur(function () {
 		if (!$(this).val()) {
@@ -5578,8 +5449,7 @@ function AgassitantCallbackFunction(result) {
 	});
 	// 左边回车搜索
 	$('.contact-search-input').keypress(function (event) {
-		
-		console.log(event);
+		// console.log(event);
 		clearTimeout(keyupTimer);
 		if (event.keyCode == 13) {
 			if ($('.contact-search-input').val().replace(/\s*/g, "")) {
@@ -5609,7 +5479,7 @@ function AgassitantCallbackFunction(result) {
 			}, 500)
 		}
 
-		
+
 	});
 
 
@@ -5744,9 +5614,13 @@ function AgassitantCallbackFunction(result) {
 		recentContactType = 2;
 		recentContactFn(0, 2, '');
 	});
-
-
-	$('.contact-frequent-input').keypress(function () {
+	var dom3 = document.getElementsByClassName('contact-frequent-input')[0];
+	dom3.oninput = function () {
+		if ($(this).val()) {
+			$('.contact-frequent-clear').show();
+		} else {
+			$('.contact-frequent-clear').hide();
+		}
 		clearTimeout(keyupTimer);
 		if (event.keyCode == 13) {
 			if (!$('.contact-frequent-input').val().replace(/\s*/g, "")) {
@@ -5766,13 +5640,7 @@ function AgassitantCallbackFunction(result) {
 				keyupValue = $('.contact-frequent-input').val();
 			}, 500)
 		}
-
-		if ($(this).val()) {
-			$('.contact-frequent-clear').show();
-		} else {
-			$('.contact-frequent-clear').hide();
-		}
-	});
+	}
 
 
 	//清空联系人或者是添加常联系人
@@ -5960,7 +5828,7 @@ function AgassitantCallbackFunction(result) {
 	// 	}, 4000)
 
 
-
+	var websockeyTimer1 = null;
 	//初始化websocket
 	ajaxN('PsnMgr/InfoCentre/GetWebSocketInfo', 'get', {}, function (data) {
 		if (data.StatusCode == 200) {
@@ -6020,15 +5888,18 @@ function AgassitantCallbackFunction(result) {
 						// 	})));
 						// }
 						if (result.code == "1004") {
+							if (result.pushtype == '-1') {
+								return;
+							}
 							$('.popup-nav-ul li').eq(0).children('b').attr('class', 'info-unread');
+
 							//刷新
 							// var assistantRemindArr1 = [];
 							if (result.pushtype == '5') {
 								scheduleRemindCount++;
 								allRemindCount++;
 								if (((onlyRemindType == 1 && $('.assistant-remind-count').attr('name') == 5) || $('.assistant-remind-count')
-										.attr(
-											'name') == -1) && $('.assistant-popup').css('opacity') == 0) {
+										.attr('name') == -1) && $('.assistant-popup').css('opacity') == 0) {
 									assistantRemindArr.push('0005');
 									animationRemindFn(5);
 
@@ -6059,31 +5930,55 @@ function AgassitantCallbackFunction(result) {
 									onlyRemindType = 0;
 
 								}
+								if ($('.isassistant-message-reminder').length < 1) {
+									websockeyArr.push(5);
+									if (($('.assistant-active').attr('name') != 1 || ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 4)) && $(
+											'.assistant-popup').css('display') != 'none') {
+										$('.popup-main').append($('<div class="isassistant-message-reminder"  name ="4"><div class="isassistant-div"><span name ="4">您有新的日程提醒啦~</span></div></div>'));
+										$('.isassistant-message-reminder').animate({
+											right: '9px'
+										}, 'slow');
+									}
+								} else {
+									if (websockeyArr.indexOf(5) == -1) {
+										websockeyArr.push(5);
 
-
-								if ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 4 && $(
-										'.assistant-popup').css('display') != 'none') {
-									$('.popup-main').append($('<div class="isassistant-message-reminder"  name ="4">您有新的系统消息啦~</div>'));
-									$('.isassistant-message-reminder').animate({
-										right: '9px'
-									}, 'slow');
+										clearTimeout(websockeyTimer1);
+										clearInterval(websockeyTimer);
+										$('.isassistant-div').css('transition', '0s all');
+										$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+										$('.isassistant-div').prepend($('<span name ="4">您有新的日程提醒啦~</span>'));
+										websockeyTimer = setInterval(function () {
+											$('.isassistant-div').css('transition', '2s all');
+											$('.isassistant-div').css('transform', 'translate(-135px, 0px)');
+											websockeyTimer1 = setTimeout(function () {
+												$('.isassistant-div').css('transition', '0s all');
+												var text = $('.isassistant-div span').eq(0).text();
+												var id = $('.isassistant-div span').eq(0).attr('name');
+												$('.isassistant-div span').eq(0).remove();
+												$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+												$('.isassistant-div').append($('<span name =' + id + '>' + text + '</span>'));
+											}, 2400)
+										}, 3000)
+									}
 								}
+
 								$('.popup-main1 ul li').eq(2).children().children().attr('class', 'info-unread4');
 								if (!$('.popup-main1 ul li').eq(2).children().children().children().children().text()) {
 									$('.popup-main1 ul li').eq(2).children().children().children().children().text('1');
 								} else {
-									var count1='';
+									var count1 = '';
 									if ($('.popup-main1 ul li').eq(2).children().children().children().children().text() == '...') {
 										count1 = '...';
 									} else {
-										 count1 = $('.popup-main1 ul li').eq(2).children().children().children().children().text() * 1 + 1;
+										count1 = $('.popup-main1 ul li').eq(2).children().children().children().children().text() * 1 + 1;
 										if (count1 > 99) {
 											count1 = '...';
 										}
 									}
 
 									$('.popup-main1 ul li').eq(2).children().children().children('span').append($(' <b>' + count1 + '</b>'));
-									$('.popup-main1 ul li').eq(2).children().children().children('span').css('transform', 'translate(0, ' + -12 *
+									$('.popup-main1 ul li').eq(2).children().children().children('span').css('transform', 'translate(0, ' + -14 *
 										($('.popup-main1 ul li').eq(2).children().children().children('span').children().length - 1) + 'px)');
 								}
 								$('.assistant-remind-count').attr('name', '5');
@@ -6095,6 +5990,38 @@ function AgassitantCallbackFunction(result) {
 							}
 							if (result.pushtype == '1' || result.pushtype == '3' || result.pushtype == '4') {
 								if (result.pushtype == '3') {
+									if ($('.isassistant-message-reminder').length < 1) {
+										websockeyArr.push(4);
+										if (($('.assistant-active').attr('name') != 1 || ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 4)) && $(
+												'.assistant-popup').css('display') != 'none') {
+											$('.popup-main').append($('<div class="isassistant-message-reminder"  name ="4"><div class="isassistant-div"><span name ="4">您有新的系统消息啦~</span></div></div>'));
+											$('.isassistant-message-reminder').animate({
+												right: '9px'
+											}, 'slow');
+
+										}
+									} else {
+										if (websockeyArr.indexOf(4) == -1) {
+											websockeyArr.push(4);
+											clearTimeout(websockeyTimer1);
+											clearInterval(websockeyTimer);
+											$('.isassistant-div').css('transition', '0s all');
+											$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+											$('.isassistant-div').prepend($('<span name ="4">您有新的系统消息啦~</span>'));
+											websockeyTimer = setInterval(function () {
+												$('.isassistant-div').css('transition', '2s all');
+												$('.isassistant-div').css('transform', 'translate(-135px, 0px)');
+												websockeyTimer1 = setTimeout(function () {
+													$('.isassistant-div').css('transition', '0s all');
+													var text = $('.isassistant-div span').eq(0).text();
+													var id = $('.isassistant-div span').eq(0).attr('name');
+													$('.isassistant-div span').eq(0).remove();
+													$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+													$('.isassistant-div').append($('<span name =' + id + '>' + text + '</span>'));
+												}, 2400)
+											}, 6000)
+										}
+									}
 									MessageRemindCount++;
 									allRemindCount++;
 									if (((onlyRemindType == 1 && $('.assistant-remind-count').attr('name') == 2) || $('.assistant-remind-count')
@@ -6112,7 +6039,40 @@ function AgassitantCallbackFunction(result) {
 									$('.assistant-remind-count').attr('name', '2');
 								}
 								if (result.pushtype == '1') {
+									if ($('.isassistant-message-reminder').length < 1) {
+										websockeyArr.push(2);
+										if (($('.assistant-active').attr('name') != 1 || ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 2)) && $(
+												'.assistant-popup').css('display') != 'none') {
+											$('.popup-main').append($('<div class="isassistant-message-reminder" name ="2"><div class="isassistant-div"><span name ="2">您有新的通知啦~</span></div></div>'));
+											$('.isassistant-message-reminder').animate({
+												right: '9px'
+											}, 'slow');
+										}
+									} else {
+										if (websockeyArr.indexOf(2) == -1) {
+											websockeyArr.push(2);
 
+											clearTimeout(websockeyTimer1);
+											clearInterval(websockeyTimer);
+											$('.isassistant-div').css('transition', '0s all');
+											$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+											$('.isassistant-div').prepend($('<span name ="2">您有新的通知啦~</span>'));
+											websockeyTimer = setInterval(function () {
+												$('.isassistant-div').css('transition', '2s all');
+												$('.isassistant-div').css('transform', 'translate(-135px, 0px)');
+												websockeyTimer1 = setTimeout(function () {
+													$('.isassistant-div').css('transition', '0s all');
+													var text = $('.isassistant-div span').eq(0).text();
+													var id = $('.isassistant-div span').eq(0).attr('name');
+													$('.isassistant-div span').eq(0).remove();
+													$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+													$('.isassistant-div').append($('<span name =' + id + '>' + text + '</span>'));
+												}, 2400)
+											}, 6000)
+										}
+
+
+									}
 									NoticeRemindCount++;
 									allRemindCount++;
 									if (((onlyRemindType == 1 && $('.assistant-remind-count').attr('name') == 1) || $('.assistant-remind-count')
@@ -6130,6 +6090,39 @@ function AgassitantCallbackFunction(result) {
 									$('.assistant-remind-count').attr('name', '1');
 								}
 								if (result.pushtype == '4') {
+									if ($('.isassistant-message-reminder').length < 1) {
+										websockeyArr.push(1);
+										if (($('.assistant-active').attr('name') != 1 || ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 1)) && $(
+												'.assistant-popup').css('display') != 'none') {
+											$('.popup-main').append($('<div class="isassistant-message-reminder" name ="1"><div class="isassistant-div"><span name ="1">您有新的待办事件啦~</span></div></div>'));
+											$('.isassistant-message-reminder').animate({
+												right: '9px'
+											}, 'slow');
+										}
+									} else {
+
+										if (websockeyArr.indexOf(1) == -1) {
+											websockeyArr.push(1);
+											clearTimeout(websockeyTimer1);
+											clearInterval(websockeyTimer);
+											$('.isassistant-div').css('transition', '0s all');
+											$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+											$('.isassistant-div').prepend($('<span name ="1">您有新的待办事件啦~</span>'));
+											websockeyTimer = setInterval(function () {
+												$('.isassistant-div').css('transition', '2s all');
+												$('.isassistant-div').css('transform', 'translate(-135px, 0px)');
+												websockeyTimer1 = setTimeout(function () {
+													$('.isassistant-div').css('transition', '0s all');
+													var text = $('.isassistant-div span').eq(0).text();
+													var id = $('.isassistant-div span').eq(0).attr('name');
+													$('.isassistant-div span').eq(0).remove();
+													$('.isassistant-div').css('transform', 'translate(0px, 0px)');
+													$('.isassistant-div').append($('<span name =' + id + '>' + text + '</span>'));
+												}, 2400)
+											}, 6000)
+										}
+
+									}
 									TodoRemindCount++;
 									allRemindCount++;
 									if (((onlyRemindType == 1 && $('.assistant-remind-count').attr('name') == 0) || $('.assistant-remind-count')
@@ -6164,115 +6157,151 @@ function AgassitantCallbackFunction(result) {
 									$('.assistant-remind-count ul li').text(allRemindCount1);
 								}
 								var data = result.msgdata;
+								// console.log(data);
 								if (data.TodoListCount > 0) {
-									if ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 1 && $(
-											'.assistant-popup').css('display') != 'none') {
-										$('.popup-main').append($('<div class="isassistant-message-reminder" name ="1">您有新的待办事件啦~</div>'));
-										$('.isassistant-message-reminder').animate({
-											right: '9px'
-										}, 'slow');
-									}
+									// if ($('.isassistant-message-reminder').length < 1) {
+									// 	if (($('.assistant-active').attr('name') != 1 || ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 1)) && $(
+									// 			'.assistant-popup').css('display') != 'none') {
+									// 		$('.popup-main').append($('<div class="isassistant-message-reminder" name ="1"><span name ="1">您有新的待办事件啦~</span></div>'));
+									// 		$('.isassistant-message-reminder').animate({
+									// 			right: '9px'
+									// 		}, 'slow');
+									// 	}
+									// } else {
+									// 	$('.isassistant-message-reminder span').text('您有新的待办事件啦~');
+									// 	$('.isassistant-message-reminder span').attr('name', '1');
+									// }
 									if (data.TodoListCount > 99) {
 										data.TodoListCount = '...';
 									}
 									$('.popup-main1 ul li').eq(0).children().children().attr('class', 'info-unread4');
-									if (!$('.popup-main1 ul li').eq(0).children().children().children().children().text()) {
-										$('.popup-main1 ul li').eq(0).children().children().children().children().text(data.TodoListCount);
-									} else {
-										$('.popup-main1 ul li').eq(0).children().children().children('span').append($(' <b>' + data.TodoListCount +
-											'</b>'));
-										$('.popup-main1 ul li').eq(0).children().children().children('span').css('transform', 'translate(0, ' + -
-											12 * ($('.popup-main1 ul li').eq(0).children().children().children('span').children().length - 1) +
-											'px)');
-
+									if ($('.popup-main1 ul li').eq(0).children().children().children().children().text() != data.TodoListCount) {
+										if (!$('.popup-main1 ul li').eq(0).children().children().children().children().text()) {
+											$('.popup-main1 ul li').eq(0).children().children().children().children().text(data.TodoListCount);
+										} else {
+											$('.popup-main1 ul li').eq(0).children().children().children('span').append($(' <b>' + data.TodoListCount +
+												'</b>'));
+											$('.popup-main1 ul li').eq(0).children().children().children('span').css('transform', 'translate(0, ' + -
+												14 * ($('.popup-main1 ul li').eq(0).children().children().children('span').children().length - 1) +
+												'px)');
+										}
 									}
+
 
 								} else {
 									$('.popup-main1 ul li').eq(0).children().children().attr('class', '');
 								}
 								if (data.NoticeCount > 0) {
-									if ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 2 && $(
-											'.assistant-popup').css('display') != 'none') {
-										$('.popup-main').append($('<div class="isassistant-message-reminder" name ="2">您有新的通知啦~</div>'));
-										$('.isassistant-message-reminder').animate({
-											right: '9px'
-										}, 'slow');
-									}
+									// if ($('.isassistant-message-reminder').length < 1) {
+									// 	if (($('.assistant-active').attr('name') != 1 || ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 2)) && $(
+									// 			'.assistant-popup').css('display') != 'none') {
+									// 		$('.popup-main').append($('<div class="isassistant-message-reminder" name ="2"><span name ="2">您有新的通知啦~</span></div>'));
+									// 		$('.isassistant-message-reminder').animate({
+									// 			right: '9px'
+									// 		}, 'slow');
+									// 	}
+									// } else {
+									// 	$('.isassistant-message-reminder span').text('您有新的通知啦~');
+									// 	$('.isassistant-message-reminder span').attr('name', '2');
+
+									// }
+
 									$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
 									if (data.NoticeCount > 99) {
-										data.NoticeCount =  '...';
+										data.NoticeCount = '...';
 									}
-									if (!$('.popup-main1 ul li').eq(1).children().children().children().children().text()) {
+									if ($('.popup-main1 ul li').eq(1).children().children().children().children().text() != data.NoticeCount) {
+										if (!$('.popup-main1 ul li').eq(1).children().children().children().children().text()) {
 
-										$('.popup-main1 ul li').eq(1).children().children().children().children().text(data.NoticeCount);
-									} else {
-										$('.popup-main1 ul li').eq(1).children().children().children('span').append($(' <b>' + data.NoticeCount +
-											'</b>'));
-										$('.popup-main1 ul li').eq(1).children().children().children('span').css('transform', 'translate(0, ' + -
-											12 * ($('.popup-main1 ul li').eq(1).children().children().children('span').children().length - 1) +
-											'px)');
+											$('.popup-main1 ul li').eq(1).children().children().children().children().text(data.NoticeCount);
+										} else {
+											$('.popup-main1 ul li').eq(1).children().children().children('span').append($(' <b>' + data.NoticeCount +
+												'</b>'));
+											$('.popup-main1 ul li').eq(1).children().children().children('span').css('transform', 'translate(0, ' + -
+												14 * ($('.popup-main1 ul li').eq(1).children().children().children('span').children().length - 1) +
+												'px)');
+										}
 									}
+
 								} else {
 									$('.popup-main1 ul li').eq(1).children().children().attr('class', '');
 								}
 								if (data.ChatCount > 0) {
-									if ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 3 && $(
-											'.assistant-popup').css('display') != 'none') {
-										$('.popup-main').append($('<div class="isassistant-message-reminder"  name ="3">您有新的聊天信息啦~</div>'));
-										$('.isassistant-message-reminder').animate({
-											right: '9px'
-										}, 'slow');
-									}
+									// if ($('.isassistant-message-reminder').length < 1) {
+									// 	if ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 3 && $(
+									// 			'.assistant-popup').css('display') != 'none') {
+									// 		$('.popup-main').append($('<div class="isassistant-message-reminder"  name ="3"><span name ="3">您有新的聊天信息啦~</span></div>'));
+									// 		$('.isassistant-message-reminder').animate({
+									// 			right: '9px'
+									// 		}, 'slow');
+									// 	}
+									// } else {
+									// 	$('.isassistant-message-reminder span').text('您有新的聊天信息啦~');
+									// 	$('.isassistant-message-reminder span').attr('name', '3');
+									// }
 									if (data.ChatCount > 99) {
-										data.ChatCount =  '...';
+										data.ChatCount = '...';
 									}
 									$('.popup-main1 ul li').eq(3).children().children().attr('class', 'info-unread4');
-									if (!$('.popup-main1 ul li').eq(3).children().children().children().children().text()) {
-										$('.popup-main1 ul li').eq(3).children().children().children().children().text(data.ChatCount);
-									} else {
-										$('.popup-main1 ul li').eq(3).children().children().children('span').append($(' <b>' + data.ChatCount +
-											'</b>'));
-										$('.popup-main1 ul li').eq(3).children().children().children('span').css('transform', 'translate(0, ' + -
-											12 * ($('.popup-main1 ul li').eq(3).children().children().children('span').children().length - 1) +
-											'px)');
+									if ($('.popup-main1 ul li').eq(3).children().children().children().children().text() != data.ChatCount) {
+										if (!$('.popup-main1 ul li').eq(3).children().children().children().children().text()) {
+											$('.popup-main1 ul li').eq(3).children().children().children().children().text(data.ChatCount);
+										} else {
+											$('.popup-main1 ul li').eq(3).children().children().children('span').append($(' <b>' + data.ChatCount +
+												'</b>'));
+											$('.popup-main1 ul li').eq(3).children().children().children('span').css('transform', 'translate(0, ' + -
+												14 * ($('.popup-main1 ul li').eq(3).children().children().children('span').children().length - 1) +
+												'px)');
+										}
 									}
+
+
 								} else {
 									$('.popup-main1 ul li').eq(3).children().children().attr('class', '');
 								}
 								if (data.MessageCount > 0) {
-									if ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 4 && $(
-											'.assistant-popup').css('display') != 'none') {
-										$('.popup-main').append($('<div class="isassistant-message-reminder"  name ="4">您有新的系统消息啦~</div>'));
-										$('.isassistant-message-reminder').animate({
-											right: '9px'
-										}, 'slow');
-									}
+									// if (($('.assistant-active').attr('name') != 1 || ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 4)) && $(
+									// 		'.assistant-popup').css('display') != 'none') {
+									// 	$('.popup-main').append($('<div class="isassistant-message-reminder"  name ="4"><span name ="4">您有新的系统消息啦~</span></div>'));
+									// 	$('.isassistant-message-reminder').animate({
+									// 		right: '9px'
+									// 	}, 'slow');
+									// } else {
+									// 	$('.isassistant-message-reminder span').text('您有新的系统消息啦~');
+									// 	$('.isassistant-message-reminder span').attr('name', '4');
+									// }
 									if (data.MessageCount > 99) {
-										data.MessageCount =  '...';
+										data.MessageCount = '...';
 									}
 									$('.popup-main1 ul li').eq(2).children().children().attr('class', 'info-unread4');
-									if (!$('.popup-main1 ul li').eq(2).children().children().children().children().text()) {
-										$('.popup-main1 ul li').eq(2).children().children().children().children().text(data.MessageCount);
-									} else {
-										$('.popup-main1 ul li').eq(2).children().children().children('span').append($(' <b>' + data.MessageCount +
-											'</b>'));
-										$('.popup-main1 ul li').eq(2).children().children().children('span').css('transform', 'translate(0, ' + -
-											12 * ($('.popup-main1 ul li').eq(2).children().children().children('span').children().length - 1) +
-											'px)');
+									if ($('.popup-main1 ul li').eq(2).children().children().children().children().text() != data.MessageCount) {
+										if (!$('.popup-main1 ul li').eq(2).children().children().children().children().text()) {
+											$('.popup-main1 ul li').eq(2).children().children().children().children().text(data.MessageCount);
+										} else {
+											$('.popup-main1 ul li').eq(2).children().children().children('span').append($(' <b>' + data.MessageCount +
+												'</b>'));
+											$('.popup-main1 ul li').eq(2).children().children().children('span').css('transform', 'translate(0, ' + -
+												14 * ($('.popup-main1 ul li').eq(2).children().children().children('span').children().length - 1) +
+												'px)');
+										}
 									}
+
 								} else {
 									$('.popup-main1 ul li').eq(2).children().children().attr('class', '');
 								}
 								if (data.NewsCount > 0) {
-									if ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 5 && $(
-											'.assistant-popup').css('display') != 'none') {
-										$('.popup-main').append($('<div class="isassistant-message-reminder" name ="5">您有新的新闻资讯啦~</div>'));
-										$('.isassistant-message-reminder').animate({
-											right: '9px'
-										}, 'slow');
-									}
+									// if (($('.assistant-active').attr('name') != 1 || ($('.assistant-active').attr('name') == 1 && $('.info-active').eq(0).attr('name') == 5)) && $(
+									// 		'.assistant-popup').css('display') != 'none') {
+									// 	$('.popup-main').append($('<div class="isassistant-message-reminder" name ="5"><span name ="5">您有新的新闻资讯啦~</span></div>'));
+									// 	$('.isassistant-message-reminder').animate({
+									// 		right: '9px'
+									// 	}, 'slow');
+									// } else {
+									// 	$('.isassistant-message-reminder span').text('您有新的新闻资讯啦~');
+									// 	$('.isassistant-message-reminder span').attr('name', '5');
+									// }
 									if (data.NewsCount > 99) {
-										data.NewsCount =  '...';
+										data.NewsCount = '...';
 									}
 									$('.popup-main1 ul li').eq(4).children().children().attr('class', 'info-unread4');
 									if (!$('.popup-main1 ul li').eq(4).children().children().children().children().text()) {
@@ -6281,7 +6310,7 @@ function AgassitantCallbackFunction(result) {
 										$('.popup-main1 ul li').eq(4).children().children().children('span').append($(' <b>' + data.NewsCount +
 											'</b>'));
 										$('.popup-main1 ul li').eq(4).children().children().children('span').css('transform', 'translate(0, ' + -
-											12 * ($('.popup-main1 ul li').eq(4).children().children().children('span').children().length - 1) +
+											14 * ($('.popup-main1 ul li').eq(4).children().children().children('span').children().length - 1) +
 											'px)');
 									}
 
@@ -6316,11 +6345,15 @@ function AgassitantCallbackFunction(result) {
 			//心跳检测
 			var obj1 = new Object({
 				MessageType: 2,
-				ClientUserID: '',
-				ClientType: 0
+				ClientUserID: UserID,
+				ClientType: 0,
+				PUshType: 0,
+				ReceiveIDType: 0,
+				ReceiveID: ''
+
 			});
 			var heartCheck = {
-				timeout: 60000,
+				timeout: 30000,
 				timeoutObj: null,
 				serverTimeoutObj: null,
 				reset: function () {
@@ -6363,7 +6396,7 @@ function AgassitantCallbackFunction(result) {
 		if (assistantRemindArr && assistantRemindArr.length > 0 && $('.assistant-popup').css('opacity') == 0 && $(
 				'.assistant-remind-count').css('display') == 'none') {
 			PromptTimerConut = 0;
-			var allRemindCount1 = allRemindCount
+			var allRemindCount1 = allRemindCount;
 			if (allRemindCount > 99) {
 				allRemindCount1 = '...';
 			}
@@ -6582,7 +6615,7 @@ function AgassitantCallbackFunction(result) {
 				}, 4000)
 
 			}
-			console.log('onlyRemindType：', onlyRemindType);
+			// console.log('onlyRemindType：', onlyRemindType);
 		}
 
 	}
@@ -6591,14 +6624,22 @@ function AgassitantCallbackFunction(result) {
 
 	function workSparceFn() {
 		$('.assistant-popup-loading').show();
-		ajaxN('PsnMgr/WorkSpace/GetWorkSpaceList', 'get', {
+		var url = '';
+		if (UserType == 2) {
+			url = '/PsnMgr/Report/GetPersonalReportList';
+		}
+		if (UserType == 1) {
+			url = '/PsnMgr/WorkSpace/GetWorkSpaceList';
+		}
+		ajaxN(url, 'get', {
 			UserClass: UserClass
 		}, function (data) {
 			$('.assistant-popup-loading').hide();
-			if (data.StatusCode == 200) {
+			if (data.StatusCode == 200 || UserType == 1) {
 				if (data.Data && data.Data.length > 0) {
 					data.Data.map(function (item) {
-						if (item.ModuleName == '发布通知') {
+						if (item.ModuleID == '0003') {
+							$('.assistant-deliver-notice span').text(item.ModuleName);
 							$('.assistant-deliver-notice').css('display', 'inline-block');
 							$('.assistant-deliver-notice').off().click(function () {
 								if (item.PCLinkType == 1) {
@@ -6617,7 +6658,8 @@ function AgassitantCallbackFunction(result) {
 
 							})
 						}
-						if (item.ModuleName == '发布问卷调查') {
+						if (item.ModuleID == '0004') {
+							$('.assistant-deliver-questionnairespan').text(item.ModuleName);
 							$('.assistant-deliver-questionnaire').css('display', 'inline-block');
 							$('.assistant-deliver-questionnaire').off().click(function () {
 								if (item.PCLinkType == 1) {
@@ -6634,7 +6676,8 @@ function AgassitantCallbackFunction(result) {
 								}
 							})
 						}
-						if (item.ModuleName == '学生档案管理') {
+						if (item.ModuleID == '0001') {
+							$('.assistant-student-admin span').text(item.ModuleName);
 							$('.assistant-student-admin').css('display', 'inline-block');
 							$('.assistant-student-admin').off().click(function () {
 								if (item.PCLinkType == 1) {
@@ -6653,7 +6696,8 @@ function AgassitantCallbackFunction(result) {
 								}
 							})
 						}
-						if (item.ModuleName == '教学班管理') {
+						if (item.ModuleID == '0002') {
+							$('.assistant-teaClass-admin span').text(item.ModuleName);
 							$('.assistant-teaClass-admin').css('display', 'inline-block');
 							$('.assistant-teaClass-admin').off().click(function () {
 								if (item.PCLinkType == 1) {
@@ -6673,6 +6717,86 @@ function AgassitantCallbackFunction(result) {
 							})
 						}
 					})
+				}
+				if (data.StatusCode == 200 || UserType == 2) {
+					if (data.Data && data.Data.length > 0) {
+						data.Data.map(function (item) {
+							if (item.ModuleName == '更换@|@(选学课程/上课老师)') {
+								$('.assistant-change-class').css('display', 'inline-block');
+								$('.assistant-change-class').off().click(function () {
+									if (item.PCLinkType == 1) {
+										if (item.SysID == '000') {
+											var tabURL = PsnMgrMainServerAddr + item.PCLink;
+											window.open(tabURL, "_blank");
+										} else {
+											getSysWeb(item.SysID, function (data) {
+												var tabURL = data + item.PCLink + '?lg_tk=' + PsnMgrToken;
+												window.open(tabURL, "_blank");
+											})
+
+										}
+
+									}
+
+								})
+							}
+							if (item.ModuleName == '请假') {
+								$('.assistant-student-leave').css('display', 'inline-block');
+								$('.assistant-student-leave').off().click(function () {
+									if (item.PCLinkType == 1) {
+										if (item.SysID == '000') {
+											var tabURL = PsnMgrMainServerAddr + item.PCLink;
+											window.open(tabURL, "_blank");
+										} else {
+											getSysWeb(item.SysID, function (data) {
+												var tabURL = data + item.PCLink + '?lg_tk=' + PsnMgrToken;
+												window.open(tabURL, "_blank");
+
+											})
+										}
+									}
+								})
+							}
+							if (item.ModuleName == '思想报告') {
+								$('.assistant-thought-report').css('display', 'inline-block');
+								$('.assistant-thought-report').off().click(function () {
+									if (item.PCLinkType == 1) {
+										if (item.SysID == '000') {
+											var tabURL = PsnMgrMainServerAddr + item.PCLink;
+											window.open(tabURL, "_blank");
+										} else {
+											ajaxN('PsnMgr/InfoCenter/GetSystemWeb', 'get', {
+												SysID: item.SysID,
+												SubjectID: item.SubjectID
+											}, function (data) {
+												var tabURL = data.Data + item.PCLink;
+												window.open(tabURL, "_blank");
+											})
+										}
+									}
+								})
+							}
+							if (item.ModuleName == '问卷作答') {
+								$('.assistant-questionnaire-answer').css('display', 'inline-block');
+								$('.assistant-questionnaire-answer').off().click(function () {
+									if (item.PCLinkType == 1) {
+										if (item.SysID == '000') {
+											var tabURL = PsnMgrMainServerAddr + item.PCLink;
+											window.open(tabURL, "_blank");
+										} else {
+											ajaxN('PsnMgr/InfoCenter/GetSystemWeb', 'get', {
+												SysID: item.SysID,
+												SubjectID: item.SubjectID
+											}, function (data) {
+												var tabURL = data.Data + item.PCLink;
+												window.open(tabURL, "_blank");
+											})
+										}
+									}
+								})
+							}
+						})
+					}
 				}
 				if (data.Data && data.Data.length > 4) {
 					$('.popup-main5 ul').css('padding', '0 0 0 2%');
@@ -6785,9 +6909,20 @@ function AgassitantCallbackFunction(result) {
 	var todoLsitTotalCount = 0;
 	var todoType = '';
 
+	function addEvent(elm, event, handler) {
+		if (window.attachEvent) {
+			elm.attachEvent("on" + event, handler);
+		} else if (window.addEventListener) {
+			elm.addEventListener(event, handler);
+		} else {
+			elm['on' + event] = handler;
+		}
+	}
+
 	function todoFn(page, type) {
 		if (!initialization) {
 			initializationFn();
+			return;
 		}
 		ajaxN('PsnMgr/InfoCentre/GetTodoListSortCount', 'get', {}, function (data) {
 			$('.todo-type-ul li').remove();
@@ -6832,6 +6967,7 @@ function AgassitantCallbackFunction(result) {
 			$('.pager1').remove();
 			$('.pager2').remove();
 			$(".pager3").remove();
+			$(".pager21").remove();
 			$('.infoCenter-empty').hide();
 			$("div").remove(".todo-div");
 			if (data.StatusCode == 200) {
@@ -6845,12 +6981,15 @@ function AgassitantCallbackFunction(result) {
 				// // 日程初始化
 				// personalScheduleFn(personalScheduleDate);
 				// }
-
+				if ($('.info-active').eq(0).attr('name') != 1) {
+					return;
+				}
 				todoLsit = data.Data.Children;
 				if (todoLsit && todoLsit.length == 0) {
 					$('.infoCenter-empty').show();
 					$('.infoCenter-empty-text').text($('.info-active').eq(1).text());
 					$('.assistant-popup-loading').hide();
+					againCountunreadFn();
 					return;
 				} else {
 					$('.todo').css('display', 'block');
@@ -6870,6 +7009,7 @@ function AgassitantCallbackFunction(result) {
 				$('.infoCenter-empty').hide();
 				$("div").remove(".todo-div");
 				$('.assistant-popup-loading').hide();
+
 				todoLsit.map(function (item, idx) {
 					var dateTime = Date.parse(item.ExpireTime) - Date.parse(serverTime);
 					dateTime = dateTime / 1000 / 60;
@@ -6935,10 +7075,10 @@ function AgassitantCallbackFunction(result) {
 					}
 					// item.ScheduleContent = item.ScheduleContent.slice(0, item.ScheduleContent.length - 2);
 					if (item.InfoContent && item.InfoContent.length > 69) {
-						item.InfoContentSmall = htmlEncode(item.InfoContent.slice(0, 68) + '...');
+						item.InfoContentSmall = htmlLableExe(item.InfoContent.slice(0, 68) + '...');
 						item.InfoContent = '"' + item.InfoContent + '"';
 					} else {
-						item.InfoContentSmall = htmlEncode(item.InfoContent);
+						item.InfoContentSmall = htmlLableExe(item.InfoContent);
 						item.InfoContent = '""';
 					}
 					todoDiv = $(
@@ -7157,20 +7297,39 @@ function AgassitantCallbackFunction(result) {
 						$('.schedule-setting-popup div').eq(0).show();
 					});
 					$('.popup-main22').hide();
-					if ($this.attr('data-InfoSourceName') == '备课') {
-						$('.schedule-type  i').attr('class', '');
-						$('.schedule-type i').eq(0).attr('class', 'schedule-type-true');
-					} else if ($this.attr('data-InfoSourceName') == '会议') {
-						$('.schedule-type  i').attr('class', '');
-						$('.schedule-type i').eq(1).attr('class', 'schedule-type-true');
-					} else if ($this.attr('data-InfoSourceName') == '重要活动') {
-						$('.schedule-type  i').attr('class', '');
-						$('.schedule-type i').eq(2).attr('class', 'schedule-type-true');
-					} else {
-						$('.schedule-type  i').attr('class', '');
-						$('.schedule-type i').eq(3).attr('class', 'schedule-type-true');
-						$('.schedule-type-name').val($this.attr('data-InfoSourceName'));
+					if (UserType == 1) {
+						if ($this.attr('data-InfoSourceName') == '备课') {
+							$('.schedule-type  i').attr('class', '');
+							$('.schedule-type i').eq(0).attr('class', 'schedule-type-true');
+						} else if ($this.attr('data-InfoSourceName') == '会议') {
+							$('.schedule-type  i').attr('class', '');
+							$('.schedule-type i').eq(1).attr('class', 'schedule-type-true');
+						} else if ($this.attr('data-InfoSourceName') == '重要活动') {
+							$('.schedule-type  i').attr('class', '');
+							$('.schedule-type i').eq(2).attr('class', 'schedule-type-true');
+						} else {
+							$('.schedule-type  i').attr('class', '');
+							$('.schedule-type i').eq(3).attr('class', 'schedule-type-true');
+							$('.schedule-type-name').val($this.attr('data-InfoSourceName'));
+						}
 					}
+					if (UserType == 2) {
+						if ($this.attr('data-InfoSourceName') == '做作业') {
+							$('.schedule-type  i').attr('class', '');
+							$('.schedule-type i').eq(0).attr('class', 'schedule-type-true');
+						} else if ($this.attr('data-InfoSourceName') == '自学') {
+							$('.schedule-type  i').attr('class', '');
+							$('.schedule-type i').eq(1).attr('class', 'schedule-type-true');
+						} else if ($this.attr('data-InfoSourceName') == '重要活动') {
+							$('.schedule-type  i').attr('class', '');
+							$('.schedule-type i').eq(2).attr('class', 'schedule-type-true');
+						} else {
+							$('.schedule-type  i').attr('class', '');
+							$('.schedule-type i').eq(3).attr('class', 'schedule-type-true');
+							$('.schedule-type-name').val($this.attr('data-InfoSourceName'));
+						}
+					}
+
 					$('.schedule-setting-true').attr('name', '22');
 					$('.schedule-setting-true').attr('data-id', $this.attr('data-id'));
 					$('.schedule-setting-true').attr('data-PCLinkType', $this.attr('data-PCLinkType'));
@@ -7200,6 +7359,51 @@ function AgassitantCallbackFunction(result) {
 					if ($(this).attr('data-PCLinkType') == 1) {
 						getSysIP($(this).attr('data-SysID'), function (data) {
 							var todoURL = data + $this.attr('data-url');
+							if ($this.attr('data-SysID') == '400') {
+								todoURL = data + $this.attr('data-url') + '&lg_tk=' + sessionStorage.getItem('PsnMgrToken');
+								if (!isAddEvent) {
+									isAddEvent = true;
+									addEvent(window, 'message', function (e) {
+										try {
+											if (e.data == 3 && popupNavChoose == 1 && infoCenterOption == 1) {
+												todoFn(0);
+											} else if (e.data == 2 && popupNavChoose == 1 && infoCenterOption == 2) {
+												noticeFn(0, 'update');
+											} else if (e.data == 3 && popupNavChoose == 1 && infoCenterOption == 4) {
+												messageFn(0);
+												ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function (data) {
+													if (data.Data.NoticeCount == 0) {
+														$('.popup-main1 ul li').eq(1).children().children().attr('class', '');
+													} else {
+														$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
+														if (data.Data.NoticeCount > 99) {
+															data.Data.NoticeCount = '...';
+														}
+														if (!$('.popup-main1 ul li').eq(1).children().children().children().children().text()) {
+
+															$('.popup-main1 ul li').eq(1).children().children().children().children().text(data.Data.NoticeCount);
+														} else {
+															if ($('.popup-main1 ul li').eq(1).children().children().children().children().text() == data.Data
+																.NoticeCount) {
+																$('.popup-main1 ul li').eq(1).children().children().children('span').append($(' <b>' + data.Data
+																	.NoticeCount +
+																	'</b>'));
+																$('.popup-main1 ul li').eq(1).children().children().children('span').css('transform',
+																	'translate(0, ' + -
+																	14 * ($('.popup-main1 ul li').eq(1).children().children().children('span').children().length -
+																		1) +
+																	'px)');
+															}
+														}
+													}
+												})
+											}
+										} catch (ex) {}
+									}, false);
+								}
+
+							}
+							// console.log(todoURL);
 							window.open(todoURL, '_blank');
 						})
 					} else {
@@ -7306,26 +7510,27 @@ function AgassitantCallbackFunction(result) {
 
 	function noticeFn(page, state) {
 		if (!initialization) {
-			initializationFn('message');
-
+			initializationFn('noticeFn');
 			return;
 		}
-
 		$('.pager1').remove();
 		$('.pager2').remove();
 		$(".pager3").remove();
+		$(".pager21").remove();
 		$('.infoCenter-empty').hide();
 		$("div").remove(
 			".message-div");
 		$('.assistant-popup-loading').show();
-		ajaxN('PublicInfo/Notice/ReceiveNotice/GetNoticeList', 'get', {
+		ajaxN('Notice/ReceiveNotice/GetNoticeList', 'get', {
 			URL: messageURL,
 			PageIndex: page + 1,
 			PageSize: 15
 		}, function (data) {
+			$('.assistant-popup-loading').hide();
 			if (data.StatusCode == 200) {
-				$('.assistant-popup-loading').hide();
+
 				messageLsit = data.Data.Item.NoticeList;
+
 				// console.log(messageLsit);
 				// messageLsit = [{
 				// 	"URL": "http://192.168.129.75:0/Message/Message.html?UserID=lcq&NoticeID=12",
@@ -7335,9 +7540,16 @@ function AgassitantCallbackFunction(result) {
 				// 	"NoticeID": "12",
 				// 	"IsRead": 0
 				// }];
+				$('.message-div').remove();
 
 				if ($('.popup-main1 ul li').eq(1).children().children().children().children().text()) {
-					$('.popup-main1 ul li').eq(1).children().children().children().children().text(data.Data.Item.UnReadCount);
+					if (data.Data.Item.UnReadCount != 0) {
+						$('.popup-main1 ul li').eq(1).children().children().children().children().text(data.Data.Item.UnReadCount);
+					} else {
+						$('.popup-main1 ul li').eq(1).children().children().children().children().text('');
+						$('.popup-main1 ul li').eq(1).children().children().children().attr('class', '');
+					}
+
 				}
 				lastRemindNum = data.Data.Item.UnReadCount;
 				messageLsitTotal = data.Data.Item.Total;
@@ -7359,6 +7571,9 @@ function AgassitantCallbackFunction(result) {
 						$('.infoCenter-option span strong').text(data.Data.Item.UnReadCount);
 						$('.message').css('display', 'block');
 					}
+					if ($('.info-active').eq(0).attr('name') != 2) {
+						return;
+					}
 					messageLsit.map(function (item, idx) {
 
 						var classname1 = '';
@@ -7374,11 +7589,11 @@ function AgassitantCallbackFunction(result) {
 							item.NoticeTitle = item.NoticeTitle.slice(0, 28) + '...';
 						}
 						messageDiv = $(
-							'<div class="message-div" data-url=' + item.URL + ' ><span  class=' + classname1 +
+							'<div class="message-div" data-url=' + item.URL + ' data-isread=' + item.IsRead + ' ><span  class=' + classname1 +
 							'></span><span title=' +
 							NoticeTitle + '  class=' +
 							classname2 + ' >' +
-							item.NoticeTitle + '<i></i></span><span class="message-div-time" >' + item.EffectTime + '</span><span>' +
+							item.NoticeTitle + '<i></i></span><span class="message-div-time" >' + item.EffectTime + '</span><span title=' + item.PublisherName + ' >' +
 							item.PublisherName +
 							'</span></div>')
 						$('.message-box').append(messageDiv);
@@ -7407,14 +7622,51 @@ function AgassitantCallbackFunction(result) {
 					$('.infoCenter-empty').show();
 					$('.infoCenter-empty-text').text($('.info-active').eq(1).text());
 					$('.assistant-popup-loading').hide();
+					againCountunreadFn();
 				}
-
 				$('.message-box').scrollTop(0);
 				$('.message-div').off().click(function () {
-					window.open($(this).attr('data-url') + '&lg_tk=' + PsnMgrToken, '_blank');
-					setTimeout(function () {
-						noticeFn(page, 'update');
-					}, 3000)
+					window.open($(this).attr('data-url') + '&isread=' + $(this).attr('data-isread') + '&lg_tk=' + PsnMgrToken, '_blank');
+					if (!isAddEvent) {
+						isAddEvent = true;
+						addEvent(window, 'message', function (e) {
+							try {
+								if (e.data == 3 && popupNavChoose == 1 && infoCenterOption == 1) {
+									todoFn(0);
+								} else if (e.data == 2 && popupNavChoose == 1 && infoCenterOption == 2) {
+									noticeFn(0, 'update');
+								} else if (e.data == 3 && popupNavChoose == 1 && infoCenterOption == 4) {
+									messageFn(0);
+									ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function (data) {
+										if (data.Data.NoticeCount == 0) {
+											$('.popup-main1 ul li').eq(1).children().children().attr('class', '');
+										} else {
+											$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
+											if (data.Data.NoticeCount > 99) {
+												data.Data.NoticeCount = '...';
+											}
+											if (!$('.popup-main1 ul li').eq(1).children().children().children().children().text()) {
+
+												$('.popup-main1 ul li').eq(1).children().children().children().children().text(data.Data.NoticeCount);
+											} else {
+												if ($('.popup-main1 ul li').eq(1).children().children().children().children().text() == data.Data
+													.NoticeCount) {
+													$('.popup-main1 ul li').eq(1).children().children().children('span').append($(' <b>' + data.Data
+														.NoticeCount +
+														'</b>'));
+													$('.popup-main1 ul li').eq(1).children().children().children('span').css('transform',
+														'translate(0, ' + -
+														14 * ($('.popup-main1 ul li').eq(1).children().children().children('span').children().length -
+															1) +
+														'px)');
+												}
+											}
+										}
+									})
+								}
+							} catch (ex) {}
+						}, false);
+					}
 				})
 			} else {
 				assistantTipsFn(data.Msg);
@@ -7483,6 +7735,10 @@ function AgassitantCallbackFunction(result) {
 	// chat();
 	//消息中心模块下的选项卡第三个
 	function chatFn() {
+		if (!initialization) {
+			initializationFn('chatFn');
+			return;
+		}
 		$('.infoCenter-empty').hide();
 		$("div").remove(".chat-div");
 		var chatLsit = [{
@@ -7581,9 +7837,14 @@ function AgassitantCallbackFunction(result) {
 	var noticeTotalCount = 0;
 
 	function messageFn(page) {
+		if (!initialization) {
+			initializationFn('messageFn');
+			return;
+		}
 		$('.pager1').remove();
 		$('.pager2').remove();
 		$(".pager3").remove();
+		$(".pager21").remove();
 		$('.notice-clear').show();
 		$('.infoCenter-empty').hide();
 		$('.assistant-popup-loading').show();
@@ -7602,6 +7863,10 @@ function AgassitantCallbackFunction(result) {
 				$('.infoCenter-empty').show();
 				$('.infoCenter-empty-text').text($('.info-active').eq(1).text());
 				$('.assistant-popup-loading').hide();
+				againCountunreadFn();
+				return;
+			}
+			if ($('.info-active').eq(0).attr('name') != 4) {
 				return;
 			}
 			var ScheduleIDList = '';
@@ -7625,7 +7890,7 @@ function AgassitantCallbackFunction(result) {
 					DeletePlanFlag: DeletePlanFlagList.slice(0, -1),
 					ScheduleDate: ScheduleDate,
 				}, function (data1) {
-					scheduleRemindCount=0;
+					scheduleRemindCount = 0;
 					message1Fn(page, noticeLsit);
 
 
@@ -7650,10 +7915,12 @@ function AgassitantCallbackFunction(result) {
 					againCountunreadFn();
 				}
 			})
+			$('.notice-div').remove();
+			$('.pager2').remove();
 
 			noticeLsit.map(function (item, idx) {
-				item.InfoContent = htmlEncode(item.InfoContent);
-				item.InfoSourceName = htmlEncode(item.InfoSourceName);
+				item.InfoContent = htmlLableExe(item.InfoContent);
+				item.InfoSourceName = htmlLableExe(item.InfoSourceName);
 				if (item.InfoContent && item.InfoContent.length > 69) {
 					item.InfoContentAll = '"' + item.InfoContent + '"';
 					item.InfoContent = item.InfoContent.slice(0, 68) + '...';
@@ -7762,43 +8029,58 @@ function AgassitantCallbackFunction(result) {
 
 				var $this = $(this);
 				if ($(this).attr('data-PCLinkType') == 1) {
+					var notiveURL = '';
 					getSysIP($(this).attr('data-SysID'), function (data) {
-						var notiveURL = data + $this.attr('data-url');
+						notiveURL = data + $this.attr('data-url');
+
 						if ($this.attr('data-SysID') == 400) {
+							notiveURL = notiveURL + '&lg_tk=' + sessionStorage.getItem('PsnMgrToken');
+							window.open(notiveURL, '_blank');
+							if (!isAddEvent) {
+								isAddEvent = true;
+								addEvent(window, 'message', function (e) {
+									try {
+										if (e.data == 3 && popupNavChoose == 1 && infoCenterOption == 1) {
+											todoFn(0);
+										} else if (e.data == 2 && popupNavChoose == 1 && infoCenterOption == 2) {
+											noticeFn(0, 'update');
+										} else if (e.data == 3 && popupNavChoose == 1 && infoCenterOption == 4) {
+											messageFn(0);
+											ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function (data) {
+												if (data.Data.NoticeCount == 0) {
+													$('.popup-main1 ul li').eq(1).children().children().attr('class', '');
+												} else {
+													$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
+													if (data.Data.NoticeCount > 99) {
+														data.Data.NoticeCount = '...';
+													}
+													if (!$('.popup-main1 ul li').eq(1).children().children().children().children().text()) {
 
-							setTimeout(function () {
-								ajaxN('PsnMgr/InfoCentre/GetNewRemindCount', 'get', {}, function (data) {
-									if (data.Data.NoticeCount == 0) {
-										$('.popup-main1 ul li').eq(1).children().children().attr('class', '');
-									} else {
-
-										$('.popup-main1 ul li').eq(1).children().children().attr('class', 'info-unread2');
-										if (data.Data.NoticeCount > 99) {
-											data.Data.NoticeCount = '...';
+														$('.popup-main1 ul li').eq(1).children().children().children().children().text(data.Data.NoticeCount);
+													} else {
+														if ($('.popup-main1 ul li').eq(1).children().children().children().children().text() == data.Data
+															.NoticeCount) {
+															$('.popup-main1 ul li').eq(1).children().children().children('span').append($(' <b>' + data.Data
+																.NoticeCount +
+																'</b>'));
+															$('.popup-main1 ul li').eq(1).children().children().children('span').css('transform',
+																'translate(0, ' + -
+																14 * ($('.popup-main1 ul li').eq(1).children().children().children('span').children().length -
+																	1) +
+																'px)');
+														}
+													}
+												}
+											})
 										}
-										if (!$('.popup-main1 ul li').eq(1).children().children().children().children().text()) {
-
-											$('.popup-main1 ul li').eq(1).children().children().children().children().text(data.Data.NoticeCount);
-										} else {
-											if ($('.popup-main1 ul li').eq(1).children().children().children().children().text() == data.Data
-												.NoticeCount) {
-												$('.popup-main1 ul li').eq(1).children().children().children('span').append($(' <b>' + data.Data
-													.NoticeCount +
-													'</b>'));
-												$('.popup-main1 ul li').eq(1).children().children().children('span').css('transform',
-													'translate(0, ' + -
-													12 * ($('.popup-main1 ul li').eq(1).children().children().children('span').children().length -
-														1) +
-													'px)');
-											}
-
-										}
-									}
-								})
-
-							}, 3000)
+									} catch (ex) {}
+								}, false);
+							}
+						} else {
+							window.open(notiveURL, '_blank');
 						}
-						window.open(notiveURL, '_blank');
+						// console.log(notiveURL);
+
 					})
 
 
@@ -7890,12 +8172,12 @@ function AgassitantCallbackFunction(result) {
 			}
 			$('.notice-box').scrollTop(0);
 			// document.getElementByclassName('notice-box').scrollTop = 0
-			if ($('.notice-box .notice-div') && $('.notice-box .notice-div').length > 5 || ($('.notice-box .notice-div') &&
-					$('.notice-box .notice-div').length > 4 && page > 0)) {
-				$('.infoCenter-option-box').css('overflow-y', 'scroll');
-			} else {
-				$('.infoCenter-option-box').css('overflow-y', 'hidden');
-			}
+			// if ($('.notice-box .notice-div') && $('.notice-box .notice-div').length > 5 || ($('.notice-box .notice-div') &&
+			// 		$('.notice-box .notice-div').length > 4 && page > 0)) {
+			// 	$('.infoCenter-option-box').css('overflow-y', 'scroll');
+			// } else {
+			// 	$('.infoCenter-option-box').css('overflow-y', 'hidden');
+			// }
 			$('.assistant-popup-loading').hide();
 		})
 
@@ -7954,59 +8236,242 @@ function AgassitantCallbackFunction(result) {
 		})
 	};
 	// news();
+	var NewsTypeName = '';
+	var NewsListTotal = 0;
 	//消息中心模块下的选项卡第五个
-	function newsFn() {
-		$('.infoCenter-empty').hide();
-		$("div").remove(".news-div");
-		var newslsit = [{
-			title: '我校召开2017年本科教学工作会议',
-			content: '9月1日，学校2在堂召开。校领导张、徐华蕊、曹辉景、钟平出席会议徐华蕊、曹辉景、钟平出席会议徐华蕊、曹辉景、钟平出席会议',
-			time: '2019-09-17-11:00',
-			imgurl: PsnMgrLgAssistantAddr + '/PsnMgr/LgAssistant/images/个人报告_更换.png'
-		}, {
-			title: '我校召开2017年本校召开2017年本科教学科教学工作会议',
-			content: '9月1日，学校2在堂召开。校领导张、徐华蕊、曹辉景、钟平出席会议徐华蕊、曹辉景、钟平出席会议徐华蕊、曹辉景、钟平出席会议',
-			time: '2019-09-17-11:00',
-			imgurl: PsnMgrLgAssistantAddr + '/PsnMgr/LgAssistant/images/个人报告_更换.png'
-		}, {
-			title: '我校召开2017年本科教学工作会议',
-			content: '9月1日，学校2在堂召开。校领导张、徐华蕊、曹辉景、月1日，学校2在堂召开。校领导钟平出席会议徐华蕊、曹辉景、钟平出席会议徐华蕊、曹辉景、钟平出席会议',
-			time: '2019-09-17-11:00',
-			imgurl: PsnMgrLgAssistantAddr + '/PsnMgr/LgAssistant/images/个人报告_更换.png'
-		}, {
-			title: '我校召开2017年本科教学工作会议',
-			content: '9月1日，学校2在堂召开。校领导张、徐华蕊、曹辉景、钟平出席会议徐华蕊、曹辉景、钟平出席会议徐华蕊、曹辉景、钟平出席会议',
-			time: '2019-09-17-11:00',
-			imgurl: PsnMgrLgAssistantAddr + '/PsnMgr/LgAssistant/images/个人报告_更换.png'
-		}, {
-			title: '我校召开2017年本科教学工作会议',
-			content: '议徐华蕊、曹辉景、钟平出席会议徐华蕊、曹辉景、钟平出席会议',
-			time: '2019-09-17-11:00',
-			imgurl: PsnMgrLgAssistantAddr + '/PsnMgr/LgAssistant/images/个人报告_更换.png'
-		}];
-		newslsit.map(function (item) {
-			if (item.content && item.content.length > 62) {
-				// console.log(item.content.length);
-				item.content = item.content.substring(0, 61) + '...';
-			};
-			newsDiv = $(
-				'<div class="news-div"><span style="background-image:url(' + item.imgurl + ') "></span><span><h6>' +
-				item.title + '</h6><p>' + item.content + '</p><p>' + item.time + '</p></span><div class="clear"></div></div>'
-			);
-
-			$('.news-box').append(newsDiv);
-		})
-		$('.message').css('display', 'none');
-		$('.chat').css('display', 'none');
-		$('.notice').css('display', 'none');
-		$('.todo').css('display', 'none');
-		$('.news').css('display', 'block');
-		if ($('.news-div') && $('.news-div').length == 0) {
-			$('.infoCenter-empty').show();
-			$('.infoCenter-empty-text').text($('.info-active').eq(1).text());
-			$('.assistant-popup-loading').hide();
-
+	function newsFn(page, type) {
+		if (!initialization) {
+			initializationFn('newsFn');
+			return;
 		}
+		$('.pager1').remove();
+		$('.pager2').remove();
+		$(".pager3").remove();
+		$(".pager21").remove();
+		$('.infoCenter-empty').hide();
+		$('.assistant-popup-loading').show();
+		$("div").remove(".news-div");
+		if (type == 1) {
+			ajaxN('/News/ReceiveNewsMgr/GetReceiveNewsTypeList', 'get', {
+				URL: messageURL,
+				UserType: UserType,
+			}, function (data) {
+				$('.assistant-popup-loading').show();
+				if (data.StatusCode == 200) {
+					var NewsTypeList = data.Data.NewsTypeList;
+					$('.news-type-ul li').remove();
+					// NewsTypeList =["校园头条", "教育政策", "校园新闻", "开箱子v", "校园资讯2", "校园资讯", "信息", "教育政策", "校园新闻", "开箱子v", "校园资讯2", "校园资讯", "信息", "教育政策", "校园新闻", "开箱子v", "校园资讯2", "校园资讯", "信息", "教育政策", "校园新闻", "开箱子v", "校园资讯2", "校园资讯", "信息"]
+					NewsTypeList.unshift('全部');
+					
+					NewsTypeName = '';
+					var TypeLi = '';
+					NewsTypeList.map(function (item, idx) {
+						if (idx == 0) {
+							TypeLi = $(
+								'<li name="" class="news-type-choose">' + item + ' <b></b></li>'
+							);
+						} else {
+							TypeLi = $(
+								'<li name=' + item + '>' + item + ' <b></b></li>'
+							);
+						}
+						$('.news-type-ul').append(TypeLi);
+					})
+					$('.news-type-ul li').off().click(function () {
+						if ($(this).attr('class') != 'news-type-choose') {
+							$('.news-type-choose').attr('class', '');
+							$(this).attr('class', 'news-type-choose');
+							NewsTypeName = $(this).attr('name');
+							newsFn(0);
+						}
+					})
+					ajaxN('/News/ReceiveNewsMgr/GetReceiveNewsList', 'get', {
+						URL: messageURL,
+						UserType: UserType,
+						UserID: UserID,
+						NewsTypeName: NewsTypeName,
+						PageIndex: page * 1 + 1,
+						PageSize: 10,
+					}, function (data) {
+						if (data.StatusCode == 200) {
+							var NewsList = data.Data.NewsList;
+							// var NewsList = [];
+							NewsListTotal = data.Data.Total;
+							NewsList.map(function (item) {
+								let content = item.NewsAbstract;
+								let NewsTitle = item.NewsTitle;
+								if (item.NewsAbstract && item.NewsAbstract.length > 82) {
+									// console.log(item.content.length);
+									content = item.NewsAbstract.substring(0, 80) + '...';
+									item.NewsAbstract = '"' + item.NewsAbstract + '"';
+								} else {
+									item.NewsAbstract = '';
+								};
+								if (item.NewsCoverPath.length == 0) {
+									item.NewsCoverPath = PsnMgrLgAssistantAddr + "/PsnMgr/LgAssistant/images/infoCenter/NewsImg.png";
+								}
+								item.NewsTitle = '"' + item.NewsTitle + '"';
+								if (!item.ReadCount) {
+									item.ReadCount = 0;
+								}
+								newsDiv = $(
+									'<div class="news-div" data-url= ' + item.URL + '><img src=' + item.NewsCoverPath + ' alt="图片丢失" /><span><p class="ph6" tltle=' + item.NewsTitle + '> <b>[' + item.NewsTypeName + ']</b>' +
+									NewsTitle + '</p><p title=' + item.NewsAbstract + '>' + content + '</p><p>   <b>发布时间：' + item.PublishTime.slice(0, 16) + '</b>    阅读次数： ' + item.ReadCount + '次</p>  </span><div class="clear"></div></div>'
+								);
+
+								$('.news-box').append(newsDiv);
+							})
+							$('.message').css('display', 'none');
+							$('.chat').css('display', 'none');
+							$('.notice').css('display', 'none');
+							$('.todo').css('display', 'none');
+							$('.news').css('display', 'block');
+
+							if ($('.news-div') && $('.news-div').length == 0) {
+								$('.infoCenter-empty').show();
+								$('.infoCenter-empty-text').text($('.info-active').eq(1).text());
+
+							}
+							if (NewsListTotal > 10) {
+								$('.news-box ').append($('<div class="frame_pager_center pager21 "></div>'));
+								setNewsPager(NewsListTotal, page);
+							}
+							$('.news-div').off().click(function () {
+								if ($(this).attr('class') == 'news-div') {
+									window.open($(this).attr('data-url') + '&lg_tk=' + PsnMgrToken, '_blank');
+								}
+							})
+							$('.news-box').scrollTop(0);
+						} else {
+							assistantTipsFn(data.Msg);
+						}
+						$('.assistant-popup-loading').hide();
+					})
+				} else {
+					assistantTipsFn(data.Msg);
+					$('.assistant-popup-loading').hide();
+				}
+
+			})
+		} else {
+			ajaxN('/News/ReceiveNewsMgr/GetReceiveNewsList', 'get', {
+				URL: messageURL,
+				UserType: UserType,
+				UserID: UserID,
+				NewsTypeName: NewsTypeName,
+				PageIndex: page * 1 + 1,
+				PageSize: 10,
+			}, function (data) {
+				if (data.StatusCode == 200) {
+					var NewsList = data.Data.NewsList;
+					// NewsList = [];
+					NewsListTotal = data.Data.Total;
+					NewsList.map(function (item) {
+						let content = item.NewsAbstract;
+						let NewsTitle = item.NewsTitle;
+						if (item.NewsAbstract && item.NewsAbstract.length > 82) {
+							// console.log(item.content.length);
+							content = item.NewsAbstract.substring(0, 80) + '...';
+							item.NewsAbstract = '"' + item.NewsAbstract + '"';
+						} else {
+							item.NewsAbstract = '';
+						};
+						if (item.NewsCoverPath.length == 0) {
+							item.NewsCoverPath = PsnMgrLgAssistantAddr + "/PsnMgr/LgAssistant/images/infoCenter/NewsImg.png";
+						}
+						item.NewsTitle = '"' + item.NewsTitle + '"';
+						item.NewsAbstract = '"' + item.NewsAbstract + '"';
+						if (!item.ReadCount) {
+							item.ReadCount = 0;
+						}
+						newsDiv = $(
+							'<div class="news-div" data-url= ' + item.URL + '><img src=' + item.NewsCoverPath + ' alt="图片丢失" /><span><p class="ph6" tltle=' + item.NewsTitle + '> <b>[' + item.NewsTypeName + ']</b>' +
+							NewsTitle + '</p><p title=' + item.NewsAbstract + '>' + content + '</p><p>   <b>发布时间：' + item.PublishTime.slice(0, 16) + '</b>    阅读次数： ' + item.ReadCount + '次</p>  </span><div class="clear"></div></div>'
+						);
+
+						$('.news-box').append(newsDiv);
+					})
+					$('.message').css('display', 'none');
+					$('.chat').css('display', 'none');
+					$('.notice').css('display', 'none');
+					$('.todo').css('display', 'none');
+					$('.news').css('display', 'block');
+
+					if ($('.news-div') && $('.news-div').length == 0) {
+						newsDiv = $(
+							'<div class="news-div news-div-empty" > <i></i> <p class="news-empty">暂时还没有' + NewsTypeName + '类的新闻资讯哦~</p></div>'
+						);
+
+						$('.news-box').append(newsDiv);
+
+					}
+					if (NewsListTotal > 10) {
+						$('.news-box ').append($('<div class="frame_pager_center pager21 "></div>'));
+						setNewsPager(NewsListTotal, page);
+					}
+					$('.news-div').off().click(function () {
+						if ($(this).attr('class') == 'news-div') {
+							window.open($(this).attr('data-url') + '&lg_tk=' + PsnMgrToken, '_blank');
+						}
+					})
+					$('.news-box').scrollTop(0);
+				} else {
+					assistantTipsFn(data.Msg);
+				}
+				$('.assistant-popup-loading').hide();
+			})
+		}
+	};
+
+	function handlePaginationClick21(new_page_index, pagination_container) {
+		setMessagePager(NewsListTotal, new_page_index);
+		newsFn(new_page_index);
+	};
+	function setNewsPager(totalNum, currentNum) {
+		$(".pager21").pagination(totalNum, {
+			//回调函数，每次点击页面或上下页及跳转按钮的时候执行的函数
+			callback: handlePaginationClick21,
+			//初始化时，高亮的页码，默认为0，即第一页
+			current_page: currentNum,
+			//每页项目数，默认为10，这仅仅用于计算分页ui的显示，实际数据的写入需要回调函数完成
+			items_per_page: 10,
+			//显示可点击页码数量
+			num_display_entries: 3,
+			prev_text: '<',
+			next_text: '>',
+			link_to: 'javascript:;'
+		})
+		$('.pager21 .pagination .pagination_go_button').css('position', 'relative');
+		$('.pager21 .pagination .pagination_go_button').append($('<div class="pager-click-shadow pager-click-shadow21"></div>'))
+		$('.pager-click-shadow21').off().click(function (ev) {
+			if (isRealNum($(this).parent().parent().children('.pagination_go_input').val()) && $(this).parent().parent().children(
+					'.pagination_go_input').val() > 0) {
+				var num = 0;
+				if (isRealNum($(this).parent().prev().prev().prev().prev().text())) {
+					num = $(this).parent().prev().prev().prev().prev().text();
+				} else {
+					num = $(this).parent().prev().prev().prev().prev().prev().text();
+				}
+
+				if (num >= $(this).parent().parent().children('.pagination_go_input').val() * 1) {
+					$(this).parent().click();
+				} else {
+					assistantTipsFn('输入页面超过最大页码了哦~');
+					$(this).parent().parent().children('.pagination_go_input').val(' ');
+					normal('.pager21 .pagination .pagination_go_input', 3);
+				}
+
+			} else {
+				$(this).parent().parent().children('.pagination_go_input').val(' ');
+				assistantTipsFn('输入的不是有效页码哦~');
+				normal('.pager21 .pagination .pagination_go_input', 3);
+			}
+
+
+
+			ev.stopPropagation();
+		})
+
 	};
 
 
@@ -8048,7 +8513,7 @@ function AgassitantCallbackFunction(result) {
 						it.SortDescription.replace(new RegExp('（', 'g'), '(');
 						it.SortDescription.replace(new RegExp('）', 'g'), ')');
 						it.SortDescriptionTitle = '"' + it.SortDescription + '"';
-						it.SortDescription = htmlEncode(it.SortDescription);
+						it.SortDescription = htmlLableExe(it.SortDescription);
 						if (it.SortDescription.indexOf('(') > -1) {
 							it.SortDescription = it.SortDescription.slice(0, it.SortDescription.indexOf('(')) +
 								'(<b class = "setting-sortDescription">' + it.SortDescription.slice(it.SortDescription.indexOf('(') * 1 +
@@ -8255,6 +8720,7 @@ function AgassitantCallbackFunction(result) {
 					var scheduleUl1Li = ''; //个人日程早上时间段的li
 					var scheduleUl2Li = ''; //个人日程下午时间段的li
 					var scheduleUl3Li = ''; //个人日程晚上时间段的li
+					var scheduleState = ''; //是否缺勤
 					if (item.StartTime == item.EndTime || !item.EndTime) {
 						scheduleTime = item.StartTime;
 					} else {
@@ -8267,6 +8733,7 @@ function AgassitantCallbackFunction(result) {
 					if (item.ScheduleType == 0) {
 						scheduleClassName = 'personalSchedule-class';
 					}
+
 					if (item.ScheduleState == 4) {
 						scheduleClassEdit = 'schedule-edit';
 						scheduleClass5 = 'next-li ' + item.ScheduleID;
@@ -8277,22 +8744,33 @@ function AgassitantCallbackFunction(result) {
 							scheduleClock = 'schedule-clock';
 						}
 					} else if (item.ScheduleState == 2) {
-						scheduleClassEdit = 'schedule-edit';
 						scheduleClass5 = 'now-li ' + item.ScheduleID;
 						if (item.ScheduleType != 0 && item.ScheduleType != 10) {
 							scheduleClassDel = 'schedule-del';
+							scheduleClassEdit = 'schedule-edit';
 						}
-						if (item.RemindFlag != -1) {
-							scheduleClock = 'schedule-clock';
+					} else if (item.ScheduleType == 0) {
+						if (item.ScheduleState == 0) {
+							scheduleState = "(缺勤)";
+						}
+						if (item.ScheduleState == 3) {
+							scheduleState = "(迟到)";
+						}
+						if (item.ScheduleState == 5) {
+							scheduleState = "(早退)";
+						}
+					} else if (item.ScheduleType == 11) {
+						if (item.ScheduleState == 0) {
+							scheduleState = "(缺考)";
 						}
 					}
-					item.ScheduleTypeName = htmlEncode(item.ScheduleTypeName);
+					item.ScheduleTypeName = htmlLableExe(item.ScheduleTypeName);
 					item.ScheduleContentTitle = '"' + item.ScheduleContent + '"';
-					if (item.ScheduleContent.length > 34) {
-						item.ScheduleContent = item.ScheduleContent.slice(0, 33) + '...';
+					if (item.ScheduleContent.length > 36) {
+						item.ScheduleContent = item.ScheduleContent.slice(0, 35) + '...';
 					}
-					item.ClassName = htmlEncode(item.ClassName);
-					item.ScheduleLocation = htmlEncode(item.ScheduleLocation);
+					item.ClassName = htmlLableExe(item.ClassName);
+					item.ScheduleLocation = htmlLableExe(item.ScheduleLocation);
 					scheduleUlLi = $('<li class="' + scheduleClass5 + '" data-ScheduleID= "' + item.ScheduleID +
 						'"   data-PCLinkType= "' + item.PCLinkType +
 						'"   data-BelongInfoID= "' + item.BelongInfoID +
@@ -8315,7 +8793,7 @@ function AgassitantCallbackFunction(result) {
 						'" > <span> ' + scheduleTime + ' </span> <span> ' + item.ScheduleTypeName + ' </span> <span> <p title=' +
 						item.ScheduleContentTitle + '> ' + item.ScheduleContent +
 						' </p><i class=' + scheduleClock +
-						'></i></span> <span> <i class=' + scheduleClassEdit + '> </i><i class=' + scheduleClassDel +
+						'></i> <b>' + scheduleState + '</b></span> <span> <i class=' + scheduleClassEdit + '> </i><i class=' + scheduleClassDel +
 						'></i> </span> <span class = ' + scheduleClassName + ' title=' + item.ClassName + '> <i> </i>' + item.ClassName +
 						'</span><span class = ' + schedulePlace + '  title=' + item.ScheduleLocation + '> <i> </i>' + item.ScheduleLocation +
 						'</span><b class="schedule-frist-b"></b> <b class="schedule-last-b"></b></li>');
@@ -8326,8 +8804,6 @@ function AgassitantCallbackFunction(result) {
 					} else {
 						$('.personal-schedule-ul3').append(scheduleUlLi);
 					}
-
-
 				})
 				if ($('.personal-schedule-ul1 li') && $('.personal-schedule-ul1 li').length == 0) {
 					$('.personal-schedule-ul1 ').hide();
@@ -8390,6 +8866,7 @@ function AgassitantCallbackFunction(result) {
 						ajaxN('PsnMgr/Schedule/OperateSchedule', 'post', param, function (data) {
 							if (data.StatusCode == 200) {
 								assistantBigSuccessFn('删除成功~');
+								layDataMark($('#lgAssistant-next3').val());
 								li.remove();
 								if ($('.info-active').eq(0).attr('name') == '1') {
 									todoFn('M');
@@ -8425,6 +8902,7 @@ function AgassitantCallbackFunction(result) {
 				$(this).parent().attr('class', 'schedule-message');
 				$('.schedule-change-type').text('编辑日程');
 				$('.schedule-edit-name').text('自定义');
+				$('.schedule-type-name').show();
 				$('.schedule-setting-popup').show();
 				$('.schedule-setting-popup div').eq(1).animate({
 					right: '0'
@@ -8434,22 +8912,30 @@ function AgassitantCallbackFunction(result) {
 
 				var li = $(this).parent().parent();
 				$('.schedule-edit-popup').hide();
-				if (li.attr('data-ScheduleType') == 0 || li.attr('data-ScheduleType') == 10) {
+				if (li.attr('data-ScheduleType') == 0 || li.attr('data-ScheduleType') == 10 || li.attr('data-ScheduleType') == 11) {
 					$('.schedule-edit-popup').show();
 					$('.schedule-type-name').hide();
 					$('.schedule-type  i').attr('class', '');
 					$('.schedule-type i').eq(3).attr('class', 'schedule-type-true');
 					if (li.attr('data-ScheduleType') == 0) {
 						$('.schedule-edit-name').text('课程');
-						$('.schedule-edit-name').attr('data-scheduleTypeName', li.attr('data-scheduleTypeName'))
+						$('.schedule-edit-name').attr('data-scheduleTypeName', li.attr('data-scheduleTypeName'));
 					}
 					if (li.attr('data-ScheduleType') == 10) {
 						$('.schedule-edit-name').text('监考');
 					}
+					if (li.attr('data-ScheduleType') == 11) {
+						$('.schedule-edit-name').text('考试');
+					}
 				} else {
 					$('.schedule-type i').attr('class', '');
-					$('.schedule-type i').eq(li.attr('data-ScheduleType') / 2 - 1).attr('class', 'schedule-type-true');
-					if (li.attr('data-ScheduleType') == 8) {
+					if (UserType == 2) {
+						$('.schedule-type i').eq(li.attr('data-ScheduleType') - 1 / 2).attr('class', 'schedule-type-true');
+					} else {
+						$('.schedule-type i').eq(li.attr('data-ScheduleType') / 2 - 1).attr('class', 'schedule-type-true');
+					}
+					if (li.attr('data-ScheduleType') == 8 || li.attr('data-ScheduleType') == 9) {
+						$('.schedule-type i').eq(3).attr('class', 'schedule-type-true');
 						$('.schedule-type-name').val(li.attr('data-scheduletypename'));
 					} else {
 						$('.schedule-type-name').val('');
@@ -8523,7 +9009,7 @@ function AgassitantCallbackFunction(result) {
 		var ScheduleType = ''; //课程类型
 		var SysID = ''; //系统id
 		var PCLinkType = ''; //pc端跳转方式
-		var BelongInfoID = ''; //日程跳转id（可能吧）
+		var BelongInfoID = ''; //日程跳转id
 		var PCLink = ''; //pc端跳转路径
 		var AndroidLink = ''; //安卓端跳转路径
 		var IOSLink = ''; //ios端跳转路径
@@ -8538,22 +9024,29 @@ function AgassitantCallbackFunction(result) {
 		if ($('.schedule-type-true').attr('name') == 4) {
 
 			if ($('.schedule-edit-name').text() == '自定义') {
-				ScheduleType = 8;
 				if (!$.trim($('.schedule-type-name').val())) {
 					normal('.schedule-type-name', 3);
 					return;
 				}
+				if (UserType == 2) {
+					ScheduleType = 9;
+				} else {
+					ScheduleType = 8;
+				}
 				scheduleTypeName = $.trim($('.schedule-type-name').val());
 			}
-			if ($('.schedule-edit-name').text() == '课程') {
-				ScheduleType = 0;
-				scheduleTypeName = $('.schedule-edit-name').attr('data-scheduleTypeName');
+			if ($('.schedule-edit-popup').css('display') == 'block') {
+				if ($('.schedule-edit-name').text() == '课程') {
+					ScheduleType = 0;
+					scheduleTypeName = $('.schedule-edit-name').attr('data-scheduleTypeName');
+				}
+				if ($('.schedule-edit-name').text() == '监考') {
+					ScheduleType = 10;
+				}
+				if ($('.schedule-edit-name').text() == '考试') {
+					ScheduleType = 11;
+				}
 			}
-			if ($('.schedule-edit-name').text() == '监考') {
-				ScheduleType = 10;
-			}
-
-
 
 		}
 		if (!$('#schedule-test1').val()) {
@@ -8627,16 +9120,32 @@ function AgassitantCallbackFunction(result) {
 			}
 
 			if ($('.schedule-type-true').attr('name') == 1) {
-				scheduleTypeName = '备课';
-				ScheduleType = 2;
+				if (UserType == 2) {
+					ScheduleType = 1;
+					scheduleTypeName = '做作业';
+				} else {
+					scheduleTypeName = '备课';
+					ScheduleType = 2;
+				}
+
 			}
 			if ($('.schedule-type-true').attr('name') == 2) {
-				scheduleTypeName = '会议';
-				ScheduleType = 4;
+				if (UserType == 2) {
+					ScheduleType = 3;
+					scheduleTypeName = '自学';
+				} else {
+					scheduleTypeName = '会议';
+					ScheduleType = 4;
+				}
 			}
 			if ($('.schedule-type-true').attr('name') == 3) {
+				if (UserType == 2) {
+					ScheduleType = 5;
+				} else {
+					ScheduleType = 6;
+				}
 				scheduleTypeName = '重要活动';
-				ScheduleType = 6;
+
 			}
 			if ($('#schedule-test1').val().slice(0, 2) < 12) {
 				scheduleTimeSlot = 3;
@@ -8934,8 +9443,8 @@ function AgassitantCallbackFunction(result) {
 				var ClassMemberType = 2;
 				ContactUrl = 'PsnMgr/Contact/GetMyClassList';
 				param = {
-					'GradeID': '行政班ID',
-					'GradeName': ''
+					'GradeID': GradeID,
+					'GradeName': GradeName,
 				};
 			} else {
 				if (state == 2) {
@@ -9239,7 +9748,7 @@ function AgassitantCallbackFunction(result) {
 	function contactSearchClick(page, name, state) {
 		//通讯录右边列表点击效果
 		var contactClick = false;
-		console.log(page, name, state);
+		// console.log(page, name, state);
 		$('.contact-li li').off('hover').hover(function () {
 			$(this).children().children('.contact-mask').css('display', 'inline-block');
 			contactClick = false;
@@ -9388,6 +9897,7 @@ function AgassitantCallbackFunction(result) {
 						$('.assistant-popup-loading').hide();
 						if (data.StatusCode == 200) {
 							assistantSmallSuccessFn('移除成功');
+
 							// if ($('.contact-li li') && $('.contact-li li').length > 6) {
 							// 	$('.contact-li').css('overflow-y', 'scroll');
 							// } else {
@@ -9490,7 +10000,7 @@ function AgassitantCallbackFunction(result) {
 			}
 		});
 	};
-	
+
 	//通讯录获取联系人信息 参数id为联系人UserID，type为联系人UserType
 	function contactIofoFn(id, type) {
 		$('.assistant-popup-loading').show();
@@ -9503,7 +10013,7 @@ function AgassitantCallbackFunction(result) {
 				data = Data.Data;
 				var contactPhotoPath = "url(" + data.PhotoPath + ")";
 				$('.contact-info-image').css('background-image', contactPhotoPath);
-				data.UserName = htmlEncode(data.UserName);
+				data.UserName = htmlLableExe(data.UserName);
 				$('.contact-info-main div span span b').text(data.UserName);
 				$('.contact-info-main div span span b').attr('title', data.UserName);
 				var sexClass = '';
@@ -9544,11 +10054,11 @@ function AgassitantCallbackFunction(result) {
 					$('.lgAssistant-main-WB').attr('target', '_blank');
 					$('.lgAssistant-main-WB').show();
 				}
-			
+
 				$('.contact-info-main div>span>span>i').attr('class', sexClass);
-				data.UserID = htmlEncode(data.UserID);
-				data.GroupName = htmlEncode(data.GroupName);
-				data.Sign = htmlEncode(data.Sign);
+				data.UserID = htmlLableExe(data.UserID);
+				data.GroupName = htmlLableExe(data.GroupName);
+				data.Sign = htmlLableExe(data.Sign);
 				$('.contact-info-id').text(data.UserID);
 				$('.contact-info-id').attr('title', data.UserID);
 				$('.contact-info-id').attr('data-type', data.UserType);
@@ -9566,19 +10076,19 @@ function AgassitantCallbackFunction(result) {
 				$('#contact-copy-text4').text(data.Weibo);
 				$('.contact-info').show();
 				$('.contact-message-ul li a').off().click(function () {
-					var $this =$(this);
+					var $this = $(this);
 					ajaxN('PsnMgr/Contact/OperateRecentContact', 'post', {
 						"OperateFlag": 1, //  1添加  -2 清空
 						"SecretKey": "55555",
 						"ContactID": $('.contact-info-id').text(), //  所要添加的常用联系人ID
 						"ContactUserType": $('.contact-info-id').attr('data-type'), //  所要添加的常用联系人用户类型   0或6代表管理员  1教师 2学生 3家长
 					}, function (data) {
-						if( $this.attr('name')=='QQ'){
-							assistantRemindFn(['是否已安装最新版QQ客户端？','确定','安装'],function(str){
-								if(str){
-									window.open('tencent://message/?uin=' + $this.attr('data-QQ') + '&Site=qq&Menu=yes','_blank');
-								}else if(str=='0'){
-									window.open('https://im.qq.com/pcqq/','_blank');
+						if ($this.attr('name') == 'QQ') {
+							assistantRemindFn(['是否已安装最新版QQ客户端？', '确定', '安装'], function (str) {
+								if (str) {
+									window.open('tencent://message/?uin=' + $this.attr('data-QQ') + '&Site=qq&Menu=yes', '_blank');
+								} else if (str == '0') {
+									window.open('https://im.qq.com/pcqq/', '_blank');
 								}
 							})
 						}
@@ -9683,7 +10193,7 @@ function AgassitantCallbackFunction(result) {
 							UserIDB += ' <b class="contact-search-break">...</b> ';
 						}
 						if (idx < 7) {
-							item.UserName = htmlEncode(item.UserName);
+							item.UserName = htmlLableExe(item.UserName);
 							searchListLi = $('<li class="search-left-li" data-id=' + item.UserID + ' data-usertype=' + item.UserType +
 								' ><i style="background-image:url(' + item.PhotoPath +
 								')"></i> <span title = ' + item.UserNameTitle + '>' + UserNameB + '<b>(</b> ' + UserIDB +
@@ -9727,7 +10237,7 @@ function AgassitantCallbackFunction(result) {
 								if (item.UserTypeName != '') {
 									contactSearchClass2 = 'contact-search-type';
 								}
-								item.UserID = htmlEncode(item.UserID);
+								item.UserID = htmlLableExe(item.UserID);
 								contactSearchli = $('<li class="contact-search-li ' + contactSearchClass1 +
 									'"> <i style = "background-image:url(' + item.PhotoPath +
 									')" > </i> <span> <b> ' + item.UserName + ' </b> <b title=' + item.UserID + ' >[' + item.UserID +
@@ -9886,6 +10396,8 @@ function AgassitantCallbackFunction(result) {
 	$('.assistant-outline-true').click(function () {
 		history.go(0);
 	})
+	// $('.popup-main1').hide();
+	// $('.popup-main6').show();
 };
 //离线判断函数(掉线检测)
 function AgassitantCallbackFn(result) {
